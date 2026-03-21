@@ -2639,6 +2639,10 @@ const ANIME_EPISODES = {
             11: {
                 name: "Episode 10",
                 videoUrl: ""
+            },
+            12: {
+                name: "Episode 11",
+                videoUrl: ""
             }
         }
     },
@@ -3375,7 +3379,7 @@ function getStatusInfo(status) {
 // Function to generate episode list with episode names and video links
 function generateEpisodes(animeId, totalEpisodes, animeImage) {
     const episodes = [];
-    const maxEpisodes = Math.min(totalEpisodes, 12);
+    const maxEpisodes = Math.min(totalEpisodes, 11);
     const animeData = ANIME_EPISODES[animeId];
     
     for (let i = 1; i <= maxEpisodes; i++) {
