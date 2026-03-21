@@ -21,7 +21,7 @@
 <div id="accountModal" class="account-modal">
     <div class="account-modal-content">
         <div class="account-logo">
-            <img src="https://i.ibb.co/4n6Gw6CV/Grid-Art-20260321-143922590.png" alt="Logo" class="logo-img">
+            <img src="YOUR_LOGO.png" alt="Logo" class="logo-img">
         </div>
         
         <div class="profile-circle" id="profileCircle">
@@ -40,296 +40,296 @@
     </div>
 </div>
 
-    <!-- Home Screen -->
-    <div id="homeScreen" class="screen active">
-        <!-- အပေါ်ဆုံး ခေါင်းစီးပိုင်း -->
-        <header class="top-header">
-            <div class="logo">
-                <a href="#" aria-label="ပင်မစာမျက်နှာ">
-                    <img src="https://i.ibb.co/4n6Gw6CV/Grid-Art-20260321-143922590.png" 
-                         alt="အက်ပ်လိုဂို"
-                         onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22160%22%20height%3D%2252%22%20viewBox%3D%220%200%20160%2052%22%3E%3Crect%20width%3D%22160%22%20height%3D%2252%22%20fill%3D%22%231e3a8a%22%20rx%3D%228%22%2F%3E%3Ctext%20x%3D%2220%22%20y%3D%2235%22%20font-family%3D%22Arial%22%20font-size%3D%2220%22%20fill%3D%22white%22%20font-weight%3D%22bold%22%3ELOGO%3C%2Ftext%3E%3C%2Fsvg%3E';">
-                </a>
-            </div>
-
-            <!-- Search Icon ခလုတ် -->
-            <div class="search-button">
-                <a href="#" id="searchIcon" role="button" aria-label="ရှာဖွေရန်">
-                    <i class="fas fa-search"></i>
-                </a>
-            </div>
-        </header>
-
-        <!-- Search Bar -->
-        <div class="search-bar-container" id="searchBarContainer">
-            <div class="search-bar-wrapper">
-                <i class="fas fa-search search-icon"></i>
-                <input type="text" id="searchInput" placeholder="Anime Name ရိုက်ထည့်ပါ..." autocomplete="off">
-                <button id="closeSearchBar" class="close-search-bar">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
+<!-- Home Screen -->
+<div id="homeScreen" class="screen active">
+    <!-- အပေါ်ဆုံး ခေါင်းစီးပိုင်း -->
+    <header class="top-header">
+        <div class="logo">
+            <a href="#" aria-label="ပင်မစာမျက်နှာ">
+                <img src="https://i.ibb.co/4n6Gw6CV/Grid-Art-20260321-143922590.png" 
+                     alt="အက်ပ်လိုဂို"
+                     onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22160%22%20height%3D%2252%22%20viewBox%3D%220%200%20160%2052%22%3E%3Crect%20width%3D%22160%22%20height%3D%2252%22%20fill%3D%22%231e3a8a%22%20rx%3D%228%22%2F%3E%3Ctext%20x%3D%2220%22%20y%3D%2235%22%20font-family%3D%22Arial%22%20font-size%3D%2220%22%20fill%3D%22white%22%20font-weight%3D%22bold%22%3ELOGO%3C%2Ftext%3E%3C%2Fsvg%3E';">
+            </a>
         </div>
+
+        <!-- Search Icon ခလုတ် -->
+        <div class="search-button">
+            <a href="#" id="searchIcon" role="button" aria-label="ရှာဖွေရန်">
+                <i class="fas fa-search"></i>
+            </a>
+        </div>
+    </header>
+
+    <!-- Search Bar -->
+    <div class="search-bar-container" id="searchBarContainer">
+        <div class="search-bar-wrapper">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text" id="searchInput" placeholder="Anime Name ရိုက်ထည့်ပါ..." autocomplete="off">
+            <button id="closeSearchBar" class="close-search-bar">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
 
         <main class="main-content">
             <div class="anime-grid" id="animeGrid">
                 
-                <!-- ကတ်ပြား ၁ 
-                <div class="anime-card" 
-                     data-id="1" 
-                     data-name="Could Real Life Be Like a Dream?" 
-                     data-namemm="Could Real Life Be Like a Dream?" 
-                     data-image="https://i.ibb.co/Fq4wyCmp/Grid-Art-20260315-205252908.png" 
-                     data-banner="https://i.ibb.co/rf7B1RvH/Grid-Art-20260316-110003214.png" 
-                     data-genres='["Romantic","Comedy","Drama"]' 
-                     data-likes="0" 
-                     data-episodes="10"
-                     data-status="ongoing"
-                     data-telegram="https://t.me/StarlarStudio">
-                    <div class="anime-image">
-                        <img src="https://i.ibb.co/Fq4wyCmp/Grid-Art-20260315-205252908.png" alt="Demon Slayer">
-                    </div>
-                    <div class="anime-info">
-                        <div class="genre-section">
-                            <div class="genre-row">
-                                <span class="genre-tag">Romantic</span>
-                                <span class="genre-tag">Comedy</span>
-                            </div>
-                            <div class="genre-row">
-                                <span class="genre-tag">Drama</span>
-                                <span class="genre-tag">Drama</span>
-                            </div>
-                        </div>
-                        <div class="play-button" data-id="1">
-                            <i class="fas fa-play"></i>
-                        </div>
-                    </div>
-                </div>
+           <!-- Card 1 - Could Real Life Be Like a Dream? -->
+<div class="anime-card" 
+     data-id="1" 
+     data-name="Could Real Life Be Like a Dream?" 
+     data-namemm="Could Real Life Be Like a Dream?" 
+     data-image="https://i.ibb.co/Fq4wyCmp/Grid-Art-20260315-205252908.png" 
+     data-banner="https://i.ibb.co/rf7B1RvH/Grid-Art-20260316-110003214.png" 
+     data-genres='["Romantic","Comedy","Drama"]' 
+     data-likes="0" 
+     data-episodes="10"
+     data-status="ongoing"
+     data-telegram="https://t.me/StarlarStudio">
+    <div class="anime-image">
+        <img src="https://i.ibb.co/Fq4wyCmp/Grid-Art-20260315-205252908.png" alt="Could Real Life Be Like a Dream?">
+    </div>
+    <div class="anime-info">
+        <div class="genre-section">
+            <div class="genre-row">
+                <span class="genre-tag">Romantic</span>
+                <span class="genre-tag">Comedy</span>
+            </div>
+            <div class="genre-row">
+                <span class="genre-tag">Drama</span>
+                <span class="genre-tag">Drama</span>
+            </div>
+        </div>
+        <div class="play-button" data-id="1">
+            <i class="fas fa-play"></i>
+        </div>
+    </div>
+</div>
 
-                <!-- ကတ်ပြား ၂ - 
-                <div class="anime-card" 
-                     data-id="2" 
-                     data-name="Coming Soon" 
-                     data-namemm="Coming Soon" 
-                     data-image="https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png" 
-                     data-banner="https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png" 
-                     data-genres='["မကြာမှီလာမည်"]' 
-                     data-likes="0" 
-                     data-episodes="12"
-                     data-status="coming_soon"
-                     data-telegram="    ">
-                    <div class="anime-image">
-                        <img src="https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png" alt="Jujutsu Kaisen">
-                    </div>
-                    <div class="anime-info">
-                        <div class="genre-section">
-                            <div class="genre-row">
-                                <span class="genre-tag">  </span>
-                                <span class="genre-tag"> </span>
-                            </div>
-                            <div class="genre-row">
-                                <span class="genre-tag"> </span>
-                                <span class="genre-tag"> </span>
-                            </div>
-                        </div>
-                        <div class="play-button" data-id="2">
-                            <i class="fas fa-play"></i>
-                        </div>
-                    </div>
-                </div>
+<!-- Card 2 - Coming Soon -->
+<div class="anime-card" 
+     data-id="2" 
+     data-name="Coming Soon" 
+     data-namemm="Coming Soon" 
+     data-image="https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png" 
+     data-banner="https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png" 
+     data-genres='["မကြာမှီလာမည်"]' 
+     data-likes="0" 
+     data-episodes="12"
+     data-status="coming_soon"
+     data-telegram="">
+    <div class="anime-image">
+        <img src="https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png" alt="Coming Soon">
+    </div>
+    <div class="anime-info">
+        <div class="genre-section">
+            <div class="genre-row">
+                <span class="genre-tag"></span>
+                <span class="genre-tag"></span>
+            </div>
+            <div class="genre-row">
+                <span class="genre-tag"></span>
+                <span class="genre-tag"></span>
+            </div>
+        </div>
+        <div class="play-button" data-id="2">
+            <i class="fas fa-play"></i>
+        </div>
+    </div>
+</div>
 
-                <!-- ကတ်ပြား ၂ - 
-                <div class="anime-card" 
-                     data-id="3" 
-                     data-name="Coming Soon" 
-                     data-namemm="Coming Soon" 
-                     data-image="https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png" 
-                     data-banner="https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png" 
-                     data-genres='["မကြာမှီလာမည်"]' 
-                     data-likes="0" 
-                     data-episodes="12"
-                     data-status="coming_soon"
-                     data-telegram="    ">
-                    <div class="anime-image">
-                        <img src="https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png" alt="Jujutsu Kaisen">
-                    </div>
-                    <div class="anime-info">
-                        <div class="genre-section">
-                            <div class="genre-row">
-                                <span class="genre-tag">  </span>
-                                <span class="genre-tag"> </span>
-                            </div>
-                            <div class="genre-row">
-                                <span class="genre-tag"> </span>
-                                <span class="genre-tag"> </span>
-                            </div>
-                        </div>
-                        <div class="play-button" data-id="2">
-                            <i class="fas fa-play"></i>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- ကတ်ပြား ၂ - 
-                <div class="anime-card" 
-                     data-id="4" 
-                     data-name="Coming Soon" 
-                     data-namemm="Coming Soon" 
-                     data-image="https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png" 
-                     data-banner="https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png" 
-                     data-genres='["မကြာမှီလာမည်"]' 
-                     data-likes="0" 
-                     data-episodes="12"
-                     data-status="coming_soon"
-                     data-telegram="    ">
-                    <div class="anime-image">
-                        <img src="https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png" alt="Jujutsu Kaisen">
-                    </div>
-                    <div class="anime-info">
-                        <div class="genre-section">
-                            <div class="genre-row">
-                                <span class="genre-tag">  </span>
-                                <span class="genre-tag"> </span>
-                            </div>
-                            <div class="genre-row">
-                                <span class="genre-tag"> </span>
-                                <span class="genre-tag"> </span>
-                            </div>
-                        </div>
-                        <div class="play-button" data-id="2">
-                            <i class="fas fa-play"></i>
-                        </div>
-                    </div>
-                </div>
+<!-- Card 3 - Coming Soon -->
+<div class="anime-card" 
+     data-id="3" 
+     data-name="Coming Soon" 
+     data-namemm="Coming Soon" 
+     data-image="https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png" 
+     data-banner="https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png" 
+     data-genres='["မကြာမှီလာမည်"]' 
+     data-likes="0" 
+     data-episodes="12"
+     data-status="coming_soon"
+     data-telegram="">
+    <div class="anime-image">
+        <img src="https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png" alt="Coming Soon">
+    </div>
+    <div class="anime-info">
+        <div class="genre-section">
+            <div class="genre-row">
+                <span class="genre-tag"></span>
+                <span class="genre-tag"></span>
+            </div>
+            <div class="genre-row">
+                <span class="genre-tag"></span>
+                <span class="genre-tag"></span>
+            </div>
+        </div>
+        <div class="play-button" data-id="3">
+            <i class="fas fa-play"></i>
+        </div>
+    </div>
+</div>
 
-                <!-- ကတ်ပြား ၂ - 
-                <div class="anime-card" 
-                     data-id="5" 
-                     data-name="Coming Soon" 
-                     data-namemm="Coming Soon" 
-                     data-image="https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png" 
-                     data-banner="https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png" 
-                     data-genres='["မကြာမှီလာမည်"]' 
-                     data-likes="0" 
-                     data-episodes="12"
-                     data-status="coming_soon"
-                     data-telegram="    ">
-                    <div class="anime-image">
-                        <img src="https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png" alt="Jujutsu Kaisen">
-                    </div>
-                    <div class="anime-info">
-                        <div class="genre-section">
-                            <div class="genre-row">
-                                <span class="genre-tag">  </span>
-                                <span class="genre-tag"> </span>
-                            </div>
-                            <div class="genre-row">
-                                <span class="genre-tag"> </span>
-                                <span class="genre-tag"> </span>
-                            </div>
-                        </div>
-                        <div class="play-button" data-id="2">
-                            <i class="fas fa-play"></i>
-                        </div>
-                    </div>
-                </div>
+<!-- Card 4 - Coming Soon -->
+<div class="anime-card" 
+     data-id="4" 
+     data-name="Coming Soon" 
+     data-namemm="Coming Soon" 
+     data-image="https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png" 
+     data-banner="https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png" 
+     data-genres='["မကြာမှီလာမည်"]' 
+     data-likes="0" 
+     data-episodes="12"
+     data-status="coming_soon"
+     data-telegram="">
+    <div class="anime-image">
+        <img src="https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png" alt="Coming Soon">
+    </div>
+    <div class="anime-info">
+        <div class="genre-section">
+            <div class="genre-row">
+                <span class="genre-tag"></span>
+                <span class="genre-tag"></span>
+            </div>
+            <div class="genre-row">
+                <span class="genre-tag"></span>
+                <span class="genre-tag"></span>
+            </div>
+        </div>
+        <div class="play-button" data-id="4">
+            <i class="fas fa-play"></i>
+        </div>
+    </div>
+</div>
 
-                <!-- ကတ်ပြား ၂ - 
-                <div class="anime-card" 
-                     data-id="6" 
-                     data-name="Coming Soon" 
-                     data-namemm="Coming Soon" 
-                     data-image="https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png" 
-                     data-banner="https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png" 
-                     data-genres='["မကြာမှီလာမည်"]' 
-                     data-likes="0" 
-                     data-episodes="12"
-                     data-status="coming_soon"
-                     data-telegram="    ">
-                    <div class="anime-image">
-                        <img src="https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png" alt="Jujutsu Kaisen">
-                    </div>
-                    <div class="anime-info">
-                        <div class="genre-section">
-                            <div class="genre-row">
-                                <span class="genre-tag">  </span>
-                                <span class="genre-tag"> </span>
-                            </div>
-                            <div class="genre-row">
-                                <span class="genre-tag"> </span>
-                                <span class="genre-tag"> </span>
-                            </div>
-                        </div>
-                        <div class="play-button" data-id="2">
-                            <i class="fas fa-play"></i>
-                        </div>
-                    </div>
-                </div>
+<!-- Card 5 - Coming Soon -->
+<div class="anime-card" 
+     data-id="5" 
+     data-name="Coming Soon" 
+     data-namemm="Coming Soon" 
+     data-image="https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png" 
+     data-banner="https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png" 
+     data-genres='["မကြာမှီလာမည်"]' 
+     data-likes="0" 
+     data-episodes="12"
+     data-status="coming_soon"
+     data-telegram="">
+    <div class="anime-image">
+        <img src="https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png" alt="Coming Soon">
+    </div>
+    <div class="anime-info">
+        <div class="genre-section">
+            <div class="genre-row">
+                <span class="genre-tag"></span>
+                <span class="genre-tag"></span>
+            </div>
+            <div class="genre-row">
+                <span class="genre-tag"></span>
+                <span class="genre-tag"></span>
+            </div>
+        </div>
+        <div class="play-button" data-id="5">
+            <i class="fas fa-play"></i>
+        </div>
+    </div>
+</div>
 
-               <!-- ကတ်ပြား ၂ - 
-                <div class="anime-card" 
-                     data-id="7" 
-                     data-name="Coming Soon" 
-                     data-namemm="Coming Soon" 
-                     data-image="https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png" 
-                     data-banner="https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png" 
-                     data-genres='["မကြာမှီလာမည်"]' 
-                     data-likes="0" 
-                     data-episodes="12"
-                     data-status="coming_soon"
-                     data-telegram="    ">
-                    <div class="anime-image">
-                        <img src="https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png" alt="Jujutsu Kaisen">
-                    </div>
-                    <div class="anime-info">
-                        <div class="genre-section">
-                            <div class="genre-row">
-                                <span class="genre-tag">  </span>
-                                <span class="genre-tag"> </span>
-                            </div>
-                            <div class="genre-row">
-                                <span class="genre-tag"> </span>
-                                <span class="genre-tag"> </span>
-                            </div>
-                        </div>
-                        <div class="play-button" data-id="2">
-                            <i class="fas fa-play"></i>
-                        </div>
-                    </div>
-                </div>
+<!-- Card 6 - Coming Soon -->
+<div class="anime-card" 
+     data-id="6" 
+     data-name="Coming Soon" 
+     data-namemm="Coming Soon" 
+     data-image="https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png" 
+     data-banner="https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png" 
+     data-genres='["မကြာမှီလာမည်"]' 
+     data-likes="0" 
+     data-episodes="12"
+     data-status="coming_soon"
+     data-telegram="">
+    <div class="anime-image">
+        <img src="https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png" alt="Coming Soon">
+    </div>
+    <div class="anime-info">
+        <div class="genre-section">
+            <div class="genre-row">
+                <span class="genre-tag"></span>
+                <span class="genre-tag"></span>
+            </div>
+            <div class="genre-row">
+                <span class="genre-tag"></span>
+                <span class="genre-tag"></span>
+            </div>
+        </div>
+        <div class="play-button" data-id="6">
+            <i class="fas fa-play"></i>
+        </div>
+    </div>
+</div>
 
-         <!-- ကတ်ပြား ၂ - 
-                <div class="anime-card" 
-                     data-id="8" 
-                     data-name="Coming Soon" 
-                     data-namemm="Coming Soon" 
-                     data-image="https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png" 
-                     data-banner="https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png" 
-                     data-genres='["မကြာမှီလာမည်"]' 
-                     data-likes="0" 
-                     data-episodes="12"
-                     data-status="coming_soon"
-                     data-telegram="    ">
-                    <div class="anime-image">
-                        <img src="https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png" alt="Jujutsu Kaisen">
-                    </div>
-                    <div class="anime-info">
-                        <div class="genre-section">
-                            <div class="genre-row">
-                                <span class="genre-tag">  </span>
-                                <span class="genre-tag"> </span>
-                            </div>
-                            <div class="genre-row">
-                                <span class="genre-tag"> </span>
-                                <span class="genre-tag"> </span>
-                            </div>
-                        </div>
-                        <div class="play-button" data-id="2">
-                            <i class="fas fa-play"></i>
-                        </div>
-                    </div>
-                </div>
+<!-- Card 7 - Coming Soon -->
+<div class="anime-card" 
+     data-id="7" 
+     data-name="Coming Soon" 
+     data-namemm="Coming Soon" 
+     data-image="https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png" 
+     data-banner="https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png" 
+     data-genres='["မကြာမှီလာမည်"]' 
+     data-likes="0" 
+     data-episodes="12"
+     data-status="coming_soon"
+     data-telegram="">
+    <div class="anime-image">
+        <img src="https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png" alt="Coming Soon">
+    </div>
+    <div class="anime-info">
+        <div class="genre-section">
+            <div class="genre-row">
+                <span class="genre-tag"></span>
+                <span class="genre-tag"></span>
+            </div>
+            <div class="genre-row">
+                <span class="genre-tag"></span>
+                <span class="genre-tag"></span>
+            </div>
+        </div>
+        <div class="play-button" data-id="7">
+            <i class="fas fa-play"></i>
+        </div>
+    </div>
+</div>
 
+<!-- Card 8 - Coming Soon -->
+<div class="anime-card" 
+     data-id="8" 
+     data-name="Coming Soon" 
+     data-namemm="Coming Soon" 
+     data-image="https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png" 
+     data-banner="https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png" 
+     data-genres='["မကြာမှီလာမည်"]' 
+     data-likes="0" 
+     data-episodes="12"
+     data-status="coming_soon"
+     data-telegram="">
+    <div class="anime-image">
+        <img src="https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png" alt="Coming Soon">
+    </div>
+    <div class="anime-info">
+        <div class="genre-section">
+            <div class="genre-row">
+                <span class="genre-tag"></span>
+                <span class="genre-tag"></span>
+            </div>
+            <div class="genre-row">
+                <span class="genre-tag"></span>
+                <span class="genre-tag"></span>
+            </div>
+        </div>
+        <div class="play-button" data-id="8">
+            <i class="fas fa-play"></i>
+        </div>
+    </div>
+</div>
+           
             </div>
         </main>
 
@@ -388,7 +388,7 @@
                 <div class="info-simple-row">
                     <div class="info-simple-label">
                         <i class="fas fa-user"></i>
-                        <span>Name</span>
+                        <span>နာမည်</span>
                     </div>
                     <div class="info-simple-value" id="profileName">-</div>
                 </div>
@@ -433,9 +433,9 @@
         </div>
         <input type="file" id="editPhotoInput" accept="image/*" style="display: none;">
         
-        <input type="text" id="editName" placeholder="Name">
+        <input type="text" id="editName" placeholder="နာမည်">
         
-        <button id="saveEditBtn" class="save-btn">Save</button>
+        <button id="saveEditBtn" class="save-btn">သိမ်းမည်</button>
     </div>
 </div>
 
@@ -527,7 +527,8 @@
         
         <!-- Studio Grid - 3 columns, 6 studios -->
         <div class="studio-grid" id="studioGrid">
-            <!-- Studio 1 - -->
+            
+            <!-- Studio 1 - Ufotable -->
             <div class="studio-card" data-studio-id="1">
                 <div class="studio-card-image">
                     <img src="https://i.ibb.co/YBCR2PwD/IMG-20260310-204302-818.jpg" alt="Ufotable">
@@ -545,7 +546,7 @@
                 ]'></div>
             </div>
             
-            <!-- Studio  -->
+            <!-- Studio 2 - Coming Soon -->
             <div class="studio-card" data-studio-id="2">
                 <div class="studio-card-image">
                     <img src="https://i.ibb.co/whMVxxCV/Grid-Art-20260321-141718369.jpg" alt="MAPPA">
@@ -564,14 +565,14 @@
                 ]'></div>
             </div>
             
-                    <!-- Studio  -->
+            <!-- Studio 3 - Coming Soon -->
             <div class="studio-card" data-studio-id="3">
                 <div class="studio-card-image">
                     <img src="https://i.ibb.co/whMVxxCV/Grid-Art-20260321-141718369.jpg" alt="MAPPA">
                 </div>
                 <div class="studio-card-info">
                     <div class="studio-card-name">Coming Soon</div>
-                    <div class="studio-view-btn" data-studio-id="2">
+                    <div class="studio-view-btn" data-studio-id="3">
                         <i class="fas fa-eye"></i>
                         <span>ကြည့်ရန်</span>
                     </div>
@@ -583,14 +584,14 @@
                 ]'></div>
             </div>
             
-                    <!-- Studio  -->
+            <!-- Studio 4 - Coming Soon -->
             <div class="studio-card" data-studio-id="4">
                 <div class="studio-card-image">
                     <img src="https://i.ibb.co/whMVxxCV/Grid-Art-20260321-141718369.jpg" alt="MAPPA">
                 </div>
                 <div class="studio-card-info">
                     <div class="studio-card-name">Coming Soon</div>
-                    <div class="studio-view-btn" data-studio-id="2">
+                    <div class="studio-view-btn" data-studio-id="4">
                         <i class="fas fa-eye"></i>
                         <span>ကြည့်ရန်</span>
                     </div>
@@ -602,14 +603,14 @@
                 ]'></div>
             </div>
             
-                    <!-- Studio  -->
+            <!-- Studio 5 - Coming Soon -->
             <div class="studio-card" data-studio-id="5">
                 <div class="studio-card-image">
                     <img src="https://i.ibb.co/whMVxxCV/Grid-Art-20260321-141718369.jpg" alt="MAPPA">
                 </div>
                 <div class="studio-card-info">
                     <div class="studio-card-name">Coming Soon</div>
-                    <div class="studio-view-btn" data-studio-id="2">
+                    <div class="studio-view-btn" data-studio-id="5">
                         <i class="fas fa-eye"></i>
                         <span>ကြည့်ရန်</span>
                     </div>
@@ -621,14 +622,14 @@
                 ]'></div>
             </div>
             
-                    <!-- Studio  -->
+            <!-- Studio 6 - Coming Soon -->
             <div class="studio-card" data-studio-id="6">
                 <div class="studio-card-image">
                     <img src="https://i.ibb.co/whMVxxCV/Grid-Art-20260321-141718369.jpg" alt="MAPPA">
                 </div>
                 <div class="studio-card-info">
                     <div class="studio-card-name">Coming Soon</div>
-                    <div class="studio-view-btn" data-studio-id="2">
+                    <div class="studio-view-btn" data-studio-id="6">
                         <i class="fas fa-eye"></i>
                         <span>ကြည့်ရန်</span>
                     </div>
@@ -661,6 +662,7 @@
         <div class="studio-anime-grid" id="studioAnimeGrid"></div>
     </div>
 </div>
+
 </body>
 </html><style>* {
     margin: 0;
@@ -2590,9 +2592,6 @@ const detailContainer = document.getElementById('detailContainer');
 const animeCards = document.querySelectorAll('.anime-card');
 const playButtons = document.querySelectorAll('.play-button');
 
-// ==================== ANIME EPISODE CONFIGURATION ====================
-// Anime ID အလိုက် Episode Video Links နှင့် Episode အမည်များ
-// ဒီမှာ ထည့်သွင်းပါ
 const ANIME_EPISODES = {
     // Could Real Life Be Like a Dream? (ID = 1)
     1: {
@@ -2643,7 +2642,7 @@ const ANIME_EPISODES = {
             }
         }
     },
-    // Jujutsu Kaisen (ID = 2)
+    // Coming Soon (ID = 2)
     2: {
         episodes: {
             1: {
@@ -2692,7 +2691,7 @@ const ANIME_EPISODES = {
             }
         }
     },
-    // One Piece (ID = 3)
+    // Coming Soon (ID = 3)
     3: {
         episodes: {
             1: {
@@ -2741,7 +2740,7 @@ const ANIME_EPISODES = {
             }
         }
     },
-    // Attack on Titan (ID = 4)
+    // Coming Soon (ID = 4)
     4: {
         episodes: {
             1: {
@@ -2790,7 +2789,7 @@ const ANIME_EPISODES = {
             }
         }
     },
-    // Naruto (ID = 5)
+    // Coming Soon (ID = 5)
     5: {
         episodes: {
             1: {
@@ -2839,7 +2838,7 @@ const ANIME_EPISODES = {
             }
         }
     },
-    // Dragon Ball Z (ID = 6)
+    // Coming Soon (ID = 6)
     6: {
         episodes: {
             1: {
@@ -2888,7 +2887,7 @@ const ANIME_EPISODES = {
             }
         }
     },
-    // My Hero Academia (ID = 7)
+    // Coming Soon (ID = 7)
     7: {
         episodes: {
             1: {
@@ -2937,7 +2936,7 @@ const ANIME_EPISODES = {
             }
         }
     },
-    // Tokyo Revengers (ID = 8)
+    // Coming Soon (ID = 8)
     8: {
         episodes: {
             1: {
@@ -2987,7 +2986,6 @@ const ANIME_EPISODES = {
         }
     }
 };
-
 // ==================== SEARCH FUNCTIONS ====================
 // Open Search Bar
 if (searchIcon) {
