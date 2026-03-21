@@ -5,7 +5,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>ShrioPlay - Anime Streaming</title>
+    <title>ShrioPlay</title>
 
     <!-- Font Awesome 6 (Free) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -3374,7 +3374,7 @@ function getStatusInfo(status) {
 // Function to generate episode list with episode names and video links
 function generateEpisodes(animeId, totalEpisodes, animeImage) {
     const episodes = [];
-    const maxEpisodes = Math.min(totalEpisodes, 12);
+    const maxEpisodes = Math.min(totalEpisodes, 10);
     const animeData = ANIME_EPISODES[animeId];
     
     for (let i = 1; i <= maxEpisodes; i++) {
@@ -3474,7 +3474,7 @@ function showDetailScreen(animeId) {
                             <img src="${ep.image}" alt="${ep.name}">
                         </div>
                         <div class="episode-info">
-                            <div class="episode-number">EP ${ep.number}</div>
+                            <div class="episode-number" style="display: none;">${ep.number}</div>
                             <div class="episode-title">${ep.name}</div>
                         </div>
                         <div class="episode-play" data-episode="${ep.number}">
