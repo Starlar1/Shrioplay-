@@ -3291,7 +3291,8 @@ const videoModalTitleMain = document.getElementById('videoModalTitleMain');
 // Function to open video modal
 function openVideoModal(videoUrl, animeName, episodeNum, episodeName) {
     if (!videoUrl || videoUrl === "") {
-        alert(`⚠️ Episode ${episodeNum} "${episodeName}" သည်မထွက်ရှိသေးပါ။`);
+        // နံပါတ်မပါဘဲ နာမည်ပဲပြမယ်
+        alert(`⚠️ "${episodeName}" သည်မထွက်ရှိသေးပါ။`);
         return false;
     }
     
@@ -3299,8 +3300,8 @@ function openVideoModal(videoUrl, animeName, episodeNum, episodeName) {
     modalVideoPlayer.src = videoUrl;
     modalVideoPlayer.load();
     
-    // Update title only - simple
-    videoModalTitleMain.textContent = `${animeName} • ${episodeNum}. ${episodeName}`;
+    // Update title - နံပါတ်မပါဘဲ နာမည်ပဲပြမယ်
+    videoModalTitleMain.textContent = `${animeName} • ${episodeName}`;
     
     // Show modal
     videoModal.classList.add('active');
@@ -3374,7 +3375,7 @@ function getStatusInfo(status) {
 // Function to generate episode list with episode names and video links
 function generateEpisodes(animeId, totalEpisodes, animeImage) {
     const episodes = [];
-    const maxEpisodes = Math.min(totalEpisodes, 10);
+    const maxEpisodes = Math.min(totalEpisodes, 12);
     const animeData = ANIME_EPISODES[animeId];
     
     for (let i = 1; i <= maxEpisodes; i++) {
