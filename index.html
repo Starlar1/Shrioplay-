@@ -534,7 +534,7 @@
                     <img src="https://i.ibb.co/YBCR2PwD/IMG-20260310-204302-818.jpg" alt="Ufotable">
                 </div>
                 <div class="studio-card-info">
-                    <div class="studio-card-name">Starlar Studio</div>
+                    <div class="studio-card-name">Ufotable</div>
                     <div class="studio-view-btn" data-studio-id="1">
                         <i class="fas fa-eye"></i>
                         <span>ကြည့်ရန်</span>
@@ -2596,7 +2596,7 @@ const ANIME_EPISODES = {
     // Could Real Life Be Like a Dream? (ID = 1)
     1: {
         episodes: {
-            1: { name: "Trailer", videoUrl: "https://files.catbox.moe/frpm68.mp4" },
+            1: { name: "Trailer", videoUrl: "https://drive.google.com/file/d/1ZTIM0Ej2lGDTBhHCdWFT6bUxQFW-X2VP/preview" },
             2: { name: "1", videoUrl: "" },
             3: { name: "2", videoUrl: "" },
             4: { name: "3", videoUrl: "" },
@@ -3024,26 +3024,34 @@ const modalVideoPlayer = document.getElementById('modalVideoPlayer');
 const closeVideoModal = document.getElementById('closeVideoModal');
 const videoModalTitleMain = document.getElementById('videoModalTitleMain');
 
-// Function to open video modal
 function openVideoModal(videoUrl, animeName, episodeNum, episodeName) {
     if (!videoUrl || videoUrl === "") {
-        // နံပါတ်ရော Ep စာရော လုံးဝမပါဘဲ နာမည်ပဲပြမယ်
         alert(`⚠️ "${episodeName}" သည်မထွက်ရှိသေးပါ။`);
         return false;
     }
     
-    // Set video source
-    modalVideoPlayer.src = videoUrl;
-    modalVideoPlayer.load();
+    // Google Drive preview link ဖြစ်မဖြစ် စစ်မယ်
+    const isGoogleDrivePreview = videoUrl.includes('drive.google.com') && videoUrl.includes('/preview');
     
-    // Update title - နံပါတ်ရော Ep စာရော မပါဘဲ နာမည်ပဲပြမယ်
+    if (isGoogleDrivePreview) {
+        // iframe နဲ့ဖွင့်မယ်
+        const iframeHtml = `<iframe src="${videoUrl}" style="width:100%; height:100%; border:none;" allow="autoplay; fullscreen"></iframe>`;
+        document.querySelector('.video-wrapper').innerHTML = iframeHtml;
+        modalVideoPlayer.style.display = 'none';
+    } else {
+        // မူလ video tag အတိုင်း
+        document.querySelector('.video-wrapper').innerHTML = `
+            <video id="modalVideoPlayer" controls autoplay class="video-element">
+                <source src="${videoUrl}" type="video/mp4">
+            </video>
+        `;
+    }
+    
     videoModalTitleMain.textContent = `${animeName} • ${episodeName}`;
-    
-    // Show modal
     videoModal.classList.add('active');
-    
     return true;
 }
+
 // Close video modal
 function closeVideoModalFunc() {
     if (modalVideoPlayer) {
