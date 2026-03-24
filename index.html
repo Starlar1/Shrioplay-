@@ -663,42 +663,6 @@
     </div>
 </div>
 
-<!-- ==================== PROTECTED VIDEO MODAL (No Screenshot/Record) ==================== -->
-<div id="protectedVideoModal" class="protected-video-modal">
-    <div class="protected-video-overlay">
-        <div class="protected-video-container">
-            <!-- Header -->
-            <div class="protected-video-header">
-                <button class="protected-video-back" id="closeProtectedVideoModal">
-                    <i class="fas fa-arrow-left"></i>
-                </button>
-                <div class="protected-video-title" id="protectedVideoTitle">Now Playing</div>
-            </div>
-            
-            <!-- Video Area with Protection -->
-            <div class="protected-video-body">
-                <div class="protected-video-wrapper" id="protectedVideoWrapper">
-                    <video id="protectedVideoPlayer" controls autoplay class="protected-video-element" playsinline disablePictureInPicture>
-                        <source src="" type="video/mp4">
-                    </video>
-                </div>
-                <!-- Black Overlay for Screenshot/Record -->
-                <div id="screenProtectOverlay" class="screen-protect-overlay" style="display: none;">
-                    <div class="protect-message">
-                        <i class="fas fa-ban"></i>
-                        <p>Screenshot / Screen Recording ပြုလုပ်၍မရပါ</p>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Watermark (always visible) -->
-            <div class="protected-watermark">
-                <span>🔒 ShrioPlay</span>
-            </div>
-        </div>
-    </div>
-</div>
-
 </body>
 </html><style>* {
     margin: 0;
@@ -2625,296 +2589,6 @@ body {
     overflow-y: auto;
     padding: 16px;
     padding-bottom: 120px; /* 🔥 အောက်မှာ space ထည့် */
-}
-
-/* ==================== PROTECTED VIDEO MODAL STYLES ==================== */
-.protected-video-modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 9999;
-    background: #000000;
-}
-
-.protected-video-modal.active {
-    display: block;
-    animation: fadeIn 0.3s ease;
-}
-
-.protected-video-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: #000000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.protected-video-container {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    background: #000;
-    display: flex;
-    flex-direction: column;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-/* Header */
-.protected-video-header {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    padding: 16px 20px;
-    background: linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 100%);
-    z-index: 15;
-    pointer-events: none;
-}
-
-.protected-video-back {
-    background: rgba(255, 255, 255, 0.2);
-    border: none;
-    color: white;
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    backdrop-filter: blur(10px);
-    pointer-events: auto;
-    transition: all 0.2s;
-    z-index: 20;
-}
-
-.protected-video-back:active {
-    transform: scale(0.95);
-    background: rgba(255, 255, 255, 0.3);
-}
-
-.protected-video-back i {
-    font-size: 1.2rem;
-}
-
-.protected-video-title {
-    font-weight: 600;
-    font-size: 1rem;
-    color: white;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    flex: 1;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
-    pointer-events: auto;
-}
-
-/* Video Body */
-.protected-video-body {
-    flex: 1;
-    background: #000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-    position: relative;
-}
-
-.protected-video-wrapper {
-    position: relative;
-    width: 100%;
-    background: #000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.protected-video-element {
-    width: 100%;
-    height: auto;
-    max-height: 100vh;
-    object-fit: contain;
-    background: #000;
-    display: block;
-}
-
-/* 🔥 SCREEN PROTECTION OVERLAY - Screenshot/Record လုပ်ရင် ဒီဟာပေါ်မယ် */
-.screen-protect-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.98);
-    z-index: 99999;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    backdrop-filter: blur(20px);
-    animation: overlayFlash 0.2s ease;
-}
-
-@keyframes overlayFlash {
-    0% { opacity: 0; backdrop-filter: blur(0px); }
-    100% { opacity: 1; backdrop-filter: blur(20px); }
-}
-
-.protect-message {
-    text-align: center;
-    color: white;
-    padding: 30px 40px;
-    background: rgba(255, 59, 48, 0.15);
-    border-radius: 30px;
-    border: 2px solid rgba(255, 59, 48, 0.8);
-    box-shadow: 0 0 50px rgba(255, 59, 48, 0.3);
-    animation: messagePulse 0.5s ease;
-}
-
-@keyframes messagePulse {
-    0% { transform: scale(0.9); opacity: 0; }
-    100% { transform: scale(1); opacity: 1; }
-}
-
-.protect-message i {
-    font-size: 4rem;
-    color: #ff3b30;
-    margin-bottom: 15px;
-    display: block;
-}
-
-.protect-message p {
-    font-size: 1.1rem;
-    font-weight: bold;
-    margin: 0;
-    letter-spacing: 1px;
-}
-
-/* Watermark - Always visible on video */
-.protected-watermark {
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
-    z-index: 20;
-    opacity: 0.5;
-    pointer-events: none;
-}
-
-.protected-watermark span {
-    background: rgba(0, 0, 0, 0.6);
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: 0.7rem;
-    color: #888;
-    font-family: monospace;
-}
-
-/* Video controls protection */
-video::-webkit-media-controls {
-    z-index: 25;
-}
-
-video::-webkit-media-controls-panel {
-    background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
-}
-
-/* Prevent right-click on video */
-.protected-video-element {
-    -webkit-user-select: none;
-    user-select: none;
-    pointer-events: auto;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-    .protected-video-header {
-        padding: 12px 16px;
-        gap: 12px;
-    }
-    
-    .protected-video-back {
-        width: 38px;
-        height: 38px;
-    }
-    
-    .protected-video-back i {
-        font-size: 1rem;
-    }
-    
-    .protected-video-title {
-        font-size: 0.85rem;
-    }
-    
-    .protect-message i {
-        font-size: 3rem;
-    }
-    
-    .protect-message p {
-        font-size: 0.9rem;
-    }
-    
-    .protect-message {
-        padding: 25px 30px;
-    }
-}
-
-@media (max-width: 480px) {
-    .protected-video-header {
-        padding: 10px 12px;
-        gap: 10px;
-    }
-    
-    .protected-video-back {
-        width: 34px;
-        height: 34px;
-    }
-    
-    .protected-video-title {
-        font-size: 0.75rem;
-    }
-    
-    .protect-message {
-        padding: 20px 25px;
-    }
-}
-
-/* Landscape mode */
-@media (orientation: landscape) {
-    .protected-video-header {
-        padding: 10px 16px;
-    }
-    
-    .protected-video-back {
-        width: 36px;
-        height: 36px;
-    }
-    
-    .protected-video-element {
-        width: auto;
-        height: 100%;
-        max-width: 100%;
-    }
-    
-    .protected-video-wrapper {
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
 }</style><script>// ==================== FULL JAVASCRIPT FILE (script.js) ====================
 // ==================== ACCOUNT SYSTEM WITH SUPABASE ====================
 
@@ -4511,288 +4185,128 @@ function createRipple(e) {
     document.addEventListener("mouseup", onEnd);
 })();
 
-// ==================== PROTECTED VIDEO PLAYER (No Screenshot/Record) ====================
+// ==================== SCREEN RECORD PROTECTION ====================
 (function() {
-    // DOM Elements
-    const protectedVideoModal = document.getElementById('protectedVideoModal');
-    const protectedVideoPlayer = document.getElementById('protectedVideoPlayer');
-    const protectedVideoTitle = document.getElementById('protectedVideoTitle');
-    const closeProtectedVideoBtn = document.getElementById('closeProtectedVideoModal');
-    const screenProtectOverlay = document.getElementById('screenProtectOverlay');
-    const protectedVideoWrapper = document.getElementById('protectedVideoWrapper');
+    console.log('🛡️ Screen Record Protection Active');
     
-    let isVideoPlaying = false;
-    let protectTimeout = null;
-    let lastActiveTime = Date.now();
-    
-    // 🔥 Show black overlay (Screenshot/Record လုပ်ရင် ဒီဟာပေါ်မယ်)
-    function showProtectOverlay(duration = 3000) {
-        if (!screenProtectOverlay) return;
-        
-        // Clear previous timeout
-        if (protectTimeout) clearTimeout(protectTimeout);
-        
-        // Show overlay
-        screenProtectOverlay.style.display = 'flex';
-        
-        // Pause video if playing
-        if (protectedVideoPlayer && !protectedVideoPlayer.paused) {
-            protectedVideoPlayer.pause();
-        }
-        
-        // Auto hide after duration
-        protectTimeout = setTimeout(() => {
-            if (screenProtectOverlay) {
-                screenProtectOverlay.style.display = 'none';
-            }
-            protectTimeout = null;
-        }, duration);
-    }
-    
-    // 🔥 Open protected video modal
-    function openProtectedVideoModal(videoUrl, animeName, episodeName) {
-        if (!videoUrl || videoUrl === "") {
-            alert(`⚠️ "${episodeName}" သည်မထွက်ရှိသေးပါ။`);
+    // 1. Keyboard Shortcuts ပိတ်ခြင်း
+    document.addEventListener('keydown', function(e) {
+        // Print Screen ပိတ်
+        if (e.key === 'PrintScreen') {
+            e.preventDefault();
+            alert('📸 Screenshot ရိုက်ခွင့်မပြုပါ။');
             return false;
         }
         
-        // Check if it's Google Drive link
-        const isGoogleDrivePreview = videoUrl.includes('drive.google.com') && videoUrl.includes('/preview');
-        
-        if (isGoogleDrivePreview) {
-            // For Google Drive, use iframe (still has some protection)
-            const iframeHtml = `<iframe src="${videoUrl}" style="width:100%; height:100%; border:none;" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
-            protectedVideoWrapper.innerHTML = iframeHtml;
-            protectedVideoPlayer.style.display = 'none';
-        } else {
-            // Normal video
-            protectedVideoWrapper.innerHTML = `
-                <video id="protectedVideoPlayer" controls autoplay class="protected-video-element" playsinline disablePictureInPicture>
-                    <source src="${videoUrl}" type="video/mp4">
-                </video>
-            `;
-            // Reassign video element reference
-            window.protectedVideoPlayer = document.getElementById('protectedVideoPlayer');
+        // Windows: Win + Shift + S (Snipping Tool)
+        if (e.key === 's' && e.shiftKey && (e.metaKey || e.ctrlKey)) {
+            e.preventDefault();
+            alert('📸 Screenshot tool ကို ပိတ်ထားပါသည်။');
+            return false;
         }
         
-        protectedVideoTitle.textContent = `${animeName} • ${episodeName}`;
-        protectedVideoModal.classList.add('active');
-        lastActiveTime = Date.now();
+        // macOS: Cmd + Shift + 3 / 4
+        if (e.metaKey && e.shiftKey && (e.key === '3' || e.key === '4')) {
+            e.preventDefault();
+            alert('📸 Screenshot ရိုက်ခွင့်မပြုပါ။');
+            return false;
+        }
         
-        // Start protection detection
-        startProtectionDetection();
+        // F12 (Developer Tools) ပိတ်
+        if (e.key === 'F12') {
+            e.preventDefault();
+            alert('🔧 Developer Tools ကို ပိတ်ထားပါသည်။');
+            return false;
+        }
         
-        return true;
-    }
+        // Ctrl + Shift + I (Dev Tools)
+        if (e.ctrlKey && e.shiftKey && e.key === 'I') {
+            e.preventDefault();
+            alert('🔧 Developer Tools ကို ပိတ်ထားပါသည်။');
+            return false;
+        }
+        
+        // Ctrl + U (View Source)
+        if (e.ctrlKey && e.key === 'u') {
+            e.preventDefault();
+            alert('🔧 View Source ကို ပိတ်ထားပါသည်။');
+            return false;
+        }
+    });
     
-    // 🔥 Close protected video modal
-    function closeProtectedVideoModalFunc() {
-        // Stop protection detection
-        stopProtectionDetection();
-        
-        // Clear video
-        if (protectedVideoWrapper) {
-            protectedVideoWrapper.innerHTML = `
-                <video id="protectedVideoPlayer" controls autoplay class="protected-video-element" playsinline disablePictureInPicture>
-                    <source src="" type="video/mp4">
-                </video>
-            `;
-        }
-        
-        protectedVideoModal.classList.remove('active');
-        
-        // Hide overlay if visible
-        if (screenProtectOverlay) {
-            screenProtectOverlay.style.display = 'none';
-        }
-        if (protectTimeout) {
-            clearTimeout(protectTimeout);
-            protectTimeout = null;
-        }
-    }
+    // 2. Right Click ပိတ်ခြင်း
+    document.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+        return false;
+    });
     
-    // ==================== PROTECTION DETECTION METHODS ====================
-    let detectionInterval = null;
-    let keydownHandler = null;
-    let visibilityHandler = null;
-    let resizeHandler = null;
-    let blurHandler = null;
-    
-    function startProtectionDetection() {
-        if (detectionInterval) return;
-        
-        // Method 1: Check for screenshot shortcuts
-        keydownHandler = function(e) {
-            // PrtScn, Alt+PrtScn, Win+PrtScn, Cmd+Shift+3/4, Ctrl+S
-            if (e.key === 'PrintScreen' || 
-                e.key === 'PrtScn' ||
-                (e.key === 's' && (e.ctrlKey || e.metaKey)) ||
-                (e.key === '3' && e.metaKey && e.shiftKey) ||
-                (e.key === '4' && e.metaKey && e.shiftKey)) {
+    // 3. Video Element တွေမှာ DRM-like protection
+    function protectVideoElements() {
+        const videos = document.querySelectorAll('video');
+        videos.forEach(video => {
+            // Disable context menu on video
+            video.addEventListener('contextmenu', (e) => {
                 e.preventDefault();
-                e.stopPropagation();
-                showProtectOverlay(3000);
                 return false;
-            }
-        };
-        document.addEventListener('keydown', keydownHandler);
-        
-        // Method 2: Detect visibility change (screenshot apps may trigger this)
-        visibilityHandler = function() {
-            if (document.hidden && protectedVideoModal.classList.contains('active')) {
-                // Page became hidden - possible screenshot/recording
-                setTimeout(() => {
-                    if (protectedVideoModal.classList.contains('active')) {
-                        showProtectOverlay(2500);
-                    }
-                }, 50);
-            }
-        };
-        document.addEventListener('visibilitychange', visibilityHandler);
-        
-        // Method 3: Detect window blur (when notification panel opens on Android)
-        blurHandler = function() {
-            if (protectedVideoModal.classList.contains('active')) {
-                setTimeout(() => {
-                    if (protectedVideoModal.classList.contains('active')) {
-                        showProtectOverlay(2000);
-                    }
-                }, 100);
-            }
-        };
-        window.addEventListener('blur', blurHandler);
-        
-        // Method 4: Detect resize (screen recording may change viewport)
-        let lastHeight = window.innerHeight;
-        resizeHandler = function() {
-            const currentHeight = window.innerHeight;
-            if (Math.abs(currentHeight - lastHeight) > 100 && 
-                protectedVideoModal.classList.contains('active')) {
-                showProtectOverlay(2000);
-            }
-            lastHeight = currentHeight;
-        };
-        window.addEventListener('resize', resizeHandler);
-        
-        // Method 5: Periodic check for performance drops (recording may cause lag)
-        let lastFrameTime = performance.now();
-        let frameDrops = 0;
-        
-        function checkPerformance() {
-            if (!protectedVideoModal.classList.contains('active')) return;
+            });
             
-            const now = performance.now();
-            const frameDelta = now - lastFrameTime;
-            
-            // If frame takes too long (possible recording overhead)
-            if (frameDelta > 100 && frameDelta < 500) {
-                frameDrops++;
-                if (frameDrops > 2) {
-                    showProtectOverlay(2500);
-                    frameDrops = 0;
-                }
-            } else {
-                frameDrops = Math.max(0, frameDrops - 0.5);
-            }
-            
-            lastFrameTime = now;
-            requestAnimationFrame(checkPerformance);
-        }
-        requestAnimationFrame(checkPerformance);
-        
-        // Method 6: Detect if video is being captured (experimental)
-        if (protectedVideoPlayer) {
-            const videoElement = document.getElementById('protectedVideoPlayer');
-            if (videoElement) {
-                // Try to detect if video element is being captured
-                videoElement.addEventListener('play', function() {
-                    lastActiveTime = Date.now();
-                });
-            }
-        }
-        
-        // Method 7: Monitor for rapid video source changes
-        let lastSrc = '';
-        const srcMonitor = setInterval(() => {
-            const videoEl = document.getElementById('protectedVideoPlayer');
-            if (videoEl && protectedVideoModal.classList.contains('active')) {
-                const currentSrc = videoEl.src;
-                if (lastSrc !== '' && lastSrc !== currentSrc && currentSrc !== '') {
-                    // Video source changed - possible recording attempt
-                    showProtectOverlay(2000);
-                }
-                lastSrc = currentSrc;
-            }
-        }, 500);
-        
-        detectionInterval = srcMonitor;
-        
-        console.log('🛡️ Video protection activated');
-    }
-    
-    function stopProtectionDetection() {
-        if (keydownHandler) document.removeEventListener('keydown', keydownHandler);
-        if (visibilityHandler) document.removeEventListener('visibilitychange', visibilityHandler);
-        if (resizeHandler) window.removeEventListener('resize', resizeHandler);
-        if (blurHandler) window.removeEventListener('blur', blurHandler);
-        if (detectionInterval) clearInterval(detectionInterval);
-        
-        keydownHandler = null;
-        visibilityHandler = null;
-        resizeHandler = null;
-        blurHandler = null;
-        detectionInterval = null;
-        
-        console.log('🛡️ Video protection deactivated');
-    }
-    
-    // Close button event
-    if (closeProtectedVideoBtn) {
-        closeProtectedVideoBtn.addEventListener('click', closeProtectedVideoModalFunc);
-    }
-    
-    // Close on overlay click (background)
-    if (protectedVideoModal) {
-        protectedVideoModal.addEventListener('click', function(e) {
-            if (e.target === protectedVideoModal || 
-                e.target.classList.contains('protected-video-overlay')) {
-                closeProtectedVideoModalFunc();
-            }
+            // Try to disable screen recording detection (optional)
+            video.setAttribute('disablePictureInPicture', 'true');
+            video.setAttribute('controlsList', 'nodownload noplaybackrate');
         });
     }
     
-    // Prevent right-click on video
-    document.addEventListener('contextmenu', function(e) {
-        if (protectedVideoModal && protectedVideoModal.classList.contains('active')) {
-            if (e.target.tagName === 'VIDEO' || e.target.closest('video')) {
-                e.preventDefault();
-                showProtectOverlay(1500);
-                return false;
+    // Run on page load and when new videos appear
+    protectVideoElements();
+    
+    // Watch for dynamically added videos
+    const observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+            if (mutation.addedNodes.length) {
+                protectVideoElements();
             }
+        });
+    });
+    
+    observer.observe(document.body, { childList: true, subtree: true });
+    
+    // 4. Tab ပြောင်းရင် Content ဖျောက်ခြင်း (Mobile အတွက် ထိရောက်)
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            // Tab ပြောင်းသွားရင် body ကို blur/ဖျောက်
+            document.body.style.filter = 'blur(12px)';
+            document.body.style.transition = 'filter 0.2s ease';
+            
+            // Optional: Title ပြောင်းပြီး သတိပေး
+            document.title = '⚠️ Recording Detected?';
+            
+            // Optional: အားလုံးကို ဖျောက်ချင်ရင်
+            // document.body.style.display = 'none';
+        } else {
+            // Tab ပြန်လာရင် ပြန်ပြင်
+            document.body.style.filter = 'none';
+            document.title = 'ShrioPlay';
         }
     });
     
-    // Prevent screenshot via keyboard combinations
-    document.addEventListener('keyup', function(e) {
-        if (protectedVideoModal && protectedVideoModal.classList.contains('active')) {
-            // Volume down + Power button combination (common screenshot on Android)
-            // This is not 100% reliable but helps
-            if (e.key === 'VolumeDown' || e.key === 'Power') {
-                setTimeout(() => {
-                    if (protectedVideoModal.classList.contains('active')) {
-                        showProtectOverlay(2000);
-                    }
-                }, 100);
-            }
-        }
+    // 5. Before unload သတိပေး (တချို့ screen recorders ကို နှောင့်နှေး)
+    window.addEventListener('beforeunload', function(e) {
+        // Comment ဖွင့်ရင် page ခွဲခါနီး confirmation ပြမယ်
+        // e.preventDefault();
+        // e.returnValue = '';
     });
     
-    // ==================== EXPORT FUNCTIONS ====================
-    window.ProtectedVideoPlayer = {
-        open: openProtectedVideoModal,
-        close: closeProtectedVideoModalFunc,
-        showProtection: showProtectOverlay
-    };
+    // 6. Debugger detection (အတော်အသင့်)
+    setInterval(function() {
+        const startTime = performance.now();
+        debugger;
+        const endTime = performance.now();
+        if (endTime - startTime > 100) {
+            console.warn('Debugger detected!');
+            // Optional: alert or redirect
+            // alert('Developer tools detected!');
+        }
+    }, 2000);
     
-    console.log('✅ Protected Video Player Ready (Screenshot/Record blocked)');
+    console.log('✅ Screen Record Protection Ready');
 })();</script>
