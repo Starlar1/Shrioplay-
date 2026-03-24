@@ -2591,31 +2591,7 @@ body {
     padding-bottom: 120px; /* 🔥 အောက်မှာ space ထည့် */
 }
 
-/* ========== SCREEN RECORD PROTECTION CSS ========== */
-body {
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
-
-/* Video protection */
-video {
-    pointer-events: auto;
-}
-
-/* When screen recording is detected */
-body.protected {
-    filter: blur(30px) !important;
-    transition: filter 0.05s linear !important;
-}
-
-/* Hide content when tab is hidden */
-body.screen-recording {
-    opacity: 0 !important;
-    visibility: hidden !important;
-}</style><script>// ==================== FULL JAVASCRIPT FILE (script.js) ====================
+</style><script>// ==================== FULL JAVASCRIPT FILE (script.js) ====================
 // ==================== ACCOUNT SYSTEM WITH SUPABASE ====================
 
 // ---------- 1. DOM Elements ----------
@@ -4211,328 +4187,74 @@ function createRipple(e) {
     document.addEventListener("mouseup", onEnd);
 })();
 
-// ==================== ADVANCED SCREEN RECORD PROTECTION ====================
+
+// ========== BLACK SCREEN RECORD PROTECTION ==========
 (function() {
-    console.log('🛡️ Advanced Screen Record Protection Active');
+    let isBlack = false;
     
-    // ========== 1. CSS နဲ့ Visual Protection ==========
-    const style = document.createElement('style');
-    style.textContent = `
-        /* Prevent selection */
-        * {
-            user-select: none !important;
-            -webkit-user-select: none !important;
-            -moz-user-select: none !important;
-            -ms-user-select: none !important;
-        }
+    function makeBlack() {
+        if (isBlack) return;
+        isBlack = true;
         
-        /* Prevent drag */
-        img, video, iframe {
-            -webkit-user-drag: none !important;
-            user-drag: none !important;
-            pointer-events: auto;
-        }
-        
-        /* Blur when tab hidden (will be toggled by JS) */
-        body.screen-recording-protection {
-            filter: blur(20px) !important;
-            transition: filter 0.1s ease !important;
-        }
-        
-        /* Video protection overlay */
-        .video-protection-overlay {
+        // အမဲကွက် ဖုံးလိုက်
+        const overlay = document.createElement('div');
+        overlay.id = 'blackProtection';
+        overlay.style.cssText = `
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.95);
-            z-index: 99999;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            color: white;
-            font-size: 18px;
-            text-align: center;
-            backdrop-filter: blur(10px);
-        }
-        
-        .video-protection-overlay i {
-            font-size: 48px;
-            margin-bottom: 20px;
-            color: #ff4444;
-        }
-    `;
-    document.head.appendChild(style);
-    
-    // ========== 2. Keyboard Shortcuts အားလုံးပိတ် ==========
-    const blockedKeys = [
-        'PrintScreen', 'F12', 'Insert',
-        's', 'S', 'p', 'P', 'r', 'R'
-    ];
-    
-    document.addEventListener('keydown', function(e) {
-        // All function keys
-        if (e.key >= 'F1' && e.key <= 'F12') {
-            e.preventDefault();
-            return false;
-        }
-        
-        // Print Screen
-        if (e.key === 'PrintScreen') {
-            e.preventDefault();
-            showProtectionAlert('Screenshot blocked!');
-            return false;
-        }
-        
-        // Ctrl + Shift + I, J, C, K (Dev Tools)
-        if (e.ctrlKey && e.shiftKey && ['I', 'J', 'C', 'K'].includes(e.key)) {
-            e.preventDefault();
-            showProtectionAlert('Developer Tools blocked!');
-            return false;
-        }
-        
-        // Ctrl + U (View Source)
-        if (e.ctrlKey && e.key === 'u') {
-            e.preventDefault();
-            showProtectionAlert('View Source blocked!');
-            return false;
-        }
-        
-        // Ctrl + S (Save)
-        if (e.ctrlKey && e.key === 's') {
-            e.preventDefault();
-            showProtectionAlert('Save page blocked!');
-            return false;
-        }
-        
-        // Cmd + Shift + 3/4 (Mac Screenshot)
-        if (e.metaKey && e.shiftKey && (e.key === '3' || e.key === '4')) {
-            e.preventDefault();
-            showProtectionAlert('Screenshot blocked!');
-            return false;
-        }
-        
-        // Windows + Shift + S (Snipping)
-        if ((e.metaKey || e.ctrlKey) && e.shiftKey && e.key === 'S') {
-            e.preventDefault();
-            showProtectionAlert('Snipping tool blocked!');
-            return false;
-        }
-    });
-    
-    // ========== 3. Right Click & Context Menu လုံးဝပိတ် ==========
-    document.addEventListener('contextmenu', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        return false;
-    });
-    
-    // Also disable on all elements
-    document.querySelectorAll('*').forEach(el => {
-        el.addEventListener('contextmenu', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            return false;
-        });
-    });
-    
-    // ========== 4. Video Protection - Screen Recording Detection ==========
-    function protectAllVideos() {
-        const videos = document.querySelectorAll('video');
-        
-        videos.forEach(video => {
-            // Disable all video controls that allow downloading
-            video.setAttribute('controlslist', 'nodownload noplaybackrate nofullscreen');
-            video.setAttribute('disablePictureInPicture', 'true');
-            
-            // Remove context menu from video
-            video.addEventListener('contextmenu', (e) => {
-                e.preventDefault();
-                return false;
-            });
-            
-            // Try to detect if screen recording is active (experimental)
-            video.addEventListener('play', function() {
-                checkScreenRecording();
-            });
-        });
-    }
-    
-    // ========== 5. Screen Recording Detection (Experimental) ==========
-    let recordingCheckInterval = null;
-    
-    function checkScreenRecording() {
-        // Method 1: Check video playback rate changes
-        const videos = document.querySelectorAll('video');
-        let suspicious = false;
-        
-        videos.forEach(video => {
-            // If video is playing but not visible (might be recording in background)
-            if (video.paused === false && video.offsetParent === null) {
-                suspicious = true;
-            }
-        });
-        
-        if (suspicious) {
-            triggerProtection();
-        }
-    }
-    
-    function triggerProtection() {
-        // Clear all content temporarily
-        document.body.style.opacity = '0';
-        document.body.style.filter = 'blur(30px)';
-        
-        // Show warning overlay
-        const overlay = document.createElement('div');
-        overlay.className = 'video-protection-overlay';
-        overlay.innerHTML = `
-            <i class="fas fa-shield-alt"></i>
-            <h2>⚠️ Screen Recording Detected!</h2>
-            <p>Content has been hidden for protection.</p>
-            <small>Please close recording software to continue.</small>
+            background: #000000;
+            z-index: 9999999;
+            pointer-events: none;
         `;
         document.body.appendChild(overlay);
         
-        setTimeout(() => {
-            if (overlay) overlay.remove();
-            document.body.style.opacity = '';
-            document.body.style.filter = '';
-        }, 3000);
-    }
-    
-    // Check periodically
-    setInterval(() => {
-        checkScreenRecording();
-    }, 3000);
-    
-    // ========== 6. Tab Visibility Protection ==========
-    let visibilityTimeout = null;
-    
-    document.addEventListener('visibilitychange', function() {
-        if (document.hidden) {
-            // Tab ပြောင်းသွားရင် ချက်ချင်းဖျောက်
-            document.body.classList.add('screen-recording-protection');
-            
-            // Optional: ဗီဒီယိုတွေကိုပါ ခေတ္တပိတ်
-            const videos = document.querySelectorAll('video');
-            videos.forEach(video => {
-                if (!video.paused) {
-                    video.pause();
-                    video.setAttribute('data-was-playing', 'true');
-                }
-            });
-        } else {
-            // Tab ပြန်လာရင် ပြန်ပြင်
-            document.body.classList.remove('screen-recording-protection');
-            
-            // ဗီဒီယိုတွေ ပြန်ဖွင့်
-            const videos = document.querySelectorAll('video');
-            videos.forEach(video => {
-                if (video.getAttribute('data-was-playing') === 'true') {
-                    video.play();
-                    video.removeAttribute('data-was-playing');
-                }
-            });
-        }
-    });
-    
-    // ========== 7. Continuous Anti-Recording ==========
-    // စက္ကန့် ၃၀ ကြာတိုင်း စစ်ဆေး
-    setInterval(() => {
-        // Check if any screen recording software is likely active
-        // by monitoring performance metrics
-        const startTime = performance.now();
-        
-        // Force a small reflow to detect if something is intercepting
-        document.body.offsetHeight;
-        
-        const endTime = performance.now();
-        
-        // If operation took too long, might be under recording/debugging
-        if (endTime - startTime > 50) {
-            console.warn('Suspicious activity detected');
-            triggerProtection();
-        }
-    }, 30000);
-    
-    // ========== 8. Prevent Copy/Paste/Cut ==========
-    document.addEventListener('copy', (e) => {
-        e.preventDefault();
-        return false;
-    });
-    
-    document.addEventListener('cut', (e) => {
-        e.preventDefault();
-        return false;
-    });
-    
-    document.addEventListener('paste', (e) => {
-        e.preventDefault();
-        return false;
-    });
-    
-    // ========== 9. Canvas Fingerprint Protection ==========
-    // Prevent canvas from being captured by some screen recorders
-    const originalToDataURL = HTMLCanvasElement.prototype.toDataURL;
-    HTMLCanvasElement.prototype.toDataURL = function(type) {
-        if (type === 'image/png' || type === 'image/jpeg') {
-            console.warn('Canvas capture blocked');
-            return originalToDataURL.call(this, 'image/png');
-        }
-        return originalToDataURL.call(this, type);
-    };
-    
-    // ========== 10. Alert Function ==========
-    function showProtectionAlert(message) {
-        // Silent alert (no popup to not annoy users)
-        console.log(`🛡️ ${message}`);
-        
-        // Optional: show toast notification
-        const toast = document.createElement('div');
-        toast.style.cssText = `
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(255,68,68,0.9);
-            color: white;
-            padding: 8px 16px;
-            border-radius: 30px;
-            font-size: 12px;
-            z-index: 999999;
-            pointer-events: none;
-            backdrop-filter: blur(5px);
-        `;
-        toast.textContent = `⚠️ ${message}`;
-        document.body.appendChild(toast);
-        setTimeout(() => toast.remove(), 1500);
-    }
-    
-    // ========== 11. Initial Setup ==========
-    protectAllVideos();
-    
-    // Watch for dynamically added videos
-    const observer = new MutationObserver(function(mutations) {
-        mutations.forEach(function(mutation) {
-            if (mutation.addedNodes.length) {
-                protectAllVideos();
+        // Video တွေ ခေတ္တပိတ်
+        document.querySelectorAll('video').forEach(v => {
+            if (!v.paused) {
+                v.pause();
+                v.setAttribute('wasPlaying', 'true');
             }
         });
-    });
-    
-    observer.observe(document.body, { childList: true, subtree: true });
-    
-    // ========== 12. iOS/Android App Mode Detection ==========
-    // Detect if running in browser vs app
-    if (window.navigator.standalone === true) {
-        console.log('Running in standalone mode (app)');
-        // Add extra protection for app mode
-        document.body.style.webkitTouchCallout = 'none';
+        
+        // 0.3 စက္ကန့်ကြာရင် ပြန်ဖွင့်
+        setTimeout(() => {
+            const el = document.getElementById('blackProtection');
+            if (el) el.remove();
+            document.querySelectorAll('video[wasPlaying="true"]').forEach(v => {
+                v.play();
+                v.removeAttribute('wasPlaying');
+            });
+            isBlack = false;
+        }, 300);
     }
     
-    console.log('✅ Advanced Screen Record Protection Ready');
-    console.log('🛡️ Features: Keyboard blocks, Video protection, Tab hide, Recording detection');
-})();</script>
+    // ၁. Tab ပြောင်းရင် အမဲ
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) makeBlack();
+    });
+    
+    // ၂. Screenshot ရိုက်ရင် အမဲ
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'PrintScreen') {
+            e.preventDefault();
+            makeBlack();
+        }
+    });
+    
+    // ၃. Right click ပိတ်
+    document.addEventListener('contextmenu', (e) => e.preventDefault());
+    
+    // ၄. စက္ကန့်တိုင်း စစ်ဆေး (Screen Recorder Detection)
+    setInterval(() => {
+        const start = performance.now();
+        debugger;
+        const end = performance.now();
+        if (end - start > 50) makeBlack();
+    }, 2000);
+    
+    console.log('✅ Black Screen Protection Active - Screen record will show black video');
+})();
+</script>
