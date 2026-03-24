@@ -2589,9 +2589,7 @@ body {
     overflow-y: auto;
     padding: 16px;
     padding-bottom: 120px; /* 🔥 အောက်မှာ space ထည့် */
-}
-
-</style><script>// ==================== FULL JAVASCRIPT FILE (script.js) ====================
+}</style><script>// ==================== FULL JAVASCRIPT FILE (script.js) ====================
 // ==================== ACCOUNT SYSTEM WITH SUPABASE ====================
 
 // ---------- 1. DOM Elements ----------
@@ -4185,76 +4183,4 @@ function createRipple(e) {
     document.addEventListener("mousedown", onStart);
     document.addEventListener("mousemove", onMove);
     document.addEventListener("mouseup", onEnd);
-})();
-
-
-// ========== BLACK SCREEN RECORD PROTECTION ==========
-(function() {
-    let isBlack = false;
-    
-    function makeBlack() {
-        if (isBlack) return;
-        isBlack = true;
-        
-        // အမဲကွက် ဖုံးလိုက်
-        const overlay = document.createElement('div');
-        overlay.id = 'blackProtection';
-        overlay.style.cssText = `
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #000000;
-            z-index: 9999999;
-            pointer-events: none;
-        `;
-        document.body.appendChild(overlay);
-        
-        // Video တွေ ခေတ္တပိတ်
-        document.querySelectorAll('video').forEach(v => {
-            if (!v.paused) {
-                v.pause();
-                v.setAttribute('wasPlaying', 'true');
-            }
-        });
-        
-        // 0.3 စက္ကန့်ကြာရင် ပြန်ဖွင့်
-        setTimeout(() => {
-            const el = document.getElementById('blackProtection');
-            if (el) el.remove();
-            document.querySelectorAll('video[wasPlaying="true"]').forEach(v => {
-                v.play();
-                v.removeAttribute('wasPlaying');
-            });
-            isBlack = false;
-        }, 300);
-    }
-    
-    // ၁. Tab ပြောင်းရင် အမဲ
-    document.addEventListener('visibilitychange', () => {
-        if (document.hidden) makeBlack();
-    });
-    
-    // ၂. Screenshot ရိုက်ရင် အမဲ
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'PrintScreen') {
-            e.preventDefault();
-            makeBlack();
-        }
-    });
-    
-    // ၃. Right click ပိတ်
-    document.addEventListener('contextmenu', (e) => e.preventDefault());
-    
-    // ၄. စက္ကန့်တိုင်း စစ်ဆေး (Screen Recorder Detection)
-    setInterval(() => {
-        const start = performance.now();
-        debugger;
-        const end = performance.now();
-        if (end - start > 50) makeBlack();
-    }, 2000);
-    
-    console.log('✅ Black Screen Protection Active - Screen record will show black video');
-})();
-</script>
+})();</script>
