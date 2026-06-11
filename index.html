@@ -1,418 +1,319 @@
 <meta name='viewport' content='width=device-width, initial-scale=1'/><!DOCTYPE html>
 <html lang="my">
 <head>
-<!-- Supabase JS Library -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>ShrioPlay </title>
-
-    <!-- Font Awesome 6 (Free) -->
+    <title>ShrioPlay - Anime Streaming</title>
+    <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
     <!-- External CSS -->
     <link rel="stylesheet" href="style.css">
-
-    <!-- External JavaScript -->
-    <script src="script.js" defer></script>
 </head>
 <body>
 
+<!-- Account Modal - Name Only (Local Storage) -->
 <div id="accountModal" class="account-modal">
     <div class="account-modal-content">
         <div class="account-logo">
             <img src="https://i.ibb.co/Ym2hJ5q/Grid-Art-20260321-143922590.png" alt="Logo" class="logo-img">
         </div>
-        
-        <div class="profile-circle" id="profileCircle">
-            <img id="profileImage" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%234a5568'/%3E%3Ccircle cx='50' cy='35' r='15' fill='%23e2e8f0'/%3E%3Ccircle cx='35' cy='32' r='2' fill='%23334155'/%3E%3Ccircle cx='65' cy='32' r='2' fill='%23334155'/%3E%3Cpath d='M35 55 Q50 70 65 55' stroke='%23e2e8f0' stroke-width='4' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
-            <div class="profile-overlay"><i class="fas fa-camera"></i></div>
-        </div>
-        <input type="file" id="photoInput" accept="image/*" style="display: none;">
-        <p class="photo-hint">ဓာတ်ပုံကိုနှိပ်ပြီး ပြောင်းလဲနိုင်ပါသည်</p>
-        
         <input type="text" id="accountName" placeholder="နာမည်ထည့်ပါ">
-        
-        <button id="registerBtn">
-            <i class="fas fa-user-plus"></i>
-            <span>အကောင့်ဖွင့်မည်</span>
-        </button>
+        <button id="registerBtn"><i class="fas fa-user-plus"></i><span>အကောင့်ဖွင့်မည်</span></button>
     </div>
 </div>
 
 <!-- Home Screen -->
 <div id="homeScreen" class="screen active">
-    <!-- အပေါ်ဆုံး ခေါင်းစီးပိုင်း -->
     <header class="top-header">
         <div class="logo">
-            <a href="#" aria-label="ပင်မစာမျက်နှာ">
-                <img src="https://iili.io/qgIqkfS.gif" 
-                     alt="အက်ပ်လိုဂို"
-                     onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22160%22%20height%3D%2252%22%20viewBox%3D%220%200%20160%2052%22%3E%3Crect%20width%3D%22160%22%20height%3D%2252%22%20fill%3D%22%231e3a8a%22%20rx%3D%228%22%2F%3E%3Ctext%20x%3D%2220%22%20y%3D%2235%22%20font-family%3D%22Arial%22%20font-size%3D%2220%22%20fill%3D%22white%22%20font-weight%3D%22bold%22%3ELOGO%3C%2Ftext%3E%3C%2Fsvg%3E';">
-            </a>
+            <img src="https://iili.io/qgIqkfS.gif" alt="Logo">
         </div>
-
-        <!-- Search Icon ခလုတ် -->
         <div class="search-button">
-            <a href="#" id="searchIcon" role="button" aria-label="ရှာဖွေရန်">
-                <i class="fas fa-search"></i>
-            </a>
+            <a href="#" id="searchIcon"><i class="fas fa-search"></i></a>
         </div>
     </header>
 
-    <!-- Search Bar -->
     <div class="search-bar-container" id="searchBarContainer">
         <div class="search-bar-wrapper">
             <i class="fas fa-search search-icon"></i>
             <input type="text" id="searchInput" placeholder="Anime Name ရိုက်ထည့်ပါ..." autocomplete="off">
-            <button id="closeSearchBar" class="close-search-bar">
-                <i class="fas fa-times"></i>
-            </button>
+            <button id="closeSearchBar" class="close-search-bar"><i class="fas fa-times"></i></button>
         </div>
     </div>
 
-        <main class="main-content">
-            <div class="anime-grid" id="animeGrid">
+    <main class="main-content">
+        <div class="anime-grid" id="animeGrid">
+            <!-- ========================================== -->
+            <!-- ပြင်ဆင်ရန် လမ်းညွှန် -->
+            <!-- ========================================== -->
+            <!-- 
+                Card တစ်ခုစီအတွက် အောက်ပါအတိုင်း ပြင်ဆင်ပါ-
                 
-           <!-- Card 1 - Could Real Life Be Like a Dream? -->
-<div class="anime-card" 
-     data-id="1" 
-     data-name="Could Real Life Be Like a Dream?" 
-     data-namemm="Starlar Studio" 
-     data-image="https://i.ibb.co/Fq4wyCmp/Grid-Art-20260315-205252908.png" 
-     data-banner="https://i.ibb.co/rf7B1RvH/Grid-Art-20260316-110003214.png" 
-     data-genres='["Romantic","Comedy","Drama","School"]' 
-     data-likes="0" 
-     data-episodes="11"
-     data-status="ongoing"
-     data-telegram="https://t.me/StarlarStudio">
-    <div class="anime-image">
-        <img src="https://i.ibb.co/Fq4wyCmp/Grid-Art-20260315-205252908.png" alt="Could Real Life Be Like a Dream?">
-    </div>
-    <div class="anime-info">
-        <div class="genre-section">
-            <div class="genre-row">
-                <span class="genre-tag">Romantic</span>
-                <span class="genre-tag">Comedy</span>
+                data-id: နံပါတ် (1,2,3... ထူးခြားရန်)
+                data-name: Anime နာမည်
+                data-studio: Studio နာမည်
+                data-image: Card ပေါ်က ပုံလိပ်ခ်ျ
+                data-banner: Detail Screen ထိပ်ပုံ
+                data-genres: အမျိုးအစားများ (JSON array)
+                data-episodes: အပိုင်းအရေအတွက်
+                data-status: ongoing / completed / coming_soon
+                data-next-ep-date: "Dec 20, 2024" (မရှိလျှင် "")
+                data-telegram: Telegram လိပ်ခ်ျ
+            -->
+            <!-- ========================================== -->
+
+            <!-- Card 1 -->
+            <div class="anime-card" 
+                 data-id="1" 
+                 data-name="Could Real Life Be Like a Dream?" 
+                 data-studio="Starlar Studio" 
+                 data-image="https://i.ibb.co/Fq4wyCmp/Grid-Art-20260315-205252908.png" 
+                 data-banner="https://i.ibb.co/rf7B1RvH/Grid-Art-20260316-110003214.png" 
+                 data-genres='["Romantic","Comedy","ama","School"]' 
+                 data-episodes="10" 
+                 data-status="ongoing" 
+                 data-next-ep-date="Dec 22, 2024" 
+                 data-telegram="https://t.me/StarlarStudio">
+                <div class="anime-image"><img src="https://i.ibb.co/Fq4wyCmp/Grid-Art-20260315-205252908.png" alt="Anime"></div>
+                <div class="anime-info">
+                    <div class="genre-section">
+                        <div class="genre-row"><span class="genre-tag">Romantic</span><span class="genre-tag">Comedy</span></div>
+                        <div class="genre-row"><span class="genre-tag">Drama</span><span class="genre-tag">School</span></div>
+                    </div>
+                    <div class="play-button" data-id="1"><i class="fas fa-play"></i></div>
+                </div>
             </div>
-            <div class="genre-row">
-                <span class="genre-tag">Drama</span>
-                <span class="genre-tag">School</span>
+
+            <!-- Card 2 -->
+            <div class="anime-card" 
+                 data-id="2" 
+                 data-name="ထူးထူး နှင့် တွေ့ဆုံချင်း" 
+                 data-studio="Myanmar Aquila" 
+                 data-image="https://i.ibb.co/23rFhHbZ/IMG-20260324-145544-327.jpg" 
+                 data-banner="https://i.ibb.co/23rFhHbZ/IMG-20260324-145544-327.jpg" 
+                 data-genres='["Historical","Action","Fantasy"]' 
+                 data-episodes="11" 
+                 data-status="ongoing" 
+                 data-next-ep-date="Dec 25, 2024" 
+                 data-telegram="https://youtube.com/@the_untold_facts-p88">
+                <div class="anime-image"><img src="https://i.ibb.co/23rFhHbZ/IMG-20260324-145544-327.jpg" alt="Anime"></div>
+                <div class="anime-info">
+                    <div class="genre-section">
+                        <div class="genre-row"><span class="genre-tag">Historical</span><span class="genre-tag">Action</span></div>
+                        <div class="genre-row"><span class="genre-tag">Fantasy</span><span class="genre-tag">MM Style</span></div>
+                    </div>
+                    <div class="play-button" data-id="2"><i class="fas fa-play"></i></div>
+                </div>
+            </div>
+
+            <!-- Card 3 - Coming Soon -->
+            <div class="anime-card" 
+                 data-id="3" 
+                 data-name="Coming Soon" 
+                 data-studio="Coming Soon" 
+                 data-image="https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png" 
+                 data-banner="https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png" 
+                 data-genres='["မကြာမှီလာမည်"]' 
+                 data-episodes="11" 
+                 data-status="coming_soon" 
+                 data-next-ep-date="" 
+                 data-telegram="">
+                <div class="anime-image"><img src="https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png" alt="Coming Soon"></div>
+                <div class="anime-info">
+                    <div class="genre-section"><div class="genre-row"><span class="genre-tag"></span><span class="genre-tag"></span></div><div class="genre-row"><span class="genre-tag"></span><span class="genre-tag"></span></div></div>
+                    <div class="play-button" data-id="3"><i class="fas fa-play"></i></div>
+                </div>
+            </div>
+
+            <!-- Card 4 - Coming Soon -->
+            <div class="anime-card" 
+                 data-id="4" 
+                 data-name="Coming Soon" 
+                 data-studio="Coming Soon" 
+                 data-image="https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png" 
+                 data-banner="https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png" 
+                 data-genres='["မကြာမှီလာမည်"]' 
+                 data-episodes="11" 
+                 data-status="coming_soon" 
+                 data-next-ep-date="" 
+                 data-telegram="">
+                <div class="anime-image"><img src="https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png" alt="Coming Soon"></div>
+                <div class="anime-info">
+                    <div class="genre-section"><div class="genre-row"><span class="genre-tag"></span><span class="genre-tag"></span></div><div class="genre-row"><span class="genre-tag"></span><span class="genre-tag"></span></div></div>
+                    <div class="play-button" data-id="4"><i class="fas fa-play"></i></div>
+                </div>
+            </div>
+
+            <!-- Card 5 - Coming Soon -->
+            <div class="anime-card" 
+                 data-id="5" 
+                 data-name="Coming Soon" 
+                 data-studio="Coming Soon" 
+                 data-image="https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png" 
+                 data-banner="https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png" 
+                 data-genres='["မကြာမှီလာမည်"]' 
+                 data-episodes="11" 
+                 data-status="coming_soon" 
+                 data-next-ep-date="" 
+                 data-telegram="">
+                <div class="anime-image"><img src="https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png" alt="Coming Soon"></div>
+                <div class="anime-info">
+                    <div class="genre-section"><div class="genre-row"><span class="genre-tag"></span><span class="genre-tag"></span></div><div class="genre-row"><span class="genre-tag"></span><span class="genre-tag"></span></div></div>
+                    <div class="play-button" data-id="5"><i class="fas fa-play"></i></div>
+                </div>
+            </div>
+
+            <!-- Card 6 - Coming Soon -->
+            <div class="anime-card" 
+                 data-id="6" 
+                 data-name="Coming Soon" 
+                 data-studio="Coming Soon" 
+                 data-image="https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png" 
+                 data-banner="https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png" 
+                 data-genres='["မကြာမှီလာမည်"]' 
+                 data-episodes="11" 
+                 data-status="coming_soon" 
+                 data-next-ep-date="" 
+                 data-telegram="">
+                <div class="anime-image"><img src="https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png" alt="Coming Soon"></div>
+                <div class="anime-info">
+                    <div class="genre-section"><div class="genre-row"><span class="genre-tag"></span><span class="genre-tag"></span></div><div class="genre-row"><span class="genre-tag"></span><span class="genre-tag"></span></div></div>
+                    <div class="play-button" data-id="6"><i class="fas fa-play"></i></div>
+                </div>
+            </div>
+
+            <!-- Card 7 - Coming Soon -->
+            <div class="anime-card" 
+                 data-id="7" 
+                 data-name="Coming Soon" 
+                 data-studio="Coming Soon" 
+                 data-image="https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png" 
+                 data-banner="https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png" 
+                 data-genres='["မကြာမှီလာမည်"]' 
+                 data-episodes="11" 
+                 data-status="coming_soon" 
+                 data-next-ep-date="" 
+                 data-telegram="">
+                <div class="anime-image"><img src="https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png" alt="Coming Soon"></div>
+                <div class="anime-info">
+                    <div class="genre-section"><div class="genre-row"><span class="genre-tag"></span><span class="genre-tag"></span></div><div class="genre-row"><span class="genre-tag"></span><span class="genre-tag"></span></div></div>
+                    <div class="play-button" data-id="7"><i class="fas fa-play"></i></div>
+                </div>
+            </div>
+
+            <!-- Card 8 - Coming Soon -->
+            <div class="anime-card" 
+                 data-id="8" 
+                 data-name="Coming Soon" 
+                 data-studio="Coming Soon" 
+                 data-image="https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png" 
+                 data-banner="https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png" 
+                 data-genres='["မကြာမှီလာမည်"]' 
+                 data-episodes="11" 
+                 data-status="coming_soon" 
+                 data-next-ep-date="" 
+                 data-telegram="">
+                <div class="anime-image"><img src="https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png" alt="Coming Soon"></div>
+                <div class="anime-info">
+                    <div class="genre-section"><div class="genre-row"><span class="genre-tag"></span><span class="genre-tag"></span></div><div class="genre-row"><span class="genre-tag"></span><span class="genre-tag"></span></div></div>
+                    <div class="play-button" data-id="8"><i class="fas fa-play"></i></div>
+                </div>
             </div>
         </div>
-        <div class="play-button" data-id="1">
-            <i class="fas fa-play"></i>
+    </main>
+
+    <nav class="bottom-nav">
+        <a href="#" class="nav-item" data-nav="home"><i class="fas fa-home"></i><span class="text">Home</span></a>
+        <a href="#" class="nav-item" data-nav="studio"><i class="fas fa-pencil-alt"></i><span class="text">Studio</span></a>
+        <a href="#" class="nav-item" data-nav="faq"><i class="fas fa-circle-question"></i><span class="text">FAQ</span></a>
+        <a href="#" class="nav-item" data-nav="account"><i class="fas fa-user-circle"></i><span class="text">Account</span></a>
+    </nav>
+</div>
+
+<!-- Detail Screen -->
+<div id="detailScreen" class="screen">
+    <div class="detail-container">
+        <div class="detail-banner" id="detailBanner"></div>
+        <button class="back-button" id="detailBackBtn"><i class="fas fa-arrow-left"></i></button>
+        <div class="detail-content">
+            <div class="detail-info-row">
+                <div class="detail-small-image" id="detailAnimeImage"></div>
+                <div class="detail-name-section">
+                    <div class="detail-anime-name" id="detailAnimeName"></div>
+                    <div class="detail-studio-name" id="detailStudioName"></div>
+                    <div class="detail-genres" id="detailGenres"></div>
+                </div>
+            </div>
+            <div class="like-comment-row" id="likeCommentRow">
+                <div class="total-likes-box" id="totalLikesBox">
+                    <i class="fas fa-heart"></i>
+                    <span id="totalLikesCount">0</span>
+                    <span>Likes</span>
+                </div>
+            </div>
+            <div class="telegram-status-row">
+                <a href="#" id="telegramLink" class="telegram-button" target="_blank">
+                    <i class="fab fa-telegram-plane"></i>
+                    <span>Official Channel</span>
+                </a>
+                <div class="status-badge" id="statusBadge">
+                    <span id="statusText"><i class="fas fa-spinner fa-pulse"></i> ထုတ်လုပ်နေဆဲ</span>
+                </div>
+            </div>
+            <div class="next-ep-date" id="nextEpDate">
+                <span id="nextEpDateText"><i class="fas fa-calendar"></i> နောက်အပိုင်းထွက်မည့်ရက်: --</span>
+            </div>
+            <div class="episode-section-title">
+                <i class="fas fa-list"></i>
+                <span>Episodes</span>
+            </div>
+            <div class="episode-list" id="episodeList"></div>
         </div>
     </div>
 </div>
 
-<!-- Card 2 - Coming Soon -->
-<div class="anime-card" 
-     data-id="2" 
-     data-name="ထူးထူး နှင့် တွေ့ဆုံချင်း" 
-     data-namemm="Myanmar Aquila The Untold Facts" 
-     data-image="https://i.ibb.co/23rFhHbZ/IMG-20260324-145544-327.jpg" 
-     data-banner="https://i.ibb.co/23rFhHbZ/IMG-20260324-145544-327.jpg" 
-     data-genres='["Historical","Action","Fantasy"]' 
-     data-likes="0" 
-     data-episodes="11"
-     data-status="ongoing"
-     data-telegram="https://youtube.com/@the_untold_facts-p88?si=lGUkstD7DT7Fgf0g ">
-    <div class="anime-image">
-        <img src="https://i.ibb.co/23rFhHbZ/IMG-20260324-145544-327.jpg" alt="ထူးထူး နှင့် တွေ့ဆုံခမ်း">
+<!-- Player Screen -->
+<div id="playerScreen" style="display:none; flex-direction:column; height:100vh; background:#000;">
+    <div style="display:flex; align-items:center; padding:16px; background:#0a0a0a; border-bottom:1px solid #1e40af;">
+        <button id="playerBackBtn" style="background:transparent; border:none; color:white; font-size:24px; margin-right:16px; cursor:pointer;"><i class="fas fa-arrow-left"></i></button>
+        <div style="flex:1;"><h3 id="episodeNameTitle" style="color:white;">Episode Name</h3></div>
     </div>
-    <div class="anime-info">
-        <div class="genre-section">
-            <div class="genre-row">
-                <span class="genre-tag">Historical</span>
-                <span class="genre-tag">Action</span>
-            </div>
-            <div class="genre-row">
-                <span class="genre-tag">Fantasy</span>
-                <span class="genre-tag">MM Style</span>
-            </div>
+    <div style="position:relative; width:100%; background:#000; aspect-ratio:16/9;">
+        <div id="videoContainer" style="position:absolute; top:0; left:0; width:100%; height:100%;"></div>
+    </div>
+    <div style="display:flex; gap:16px; padding:16px; border-bottom:1px solid #333;">
+        <button id="likeBtn" style="flex:1; padding:12px; background:#1e40af; border:none; border-radius:30px; color:white; cursor:pointer;"><i class="far fa-heart"></i> <span id="likeCount">0</span></button>
+        <div style="flex:1; padding:12px; background:#1a1a1a; border-radius:30px; text-align:center; color:#3b82f6;"><i class="fas fa-comment"></i> <span id="commentCount">0</span> Comments</div>
+    </div>
+    <div style="flex:1; overflow-y:auto; padding:16px;">
+        <div style="display:flex; gap:12px; margin-bottom:20px;">
+            <input type="text" id="commentInput" placeholder="သင့်ရဲ့ Comment ကိုရေးပါ..." style="flex:1; padding:12px; background:#1a1a1a; border:1px solid #333; border-radius:30px; color:white;">
+            <button id="postCommentBtn" style="padding:12px 20px; background:#1e40af; border:none; border-radius:30px; color:white; cursor:pointer;"><i class="fas fa-paper-plane"></i></button>
         </div>
-        <div class="play-button" data-id="2">
-            <i class="fas fa-play"></i>
-        </div>
+        <div id="commentsList"></div>
     </div>
 </div>
-
-<!-- Card 3 - Coming Soon -->
-<div class="anime-card" 
-     data-id="3" 
-     data-name="Coming Soon" 
-     data-namemm="Coming Soon" 
-     data-image="https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png" 
-     data-banner="https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png" 
-     data-genres='["မကြာမှီလာမည်"]' 
-     data-likes="0" 
-     data-episodes="11"
-     data-status="coming_soon"
-     data-telegram="">
-    <div class="anime-image">
-        <img src="https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png" alt="Coming Soon">
-    </div>
-    <div class="anime-info">
-        <div class="genre-section">
-            <div class="genre-row">
-                <span class="genre-tag"></span>
-                <span class="genre-tag"></span>
-            </div>
-            <div class="genre-row">
-                <span class="genre-tag"></span>
-                <span class="genre-tag"></span>
-            </div>
-        </div>
-        <div class="play-button" data-id="3">
-            <i class="fas fa-play"></i>
-        </div>
-    </div>
-</div>
-
-<!-- Card 4 - Coming Soon -->
-<div class="anime-card" 
-     data-id="4" 
-     data-name="Coming Soon" 
-     data-namemm="Coming Soon" 
-     data-image="https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png" 
-     data-banner="https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png" 
-     data-genres='["မကြာမှီလာမည်"]' 
-     data-likes="0" 
-     data-episodes="11"
-     data-status="coming_soon"
-     data-telegram="">
-    <div class="anime-image">
-        <img src="https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png" alt="Coming Soon">
-    </div>
-    <div class="anime-info">
-        <div class="genre-section">
-            <div class="genre-row">
-                <span class="genre-tag"></span>
-                <span class="genre-tag"></span>
-            </div>
-            <div class="genre-row">
-                <span class="genre-tag"></span>
-                <span class="genre-tag"></span>
-            </div>
-        </div>
-        <div class="play-button" data-id="4">
-            <i class="fas fa-play"></i>
-        </div>
-    </div>
-</div>
-
-<!-- Card 5 - Coming Soon -->
-<div class="anime-card" 
-     data-id="5" 
-     data-name="Coming Soon" 
-     data-namemm="Coming Soon" 
-     data-image="https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png" 
-     data-banner="https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png" 
-     data-genres='["မကြာမှီလာမည်"]' 
-     data-likes="0" 
-     data-episodes="11"
-     data-status="coming_soon"
-     data-telegram="">
-    <div class="anime-image">
-        <img src="https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png" alt="Coming Soon">
-    </div>
-    <div class="anime-info">
-        <div class="genre-section">
-            <div class="genre-row">
-                <span class="genre-tag"></span>
-                <span class="genre-tag"></span>
-            </div>
-            <div class="genre-row">
-                <span class="genre-tag"></span>
-                <span class="genre-tag"></span>
-            </div>
-        </div>
-        <div class="play-button" data-id="5">
-            <i class="fas fa-play"></i>
-        </div>
-    </div>
-</div>
-
-<!-- Card 6 - Coming Soon -->
-<div class="anime-card" 
-     data-id="6" 
-     data-name="Coming Soon" 
-     data-namemm="Coming Soon" 
-     data-image="https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png" 
-     data-banner="https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png" 
-     data-genres='["မကြာမှီလာမည်"]' 
-     data-likes="0" 
-     data-episodes="11"
-     data-status="coming_soon"
-     data-telegram="">
-    <div class="anime-image">
-        <img src="https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png" alt="Coming Soon">
-    </div>
-    <div class="anime-info">
-        <div class="genre-section">
-            <div class="genre-row">
-                <span class="genre-tag"></span>
-                <span class="genre-tag"></span>
-            </div>
-            <div class="genre-row">
-                <span class="genre-tag"></span>
-                <span class="genre-tag"></span>
-            </div>
-        </div>
-        <div class="play-button" data-id="6">
-            <i class="fas fa-play"></i>
-        </div>
-    </div>
-</div>
-
-<!-- Card 7 - Coming Soon -->
-<div class="anime-card" 
-     data-id="7" 
-     data-name="Coming Soon" 
-     data-namemm="Coming Soon" 
-     data-image="https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png" 
-     data-banner="https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png" 
-     data-genres='["မကြာမှီလာမည်"]' 
-     data-likes="0" 
-     data-episodes="11"
-     data-status="coming_soon"
-     data-telegram="">
-    <div class="anime-image">
-        <img src="https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png" alt="Coming Soon">
-    </div>
-    <div class="anime-info">
-        <div class="genre-section">
-            <div class="genre-row">
-                <span class="genre-tag"></span>
-                <span class="genre-tag"></span>
-            </div>
-            <div class="genre-row">
-                <span class="genre-tag"></span>
-                <span class="genre-tag"></span>
-            </div>
-        </div>
-        <div class="play-button" data-id="7">
-            <i class="fas fa-play"></i>
-        </div>
-    </div>
-</div>
-
-<!-- Card 8 - Coming Soon -->
-<div class="anime-card" 
-     data-id="8" 
-     data-name="Coming Soon" 
-     data-namemm="Coming Soon" 
-     data-image="https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png" 
-     data-banner="https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png" 
-     data-genres='["မကြာမှီလာမည်"]' 
-     data-likes="0" 
-     data-episodes="11"
-     data-status="coming_soon"
-     data-telegram="">
-    <div class="anime-image">
-        <img src="https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png" alt="Coming Soon">
-    </div>
-    <div class="anime-info">
-        <div class="genre-section">
-            <div class="genre-row">
-                <span class="genre-tag"></span>
-                <span class="genre-tag"></span>
-            </div>
-            <div class="genre-row">
-                <span class="genre-tag"></span>
-                <span class="genre-tag"></span>
-            </div>
-        </div>
-        <div class="play-button" data-id="8">
-            <i class="fas fa-play"></i>
-        </div>
-    </div>
-</div>
-           
-            </div>
-        </main>
-
-
-
-      <!-- အောက်ခြေ မီနူး -->
-        <nav class="bottom-nav">
-            <a href="#" class="nav-item">
-                <i class="fas fa-home"></i>
-                <span class="text">Home</span>
-            </a>
-       
-<a href="#" class="nav-item">
-    <i class="fas fa-pencil-alt"></i>
-    <span class="text">Studio</span>
-</a>
-            <a href="#" class="nav-item">
-                <i class="fas fa-circle-question"></i>
-                <span class="text">FAQ</span>
-            </a>
-            <a href="#" class="nav-item">
-                <i class="fas fa-user-circle"></i>
-                <span class="text">Account</span>
-            </a>
-        </nav>
-    </div>
-
-    <!-- Detail Screen (New Screen) -->
-    <div id="detailScreen" class="screen">
-        <div class="detail-container" id="detailContainer">
-            <!-- Detail content will be generated by JavaScript -->
-        </div>
-    </div>
 
 <!-- Profile Screen -->
 <div id="profileScreen" class="screen">
     <div class="profile-wrapper">
         <div class="profile-card">
-            <!-- Back Button - အပေါ်ဘယ်ဘက် -->
-            <div class="profile-back-btn" id="profileBackBtn">
-                <i class="fas fa-arrow-left"></i>
-            </div>
-            
-            <!-- Profile Header Title -->
-            <div class="profile-header-title">
-                <h2>My Profile</h2>
-            </div>
-            
-            <!-- Profile Avatar -->
-            <div class="profile-avatar">
-                <img id="profileImageLarge" src="" alt="Profile">
-            </div>
-            
-            <!-- Profile Info -->
+            <div class="profile-back-btn" id="profileBackBtn"><i class="fas fa-arrow-left"></i></div>
+            <div class="profile-header-title"><h2>My Profile</h2></div>
             <div class="profile-info-simple">
                 <div class="info-simple-row">
-                    <div class="info-simple-label">
-                        <i class="fas fa-user"></i>
-                        <span>နာမည်</span>
-                    </div>
+                    <div class="info-simple-label"><i class="fas fa-user"></i><span>နာမည်</span></div>
                     <div class="info-simple-value" id="profileName">-</div>
                 </div>
                 <div class="info-simple-row">
-                    <div class="info-simple-label">
-                        <i class="fas fa-id-card"></i>
-                        <span>ID</span>
-                    </div>
+                    <div class="info-simple-label"><i class="fas fa-id-card"></i><span>ID</span></div>
                     <div class="info-simple-value" id="profileId">-</div>
                 </div>
-                <div class="info-simple-row">
-                    <div class="info-simple-label">
-                        <i class="fas fa-link"></i>
-                        <span>Invite Code</span>
-                    </div>
-                    <div class="info-simple-value" id="profileInvite">-</div>
-                </div>
             </div>
-            
-            <!-- Edit Profile Button -->
-            <button id="editProfileBtn" class="edit-profile-btn">
-                <i class="fas fa-edit"></i>
-                <span>Edit Profile</span>
-            </button>
+            <button id="editProfileBtn" class="edit-profile-btn"><i class="fas fa-edit"></i><span>Edit Profile</span></button>
         </div>
     </div>
 </div>
@@ -422,19 +323,9 @@
     <div class="edit-modal-content">
         <div class="edit-modal-header">
             <h3>Edit Profile</h3>
-            <button id="closeEditModal" class="close-edit">
-                <i class="fas fa-times"></i>
-            </button>
+            <button id="closeEditModal" class="close-edit"><i class="fas fa-times"></i></button>
         </div>
-        
-        <div class="edit-profile-circle" id="editProfileCircle">
-            <img id="editProfileImage" src="">
-            <div class="edit-overlay"><i class="fas fa-camera"></i></div>
-        </div>
-        <input type="file" id="editPhotoInput" accept="image/*" style="display: none;">
-        
         <input type="text" id="editName" placeholder="နာမည်">
-        
         <button id="saveEditBtn" class="save-btn">သိမ်းမည်</button>
     </div>
 </div>
@@ -442,72 +333,28 @@
 <!-- FAQ Screen -->
 <div id="faqScreen" class="screen">
     <div class="faq-container">
-        <!-- Back Button -->
-        <div class="faq-back-btn" id="faqBackBtn">
-            <i class="fas fa-arrow-left"></i>
-        </div>
-        
-        <!-- Header -->
+        <div class="faq-back-btn" id="faqBackBtn"><i class="fas fa-arrow-left"></i></div>
         <div class="faq-header">
             <i class="fas fa-circle-question"></i>
             <h2>FAQ</h2>
             <p>မေးလေ့ရှိသောမေးခွန်းများ</p>
         </div>
-        
-        <!-- FAQ List -->
         <div class="faq-list">
-            <!-- FAQ 1 -->
             <div class="faq-item">
-                <div class="faq-question">
-                    <i class="fas fa-upload"></i>
-                    <span>သင့် Anime ကိုအခမဲ့တင်သွင်းရန်</span>
-                    <i class="fas fa-chevron-down faq-arrow"></i>
-                </div>
-                <div class="faq-answer">
-                    <p>Telegram <strong>@Starlar1</strong> စီဆက်သွယ်ပါ</p>
-                </div>
+                <div class="faq-question"><i class="fas fa-upload"></i><span>သင့် Anime ကိုအခမဲ့တင်သွင်းရန်</span><i class="fas fa-chevron-down faq-arrow"></i></div>
+                <div class="faq-answer"><p>Telegram <strong>@Starlar1</strong> စီဆက်သွယ်ပါ</p></div>
             </div>
-            
-            <!-- FAQ 2 -->
             <div class="faq-item">
-                <div class="faq-question">
-                    <i class="fas fa-graduation-cap"></i>
-                    <span>Anime ထုတ်နည်းသင်ချင်ပါက</span>
-                    <i class="fas fa-chevron-down faq-arrow"></i>
-                </div>
-                <div class="faq-answer">
-                    <p>Telegram <strong>@Starlar1</strong> စီသင်နိုင်သည်</p>
-                </div>
+                <div class="faq-question"><i class="fas fa-graduation-cap"></i><span>Anime ထုတ်နည်းသင်ချင်ပါက</span><i class="fas fa-chevron-down faq-arrow"></i></div>
+                <div class="faq-answer"><p>Telegram <strong>@Starlar1</strong> စီသင်နိုင်သည်</p></div>
             </div>
-            
-            <!-- FAQ 3 -->
             <div class="faq-item">
-                <div class="faq-question">
-                    <i class="fas fa-tv"></i>
-                    <span>Official Channel</span>
-                    <i class="fas fa-chevron-down faq-arrow"></i>
-                </div>
-                <div class="faq-answer">
-                    <a href="https://t.me/ShrioPlay" target="_blank" class="faq-link">
-                        <i class="fab fa-telegram"></i>
-                        https://t.me/ShrioPlay
-                    </a>
-                </div>
+                <div class="faq-question"><i class="fas fa-tv"></i><span>Official Channel</span><i class="fas fa-chevron-down faq-arrow"></i></div>
+                <div class="faq-answer"><a href="https://t.me/ShrioPlay" target="_blank" class="faq-link"><i class="fab fa-telegram"></i>https://t.me/ShrioPlay</a></div>
             </div>
-            
-            <!-- FAQ 4 -->
             <div class="faq-item">
-                <div class="faq-question">
-                    <i class="fas fa-building"></i>
-                    <span>ထုတ်လုပ်သည့် Channel</span>
-                    <i class="fas fa-chevron-down faq-arrow"></i>
-                </div>
-                <div class="faq-answer">
-                    <a href="https://t.me/StarlarCompany" target="_blank" class="faq-link">
-                        <i class="fab fa-telegram"></i>
-                        https://t.me/StarlarCompany
-                    </a>
-                </div>
+                <div class="faq-question"><i class="fas fa-building"></i><span>ထုတ်လုပ်သည့် Channel</span><i class="fas fa-chevron-down faq-arrow"></i></div>
+                <div class="faq-answer"><a href="https://t.me/StarlarCompany" target="_blank" class="faq-link"><i class="fab fa-telegram"></i>https://t.me/StarlarCompany</a></div>
             </div>
         </div>
     </div>
@@ -516,158 +363,89 @@
 <!-- Studio Main Screen -->
 <div id="studioScreen" class="screen">
     <div class="studio-container">
-        <div class="studio-back-btn" id="studioBackBtn">
-            <i class="fas fa-arrow-left"></i>
-        </div>
-        
-        <!-- Header Title Only (No Icon) -->
-        <div class="studio-header">
-            <h2>Studio များ</h2>
-        </div>
-        
-        <!-- Studio Grid - 3 columns, 6 studios -->
+        <div class="studio-back-btn" id="studioBackBtn"><i class="fas fa-arrow-left"></i></div>
+        <div class="studio-header"><h2>Studio များ</h2></div>
         <div class="studio-grid" id="studioGrid">
-            
-            <!-- Studio 1 - Ufotable -->
+            <!-- Studio 1 -->
             <div class="studio-card" data-studio-id="1">
-                <div class="studio-card-image">
-                    <img src="https://i.ibb.co/YBCR2PwD/IMG-20260310-204302-818.jpg" alt="Ufotable">
-                </div>
+                <div class="studio-card-image"><img src="https://i.ibb.co/YBCR2PwD/IMG-20260310-204302-818.jpg" alt="Studio"></div>
                 <div class="studio-card-info">
                     <div class="studio-card-name">Starlar Studio</div>
-                    <div class="studio-view-btn" data-studio-id="1">
-                        <i class="fas fa-eye"></i>
-                        <span>ကြည့်ရန်</span>
-                    </div>
+                    <div class="studio-view-btn" data-studio-id="1"><i class="fas fa-eye"></i><span>ကြည့်ရန်</span></div>
                 </div>
-                <div class="studio-anime-data" style="display:none;" data-anime-list='[
-                    {"name":"Could Real Life Be Like a Dream?","image":"https://i.ibb.co/Fq4wyCmp/Grid-Art-20260315-205252908.png"},
-                    {"name":"Coming Soon","image":"https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png"}
-                ]'></div>
+                <div class="studio-anime-data" style="display:none;" data-anime-list='[{"name":"Could Real Life Be Like a Dream?","image":"https://i.ibb.co/Fq4wyCmp/Grid-Art-20260315-205252908.png"},{"name":"Coming Soon","image":"https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png"}]'></div>
             </div>
-            
-            <!-- Studio 2 - Coming Soon -->
+            <!-- Studio 2 -->
             <div class="studio-card" data-studio-id="2">
-                <div class="studio-card-image">
-                    <img src="https://i.ibb.co/r214SStZ/IMG-20260324-145800-832.jpg" alt="MAPPA">
-                </div>
+                <div class="studio-card-image"><img src="https://i.ibb.co/r214SStZ/IMG-20260324-145800-832.jpg" alt="Studio"></div>
                 <div class="studio-card-info">
-                    <div class="studio-card-name">Myanmar Aquila The Untold Facts</div>
-                    <div class="studio-view-btn" data-studio-id="2">
-                        <i class="fas fa-eye"></i>
-                        <span>ကြည့်ရန်</span>
-                    </div>
+                    <div class="studio-card-name">Myanmar Aquila</div>
+                    <div class="studio-view-btn" data-studio-id="2"><i class="fas fa-eye"></i><span>ကြည့်ရန်</span></div>
                 </div>
-                <div class="studio-anime-data" style="display:none;" data-anime-list='[
-                    {"name":"ထူးထူး နှင့် တွေ့ဆုံချင်း","image":"https://i.ibb.co/23rFhHbZ/IMG-20260324-145544-327.jpg"},
-                    {"name":"Coming Soon","image":"https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png"},
-                    {"name":"Coming Soon","image":"https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png"}
-                ]'></div>
+                <div class="studio-anime-data" style="display:none;" data-anime-list='[{"name":"ထူးထူး နှင့် တွေ့ဆုံချင်း","image":"https://i.ibb.co/23rFhHbZ/IMG-20260324-145544-327.jpg"},{"name":"Coming Soon","image":"https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png"}]'></div>
             </div>
-            
-            <!-- Studio 3 - Coming Soon -->
+            <!-- Studio 3 -->
             <div class="studio-card" data-studio-id="3">
-                <div class="studio-card-image">
-                    <img src="https://i.ibb.co/whMVxxCV/Grid-Art-20260321-141718369.jpg" alt="MAPPA">
-                </div>
+                <div class="studio-card-image"><img src="https://i.ibb.co/whMVxxCV/Grid-Art-20260321-141718369.jpg" alt="Studio"></div>
                 <div class="studio-card-info">
                     <div class="studio-card-name">Coming Soon</div>
-                    <div class="studio-view-btn" data-studio-id="3">
-                        <i class="fas fa-eye"></i>
-                        <span>ကြည့်ရန်</span>
-                    </div>
+                    <div class="studio-view-btn" data-studio-id="3"><i class="fas fa-eye"></i><span>ကြည့်ရန်</span></div>
                 </div>
-                <div class="studio-anime-data" style="display:none;" data-anime-list='[
-                    {"name":"Coming Soon","image":"https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png"},
-                    {"name":"Coming Soon","image":"https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png"},
-                    {"name":"Coming Soon","image":"https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png"}
-                ]'></div>
+                <div class="studio-anime-data" style="display:none;" data-anime-list='[{"name":"Coming Soon","image":"https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png"}]'></div>
             </div>
-            
-            <!-- Studio 4 - Coming Soon -->
+            <!-- Studio 4 -->
             <div class="studio-card" data-studio-id="4">
-                <div class="studio-card-image">
-                    <img src="https://i.ibb.co/whMVxxCV/Grid-Art-20260321-141718369.jpg" alt="MAPPA">
-                </div>
+                <div class="studio-card-image"><img src="https://i.ibb.co/whMVxxCV/Grid-Art-20260321-141718369.jpg" alt="Studio"></div>
                 <div class="studio-card-info">
                     <div class="studio-card-name">Coming Soon</div>
-                    <div class="studio-view-btn" data-studio-id="4">
-                        <i class="fas fa-eye"></i>
-                        <span>ကြည့်ရန်</span>
-                    </div>
+                    <div class="studio-view-btn" data-studio-id="4"><i class="fas fa-eye"></i><span>ကြည့်ရန်</span></div>
                 </div>
-                <div class="studio-anime-data" style="display:none;" data-anime-list='[
-                    {"name":"Coming Soon","image":"https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png"},
-                    {"name":"Coming Soon","image":"https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png"},
-                    {"name":"Coming Soon","image":"https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png"}
-                ]'></div>
+                <div class="studio-anime-data" style="display:none;" data-anime-list='[{"name":"Coming Soon","image":"https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png"}]'></div>
             </div>
-            
-            <!-- Studio 5 - Coming Soon -->
+            <!-- Studio 5 -->
             <div class="studio-card" data-studio-id="5">
-                <div class="studio-card-image">
-                    <img src="https://i.ibb.co/whMVxxCV/Grid-Art-20260321-141718369.jpg" alt="MAPPA">
-                </div>
+                <div class="studio-card-image"><img src="https://i.ibb.co/whMVxxCV/Grid-Art-20260321-141718369.jpg" alt="Studio"></div>
                 <div class="studio-card-info">
                     <div class="studio-card-name">Coming Soon</div>
-                    <div class="studio-view-btn" data-studio-id="5">
-                        <i class="fas fa-eye"></i>
-                        <span>ကြည့်ရန်</span>
-                    </div>
+                    <div class="studio-view-btn" data-studio-id="5"><i class="fas fa-eye"></i><span>ကြည့်ရန်</span></div>
                 </div>
-                <div class="studio-anime-data" style="display:none;" data-anime-list='[
-                    {"name":"Coming Soon","image":"https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png"},
-                    {"name":"Coming Soon","image":"https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png"},
-                    {"name":"Coming Soon","image":"https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png"}
-                ]'></div>
+                <div class="studio-anime-data" style="display:none;" data-anime-list='[{"name":"Coming Soon","image":"https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png"}]'></div>
             </div>
-            
-            <!-- Studio 6 - Coming Soon -->
+            <!-- Studio 6 -->
             <div class="studio-card" data-studio-id="6">
-                <div class="studio-card-image">
-                    <img src="https://i.ibb.co/whMVxxCV/Grid-Art-20260321-141718369.jpg" alt="MAPPA">
-                </div>
+                <div class="studio-card-image"><img src="https://i.ibb.co/whMVxxCV/Grid-Art-20260321-141718369.jpg" alt="Studio"></div>
                 <div class="studio-card-info">
                     <div class="studio-card-name">Coming Soon</div>
-                    <div class="studio-view-btn" data-studio-id="6">
-                        <i class="fas fa-eye"></i>
-                        <span>ကြည့်ရန်</span>
-                    </div>
+                    <div class="studio-view-btn" data-studio-id="6"><i class="fas fa-eye"></i><span>ကြည့်ရန်</span></div>
                 </div>
-                <div class="studio-anime-data" style="display:none;" data-anime-list='[
-                    {"name":"Coming Soon","image":"https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png"},
-                    {"name":"Coming Soon","image":"https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png"},
-                    {"name":"Coming Soon","image":"https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png"}
-                ]'></div>
+                <div class="studio-anime-data" style="display:none;" data-anime-list='[{"name":"Coming Soon","image":"https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png"}]'></div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Studio Anime Screen (ထုတ်လုပ်ထားတဲ့ Anime များ) -->
+<!-- Studio Anime Screen -->
 <div id="studioAnimeScreen" class="screen">
     <div class="studio-anime-container">
-        <div class="studio-anime-back-btn" id="studioAnimeBackBtn">
-            <i class="fas fa-arrow-left"></i>
-        </div>
+        <div class="studio-anime-back-btn" id="studioAnimeBackBtn"><i class="fas fa-arrow-left"></i></div>
         <div class="studio-anime-header" id="studioAnimeHeader">
-            <div class="studio-avatar" id="studioAvatar">
-                <img src="" alt="Studio">
-            </div>
-            <div class="studio-info">
-                <h2 id="studioAnimeName">Studio Name</h2>
-                <p id="studioAnimeCount">0 Anime</p>
-            </div>
+            <div class="studio-avatar" id="studioAvatar"><img src="" alt="Studio"></div>
+            <div class="studio-info"><h2 id="studioAnimeName">Studio Name</h2><p id="studioAnimeCount">0 Anime</p></div>
         </div>
         <div class="studio-anime-grid" id="studioAnimeGrid"></div>
     </div>
 </div>
 
+<!-- External JavaScript -->
+<script src="script.js"></script>
 </body>
-</html><style>* {
+</html><style>/* style.css - Complete ShrioPlay Styles (Fully Optimized for All Android Devices) */
+
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
 }
 
 body {
@@ -705,7 +483,7 @@ body::before {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 24px;
+    padding: 16px 20px;
     background: linear-gradient(180deg, #0a0a0a 0%, #000000 100%);
     border-bottom: 1px solid rgba(59, 130, 246, 0.2);
     flex-shrink: 0;
@@ -715,13 +493,10 @@ body::before {
 .logo img {
     display: block;
     width: auto;
-    height: 180px;      /* 🔥 အရမ်းကြီး */
-    max-width: 600px;
+    height: 8vh;
+    max-height: 50px;
+    min-height: 30px;
     object-fit: contain;
-
-    position: relative;
-    left: -15px;
-    top: 15px;
 }
 
 .search-button a {
@@ -731,8 +506,8 @@ body::before {
     background: linear-gradient(145deg, #1e40af, #2563eb);
     color: white;
     text-decoration: none;
-    width: 48px;
-    height: 48px;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
     box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
     cursor: pointer;
@@ -746,7 +521,7 @@ body::before {
 
 .search-bar-container {
     display: none;
-    padding: 12px 16px;
+    padding: 10px 16px;
     background: linear-gradient(180deg, #0a0a0a 0%, #000000 100%);
     border-bottom: 1px solid rgba(59, 130, 246, 0.3);
     flex-shrink: 0;
@@ -814,15 +589,14 @@ body::before {
 .main-content {
     flex: 1;
     overflow-y: auto;
-    padding: 16px;
+    padding: 12px;
+    padding-bottom: 90px;
 }
 
 .anime-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-    max-width: 450px;
-    margin: 0 auto;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 12px;
     width: 100%;
 }
 
@@ -866,15 +640,19 @@ body::before {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 4px;
 }
 
 .genre-section {
     flex: 1;
+    min-width: 0;
 }
 
 .genre-row {
     display: flex;
     gap: 4px;
+    flex-wrap: wrap;
     margin-bottom: 3px;
 }
 
@@ -885,7 +663,7 @@ body::before {
 .genre-tag {
     background: rgba(30, 64, 175, 0.3);
     color: #a5b4fc;
-    font-size: 0.45rem;
+    font-size: 0.55rem;
     padding: 2px 6px;
     border-radius: 20px;
     border: 1px solid rgba(59, 130, 246, 0.3);
@@ -904,7 +682,6 @@ body::before {
     box-shadow: 0 4px 8px rgba(0,0,0,0.5);
     border: 1px solid rgba(255,255,255,0.2);
     flex-shrink: 0;
-    margin-left: 6px;
     cursor: pointer;
     transition: all 0.2s;
 }
@@ -914,22 +691,22 @@ body::before {
     background: #2563eb;
 }
 
-/* ========== BOTTOM NAVIGATION - CLEAR GLASS STYLE ========== */
+/* ========== BOTTOM NAVIGATION ========== */
 .bottom-nav {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 28px;
+    gap: 16px;
     background: rgba(15, 15, 20, 0.25);
     backdrop-filter: blur(28px);
     -webkit-backdrop-filter: blur(28px);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 60px;
-    padding: 10px 28px;
+    padding: 8px 20px;
     position: fixed;
-    bottom: 28px;
-    left: 16px;
-    right: 16px;
+    bottom: 20px;
+    left: 12px;
+    right: 12px;
     width: auto;
     margin: 0;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
@@ -937,7 +714,6 @@ body::before {
     z-index: 100;
 }
 
-/* 🔥 ခလုပ်ကို အောက်ရွှေ့ */
 .bottom-nav .nav-item {
     display: flex;
     flex-direction: column;
@@ -948,17 +724,13 @@ body::before {
     backdrop-filter: blur(8px);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 48px;
-    padding: 8px 0;
+    padding: 6px 0;
     width: 100%;
     max-width: 70px;
     transition: all 0.25s ease;
     cursor: pointer;
     gap: 4px;
     flex: 1;
-
-    /* 👇 ဒီတစ်ကြောင်းပဲအသစ် */
-    position: relative;
-    top: 3px; /* 🔥 အောက်ကိုရွှေ့ */
 }
 
 .bottom-nav .nav-item:active {
@@ -968,19 +740,18 @@ body::before {
 }
 
 .bottom-nav .nav-item i {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     color: rgba(255, 255, 255, 0.9);
     transition: all 0.2s;
 }
 
 .bottom-nav .nav-item span.text {
     color: rgba(255, 255, 255, 0.75);
-    font-size: 0.62rem;
+    font-size: 0.6rem;
     font-weight: 500;
     letter-spacing: 0.3px;
 }
 
-/* Active */
 .bottom-nav .nav-item.active {
     background: linear-gradient(135deg, rgba(59, 130, 246, 0.35), rgba(37, 99, 235, 0.25));
     border-color: rgba(59, 130, 246, 0.6);
@@ -995,123 +766,6 @@ body::before {
     color: #3b82f6;
 }
 
-/* Media (မပြင်ဘူး) */
-@media (min-width: 400px) {
-    .bottom-nav {
-        bottom: 32px;
-        left: 20px;
-        right: 20px;
-        border-radius: 70px;
-        padding: 12px 32px;
-        gap: 36px;
-    }
-
-    .bottom-nav .nav-item {
-        max-width: 78px;
-        padding: 10px 0;
-    }
-
-    .bottom-nav .nav-item i {
-        font-size: 1.3rem;
-    }
-
-    .bottom-nav .nav-item span.text {
-        font-size: 0.68rem;
-    }
-}
-
-@media (min-width: 500px) {
-    .bottom-nav {
-        bottom: 36px;
-        left: 24px;
-        right: 24px;
-        border-radius: 80px;
-        padding: 12px 36px;
-        gap: 44px;
-    }
-
-    .bottom-nav .nav-item {
-        max-width: 84px;
-        padding: 10px 0;
-    }
-
-    .bottom-nav .nav-item i {
-        font-size: 1.4rem;
-    }
-
-    .bottom-nav .nav-item span.text {
-        font-size: 0.72rem;
-    }
-}
-
-/* Safe area */
-@supports (padding-bottom: env(safe-area-inset-bottom)) {
-    .bottom-nav {
-        bottom: calc(28px + env(safe-area-inset-bottom));
-    }
-
-    @media (min-width: 400px) {
-        .bottom-nav {
-            bottom: calc(32px + env(safe-area-inset-bottom));
-        }
-    }
-
-    @media (min-width: 500px) {
-        .bottom-nav {
-            bottom: calc(36px + env(safe-area-inset-bottom));
-        }
-    }
-}
-
-/* Mobile */
-@media (max-width: 480px) {
-    .bottom-nav {
-        bottom: 24px;
-        left: 12px;
-        right: 12px;
-        border-radius: 56px;
-        padding: 8px 24px;
-        gap: 20px;
-    }
-
-    .bottom-nav .nav-item {
-        max-width: 62px;
-        padding: 6px 0;
-    }
-
-    .bottom-nav .nav-item i {
-        font-size: 1.1rem;
-    }
-
-    .bottom-nav .nav-item span.text {
-        font-size: 0.58rem;
-    }
-}
-
-@media (max-width: 380px) {
-    .bottom-nav {
-        bottom: 20px;
-        left: 10px;
-        right: 10px;
-        border-radius: 48px;
-        padding: 6px 20px;
-        gap: 16px;
-    }
-
-    .bottom-nav .nav-item {
-        max-width: 56px;
-        padding: 5px 0;
-    }
-
-    .bottom-nav .nav-item i {
-        font-size: 1rem;
-    }
-
-    .bottom-nav .nav-item span.text {
-        font-size: 0.52rem;
-    }
-}
-
 /* ========== DETAIL SCREEN STYLES ========== */
 .detail-container {
     width: 100%;
@@ -1120,10 +774,10 @@ body::before {
     background: #000000;
 }
 
-/* Banner Image */
 .detail-banner {
     width: 100%;
-    height: 220px;
+    height: 35vh;
+    min-height: 200px;
     background-size: cover;
     background-position: center;
     position: relative;
@@ -1134,11 +788,10 @@ body::before {
     bottom: 0;
     left: 0;
     right: 0;
-    height: 100px;
+    height: 120px;
     background: linear-gradient(to top, #000000, transparent);
 }
 
-/* Back Button */
 .back-button {
     position: fixed;
     top: 20px;
@@ -1163,15 +816,13 @@ body::before {
     transform: scale(0.9);
 }
 
-/* Detail Content */
 .detail-content {
-    padding: 20px;
+    padding: 16px;
     margin-top: -60px;
     position: relative;
     z-index: 5;
 }
 
-/* Anime Info Row (Image + Name) */
 .detail-info-row {
     display: flex;
     gap: 16px;
@@ -1198,19 +849,28 @@ body::before {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    min-width: 0;
 }
 
 .detail-anime-name {
-    font-size: 1.6rem;
+    font-size: 1.4rem;
     font-weight: bold;
     margin-bottom: 8px;
     color: white;
+    word-break: break-word;
 }
 
-.detail-anime-name-mm {
-    font-size: 0.9rem;
-    color: #888;
+.detail-studio-name {
+    font-size: 0.8rem;
+    color: #3b82f6;
     margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.detail-studio-name i {
+    font-size: 0.7rem;
 }
 
 .detail-genres {
@@ -1228,86 +888,63 @@ body::before {
     border: 1px solid rgba(59, 130, 246, 0.5);
 }
 
-/* Like and Status Row - တစ်တန်းထဲ ဘေးချင်းကပ်ပြီးပြ */
-.like-status-row {
+/* Like Row */
+.like-comment-row {
     display: flex;
-    gap: 12px;
+    gap: 16px;
     margin-bottom: 20px;
-    align-items: center;
 }
 
-/* Like Button */
-.like-button {
+.total-likes-box {
     flex: 1;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
-    background: linear-gradient(145deg, #1e3a8a, #1e40af);
+    background: linear-gradient(145deg, #1a1a1a, #222);
     padding: 12px;
     border-radius: 30px;
-    cursor: pointer;
-    border: 1px solid rgba(255,255,255,0.2);
+    border: 1px solid #333;
     transition: all 0.2s;
 }
 
-.like-button:active {
+.total-likes-box:active {
     transform: scale(0.98);
+    background: #1e40af;
 }
 
-.like-button i {
-    font-size: 1.3rem;
-    color: white;
+.total-likes-box i {
+    font-size: 1.2rem;
+    color: #3b82f6;
 }
 
-.like-button .like-count {
-    font-size: 1rem;
-    font-weight: bold;
-    color: white;
-}
-
-.like-button.liked i {
-    color: #ff4d4d;
-}
-
-/* Status Badge - Like နဲ့ အတူတူ တစ်တန်းထဲမှာပဲ */
-.status-badge {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 12px 18px;
-    border-radius: 30px;
-    font-weight: bold;
-    font-size: 0.85rem;
-    border: 1px solid rgba(255,255,255,0.2);
-    white-space: nowrap;
-}
-
-.status-badge.ongoing {
-    background: linear-gradient(145deg, #b45309, #c2410c);
-    color: #ffedd5;
-}
-
-.status-badge.completed {
-    background: linear-gradient(145deg, #065f46, #047857);
-    color: #d1fae5;
-}
-
-.status-badge i {
+.total-likes-box span {
     font-size: 0.9rem;
+    font-weight: 500;
 }
 
-/* Telegram Channel Button */
+/* Hide comments box */
+.total-comments-box {
+    display: none;
+}
+
+/* Telegram and Status Row */
+.telegram-status-row {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+}
+
 .telegram-button {
+    flex: 2;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 10px;
     background: linear-gradient(145deg, #1e3a8a, #1e40af);
-    padding: 14px;
+    padding: 12px;
     border-radius: 30px;
-    margin-bottom: 24px;
     cursor: pointer;
     border: 1px solid rgba(255,255,255,0.2);
     transition: all 0.2s;
@@ -1319,17 +956,67 @@ body::before {
     transform: scale(0.98);
 }
 
-.telegram-button i {
-    font-size: 1.3rem;
-}
-
-.telegram-button i:first-child {
-    color: #3b82f6;
-}
-
-.telegram-button span {
-    font-size: 1rem;
+/* FIXED: Status Badge - single icon only */
+.status-badge {
+    flex: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px 12px;
+    border-radius: 30px;
     font-weight: bold;
+    font-size: 0.75rem;
+    border: 1px solid rgba(255,255,255,0.2);
+    white-space: nowrap;
+}
+
+.status-badge i {
+    font-size: 0.8rem;
+    margin-right: 4px;
+}
+
+.status-badge span {
+    display: inline;
+}
+
+.status-badge.ongoing {
+    background: linear-gradient(145deg, #b45309, #c2410c);
+    color: #ffedd5;
+}
+
+.status-badge.coming-soon {
+    background: linear-gradient(145deg, #065f46, #047857);
+    color: #d1fae5;
+}
+
+.status-badge.completed {
+    background: linear-gradient(145deg, #1e40af, #2563eb);
+    color: white;
+}
+
+/* FIXED: Next Episode Date - single icon only */
+.next-ep-date {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    background: rgba(59, 130, 246, 0.15);
+    padding: 8px 12px;
+    border-radius: 30px;
+    margin-bottom: 24px;
+    font-size: 0.7rem;
+    color: #3b82f6;
+    border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.next-ep-date i {
+    font-size: 0.7rem;
+    margin-right: 2px;
+}
+
+.next-ep-date span {
+    display: inline;
 }
 
 /* Episode Section */
@@ -1341,10 +1028,6 @@ body::before {
     display: flex;
     align-items: center;
     gap: 8px;
-}
-
-.episode-section-title i {
-    font-size: 1rem;
 }
 
 .episode-list {
@@ -1363,13 +1046,13 @@ body::before {
     border-radius: 12px;
     border: 1px solid #333;
     transition: all 0.2s;
+    cursor: pointer;
 }
 
 .episode-item:active {
     transform: scale(0.99);
 }
 
-/* Episode Image */
 .episode-image {
     width: 45px;
     height: 45px;
@@ -1387,18 +1070,13 @@ body::before {
 .episode-info {
     flex: 1;
     margin-left: 12px;
-}
-
-.episode-number {
-    font-weight: bold;
-    color: #3b82f6;
-    font-size: 0.75rem;
-    margin-bottom: 2px;
+    min-width: 0;
 }
 
 .episode-title {
     font-size: 0.85rem;
     color: #ccc;
+    word-break: break-word;
 }
 
 .episode-play {
@@ -1424,66 +1102,7 @@ body::before {
     font-size: 0.9rem;
 }
 
-/* Responsive */
-@media (max-width: 380px) {
-    .top-header {
-        padding: 16px 20px;
-    }
-    .logo img {
-        height: 44px;
-    }
-    .search-button a {
-        width: 42px;
-        height: 42px;
-    }
-    .nav-item {
-        width: 68px;
-        height: 54px;
-    }
-    .nav-item i {
-        font-size: 1.3rem;
-    }
-    .nav-item span.text {
-        font-size: 0.6rem;
-    }
-    .detail-anime-name {
-        font-size: 1.3rem;
-    }
-    .detail-small-image {
-        width: 80px;
-        height: 120px;
-    }
-    .detail-banner {
-        height: 180px;
-    }
-    .episode-image {
-        width: 38px;
-        height: 38px;
-    }
-    .episode-title {
-        font-size: 0.75rem;
-    }
-
-}
-
-/* iOS safe area */
-@supports (padding-bottom: env(safe-area-inset-bottom)) {
-    .bottom-nav {
-        padding-bottom: calc(22px + env(safe-area-inset-bottom));
-    }
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Segoe UI', system-ui, sans-serif;
-    background: #000;
-}
-
+/* ========== ACCOUNT MODAL (NAME ONLY - NO PHOTO) ========== */
 .account-modal {
     display: none;
     position: fixed;
@@ -1512,58 +1131,18 @@ body {
 }
 
 .account-logo {
-    margin-bottom: 28px;
+    margin-bottom: 24px;
 }
 
 .logo-img {
-    width: 70px;
-    height: 70px;
+    width: 60px;
+    height: 60px;
     border-radius: 18px;
 }
 
-.profile-circle {
-    width: 100px;
-    height: 100px;
-    background: linear-gradient(145deg, #1e3a8a, #1e40af);
-    border-radius: 50%;
-    margin: 0 auto 12px;
-    position: relative;
-    cursor: pointer;
-    overflow: hidden;
-    border: 3px solid #3b82f6;
-    box-shadow: 0 8px 20px rgba(59,130,246,0.3);
-}
-
-.profile-circle img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.profile-overlay {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: rgba(0,0,0,0.6);
-    padding: 8px;
-    opacity: 0;
-    transition: opacity 0.2s;
-}
-
-.profile-circle:hover .profile-overlay {
-    opacity: 1;
-}
-
-.profile-overlay i {
-    color: white;
-    font-size: 16px;
-}
-
-.photo-hint {
-    font-size: 11px;
-    color: #666;
-    margin-bottom: 24px;
+/* Hide profile circle and photo hint */
+.profile-circle, .photo-hint, #photoInput {
+    display: none;
 }
 
 #accountName {
@@ -1573,8 +1152,9 @@ body {
     border: 1px solid #2a2a3a;
     border-radius: 30px;
     color: white;
-    font-size: 15px;
+    font-size: 16px;
     margin-bottom: 20px;
+    text-align: center;
 }
 
 #accountName:focus {
@@ -1616,29 +1196,7 @@ body {
     to { transform: rotate(360deg); }
 }
 
-@media (max-width: 480px) {
-    .account-modal-content {
-        padding: 24px 20px;
-    }
-    .logo-img {
-        width: 60px;
-        height: 60px;
-    }
-    .profile-circle {
-        width: 85px;
-        height: 85px;
-    }
-    #accountName {
-        padding: 12px 14px;
-        font-size: 14px;
-    }
-    #registerBtn {
-        padding: 12px;
-        font-size: 15px;
-    }
-}
-
-/* Profile Screen - အလယ်မှာ ပိုကြီးအောင်ပြမယ် */
+/* ========== PROFILE SCREEN (NAME ONLY - NO PHOTO) ========== */
 #profileScreen {
     display: none;
     position: fixed;
@@ -1657,19 +1215,23 @@ body {
     display: flex;
 }
 
-/* Profile Container - ပိုကြီးအောင် */
-.profile-container {
+.profile-wrapper {
     width: 90%;
     max-width: 450px;
     background: linear-gradient(145deg, #0f0f1a, #0a0a0f);
     border-radius: 40px;
-    padding: 32px 28px 40px;
+    padding: 24px 20px 32px;
     border: 1px solid rgba(59, 130, 246, 0.3);
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
     position: relative;
     animation: slideUp 0.3s ease;
-    overflow-y: auto;
     max-height: 85vh;
+    overflow-y: auto;
+}
+
+/* Hide profile avatar */
+.profile-avatar {
+    display: none;
 }
 
 @keyframes slideUp {
@@ -1683,13 +1245,12 @@ body {
     }
 }
 
-/* Back Button - ပိုကြီးအောင် */
 .profile-back-btn {
     position: absolute;
-    top: 20px;
-    left: 20px;
-    width: 44px;
-    height: 44px;
+    top: 16px;
+    left: 16px;
+    width: 40px;
+    height: 40px;
     background: rgba(59, 130, 246, 0.2);
     backdrop-filter: blur(10px);
     border-radius: 50%;
@@ -1703,12 +1264,8 @@ body {
 }
 
 .profile-back-btn i {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     color: #3b82f6;
-}
-
-.profile-back-btn span {
-    display: none;
 }
 
 .profile-back-btn:active {
@@ -1716,16 +1273,15 @@ body {
     background: rgba(59, 130, 246, 0.4);
 }
 
-/* Profile Header Title - ပိုကြီးအောင် */
 .profile-header-title {
     text-align: center;
-    margin-bottom: 32px;
-    margin-top: 12px;
+    margin-bottom: 28px;
+    margin-top: 8px;
 }
 
 .profile-header-title h2 {
     color: white;
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     font-weight: bold;
     background: linear-gradient(135deg, #fff, #3b82f6);
     -webkit-background-clip: text;
@@ -1733,37 +1289,21 @@ body {
     background-clip: text;
 }
 
-/* Profile Avatar - ပိုကြီးအောင် */
-.profile-avatar {
-    width: 130px;
-    height: 130px;
-    margin: 0 auto 28px;
-    border-radius: 50%;
-    overflow: hidden;
-    border: 4px solid #3b82f6;
-    box-shadow: 0 8px 30px rgba(59, 130, 246, 0.5);
-}
-
-.profile-avatar img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-/* Profile Info - ပိုကြီးအောင် */
 .profile-info-simple {
     background: rgba(255, 255, 255, 0.05);
     border-radius: 24px;
-    padding: 12px 20px;
-    margin-bottom: 32px;
+    padding: 12px 16px;
+    margin-bottom: 28px;
 }
 
 .info-simple-row {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 18px 0;
+    padding: 14px 0;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    flex-wrap: wrap;
+    gap: 8px;
 }
 
 .info-simple-row:last-child {
@@ -1775,37 +1315,35 @@ body {
     align-items: center;
     gap: 12px;
     color: #9ca3af;
-    font-size: 1rem;
+    font-size: 0.95rem;
     font-weight: 500;
 }
 
 .info-simple-label i {
-    width: 26px;
-    font-size: 1.2rem;
+    width: 24px;
+    font-size: 1.1rem;
     color: #3b82f6;
 }
 
 .info-simple-value {
     color: white;
-    font-size: 1rem;
+    font-size: 0.9rem;
     font-weight: 500;
     word-break: break-all;
     text-align: right;
-    max-width: 60%;
     background: rgba(59, 130, 246, 0.15);
     padding: 6px 14px;
     border-radius: 30px;
 }
 
-/* Edit Profile Button - ပိုကြီးအောင် */
 .edit-profile-btn {
     width: 100%;
-    padding: 16px;
+    padding: 14px;
     background: linear-gradient(135deg, #2563eb, #1e40af);
     border: none;
     border-radius: 50px;
     color: white;
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: bold;
     display: flex;
     align-items: center;
@@ -1815,15 +1353,11 @@ body {
     transition: all 0.2s;
 }
 
-.edit-profile-btn i {
-    font-size: 1.2rem;
-}
-
 .edit-profile-btn:active {
     transform: scale(0.98);
 }
 
-/* Edit Modal - ပိုကြီးအောင် */
+/* ========== EDIT MODAL (NAME ONLY - NO PHOTO) ========== */
 .edit-modal {
     display: none;
     position: fixed;
@@ -1846,7 +1380,7 @@ body {
     max-width: 400px;
     background: #0f0f1a;
     border-radius: 36px;
-    padding: 32px 28px;
+    padding: 24px 20px;
     border: 1px solid rgba(59, 130, 246, 0.3);
     text-align: center;
     animation: slideUp 0.3s ease;
@@ -1856,24 +1390,24 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 28px;
+    margin-bottom: 24px;
 }
 
 .edit-modal-header h3 {
     color: white;
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     margin: 0;
 }
 
 .close-edit {
     background: rgba(255, 255, 255, 0.1);
     border: none;
-    width: 40px;
-    height: 40px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
     color: white;
     cursor: pointer;
-    font-size: 1.1rem;
+    font-size: 1rem;
     transition: all 0.2s;
 }
 
@@ -1881,53 +1415,21 @@ body {
     transform: scale(0.9);
 }
 
-.edit-profile-circle {
-    width: 120px;
-    height: 120px;
-    background: linear-gradient(145deg, #1e3a8a, #1e40af);
-    border-radius: 50%;
-    margin: 0 auto 20px;
-    position: relative;
-    cursor: pointer;
-    overflow: hidden;
-    border: 3px solid #3b82f6;
-}
-
-.edit-profile-circle img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.edit-overlay {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: rgba(0, 0, 0, 0.6);
-    padding: 10px;
-    opacity: 0;
-    transition: opacity 0.2s;
-}
-
-.edit-profile-circle:hover .edit-overlay {
-    opacity: 1;
-}
-
-.edit-overlay i {
-    color: white;
-    font-size: 18px;
+/* Hide edit profile circle and photo input */
+.edit-profile-circle, #editPhotoInput {
+    display: none;
 }
 
 #editName {
     width: 100%;
-    padding: 16px 18px;
+    padding: 14px 16px;
     background: #111;
     border: 1px solid #2a2a3a;
     border-radius: 40px;
     color: white;
     font-size: 1rem;
-    margin: 24px 0;
+    margin: 20px 0;
+    text-align: center;
 }
 
 #editName:focus {
@@ -1937,12 +1439,12 @@ body {
 
 .save-btn {
     width: 100%;
-    padding: 16px;
+    padding: 14px;
     background: linear-gradient(135deg, #2563eb, #1e40af);
     border: none;
     border-radius: 50px;
     color: white;
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: bold;
     cursor: pointer;
 }
@@ -1951,56 +1453,7 @@ body {
     transform: scale(0.98);
 }
 
-/* Responsive - ဖုန်းငယ်အတွက် */
-@media (max-width: 480px) {
-    .profile-container {
-        width: 92%;
-        max-width: 400px;
-        padding: 28px 20px 36px;
-    }
-    
-    .profile-header-title h2 {
-        font-size: 1.6rem;
-    }
-    
-    .profile-avatar {
-        width: 110px;
-        height: 110px;
-    }
-    
-    .info-simple-label {
-        font-size: 0.9rem;
-        gap: 10px;
-    }
-    
-    .info-simple-label i {
-        width: 22px;
-        font-size: 1rem;
-    }
-    
-    .info-simple-value {
-        font-size: 0.9rem;
-        padding: 5px 12px;
-    }
-    
-    .edit-profile-btn {
-        padding: 14px;
-        font-size: 1rem;
-    }
-    
-    .profile-back-btn {
-        width: 40px;
-        height: 40px;
-        top: 16px;
-        left: 16px;
-    }
-    
-    .profile-back-btn i {
-        font-size: 1rem;
-    }
-}
-
-/* ========== FAQ SCREEN STYLES ========== */
+/* ========== FAQ SCREEN ========== */
 #faqScreen {
     background: linear-gradient(135deg, #0a0a0a 0%, #000000 100%);
     overflow-y: auto;
@@ -2008,17 +1461,16 @@ body {
 
 .faq-container {
     min-height: 100%;
-    padding: 24px 20px 40px;
+    padding: 20px 16px 30px;
     position: relative;
 }
 
-/* Back Button */
 .faq-back-btn {
     position: fixed;
-    top: 20px;
-    left: 20px;
-    width: 44px;
-    height: 44px;
+    top: 16px;
+    left: 16px;
+    width: 40px;
+    height: 40px;
     background: rgba(59, 130, 246, 0.2);
     backdrop-filter: blur(10px);
     border-radius: 50%;
@@ -2032,7 +1484,7 @@ body {
 }
 
 .faq-back-btn i {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     color: #3b82f6;
 }
 
@@ -2041,44 +1493,41 @@ body {
     background: rgba(59, 130, 246, 0.4);
 }
 
-/* Header */
 .faq-header {
     text-align: center;
     margin-top: 40px;
-    margin-bottom: 32px;
+    margin-bottom: 28px;
 }
 
 .faq-header i {
-    font-size: 3rem;
+    font-size: 2.5rem;
     color: #3b82f6;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
 }
 
 .faq-header h2 {
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     font-weight: bold;
     background: linear-gradient(135deg, #fff, #3b82f6);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
 }
 
 .faq-header p {
     color: #9ca3af;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
 }
 
-/* FAQ List */
 .faq-list {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 12px;
     max-width: 500px;
     margin: 0 auto;
 }
 
-/* FAQ Item */
 .faq-item {
     background: rgba(20, 20, 30, 0.8);
     border-radius: 20px;
@@ -2090,8 +1539,8 @@ body {
 .faq-question {
     display: flex;
     align-items: center;
-    gap: 14px;
-    padding: 18px 20px;
+    gap: 12px;
+    padding: 14px 16px;
     cursor: pointer;
     transition: all 0.2s;
 }
@@ -2101,14 +1550,14 @@ body {
 }
 
 .faq-question i:first-child {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     color: #3b82f6;
-    width: 28px;
+    width: 24px;
 }
 
 .faq-question span {
     flex: 1;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     font-weight: 500;
     color: #fff;
 }
@@ -2123,24 +1572,23 @@ body {
     transform: rotate(180deg);
 }
 
-/* FAQ Answer */
 .faq-answer {
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.3s ease;
-    padding: 0 20px;
+    padding: 0 16px;
     border-top: none;
 }
 
 .faq-item.active .faq-answer {
     max-height: 200px;
-    padding: 0 20px 18px 20px;
+    padding: 0 16px 14px 16px;
     border-top: 1px solid rgba(59, 130, 246, 0.2);
 }
 
 .faq-answer p {
     color: #cbd5e1;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     line-height: 1.5;
     margin: 0;
 }
@@ -2151,63 +1599,19 @@ body {
     gap: 8px;
     color: #3b82f6;
     text-decoration: none;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     word-break: break-all;
     background: rgba(59, 130, 246, 0.1);
-    padding: 8px 12px;
+    padding: 6px 10px;
     border-radius: 30px;
     width: 100%;
-}
-
-.faq-link i {
-    font-size: 1rem;
 }
 
 .faq-link:active {
     background: rgba(59, 130, 246, 0.2);
 }
 
-/* Responsive */
-@media (max-width: 480px) {
-    .faq-container {
-        padding: 20px 16px 30px;
-    }
-    
-    .faq-header i {
-        font-size: 2.5rem;
-    }
-    
-    .faq-header h2 {
-        font-size: 1.5rem;
-    }
-    
-    .faq-question {
-        padding: 14px 16px;
-        gap: 10px;
-    }
-    
-    .faq-question span {
-        font-size: 0.85rem;
-    }
-    
-    .faq-question i:first-child {
-        font-size: 1rem;
-        width: 24px;
-    }
-    
-    .faq-back-btn {
-        width: 38px;
-        height: 38px;
-        top: 16px;
-        left: 16px;
-    }
-    
-    .faq-back-btn i {
-        font-size: 1rem;
-    }
-}
-
-/* ========== STUDIO SCREEN STYLES ========== */
+/* ========== STUDIO SCREENS ========== */
 #studioScreen, #studioAnimeScreen {
     background: linear-gradient(135deg, #0a0a0a 0%, #000000 100%);
     overflow-y: auto;
@@ -2223,19 +1627,18 @@ body {
 
 .studio-container, .studio-anime-container {
     min-height: 100%;
-    padding: 24px 16px 40px;
+    padding: 20px 12px 30px;
     position: relative;
     flex: 1;
     overflow-y: auto;
 }
 
-/* Back Button */
 .studio-back-btn, .studio-anime-back-btn {
     position: fixed;
-    top: 20px;
-    left: 20px;
-    width: 44px;
-    height: 44px;
+    top: 16px;
+    left: 16px;
+    width: 40px;
+    height: 40px;
     background: rgba(59, 130, 246, 0.2);
     backdrop-filter: blur(10px);
     border-radius: 50%;
@@ -2249,7 +1652,7 @@ body {
 }
 
 .studio-back-btn i, .studio-anime-back-btn i {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     color: #3b82f6;
 }
 
@@ -2257,15 +1660,14 @@ body {
     transform: scale(0.92);
 }
 
-/* Header - Title Only (No Icon) */
 .studio-header {
     text-align: center;
     margin-top: 40px;
-    margin-bottom: 32px;
+    margin-bottom: 28px;
 }
 
 .studio-header h2 {
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     font-weight: bold;
     background: linear-gradient(135deg, #fff, #3b82f6);
     -webkit-background-clip: text;
@@ -2274,16 +1676,14 @@ body {
     margin: 0;
 }
 
-/* Studio Grid - 3 columns */
 .studio-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 12px;
     max-width: 100%;
     margin: 0 auto;
 }
 
-/* Studio Card */
 .studio-card {
     background: rgba(20, 20, 30, 0.8);
     border-radius: 16px;
@@ -2310,15 +1710,15 @@ body {
 }
 
 .studio-card-info {
-    padding: 12px 8px;
+    padding: 10px 6px;
     text-align: center;
 }
 
 .studio-card-name {
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     font-weight: 600;
     color: white;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -2328,41 +1728,36 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
+    gap: 4px;
     background: linear-gradient(135deg, #2563eb, #1e40af);
-    padding: 6px 10px;
+    padding: 5px 8px;
     border-radius: 20px;
-    font-size: 0.65rem;
+    font-size: 0.6rem;
     color: white;
     cursor: pointer;
     transition: all 0.2s;
-}
-
-.studio-view-btn i {
-    font-size: 0.6rem;
 }
 
 .studio-view-btn:active {
     transform: scale(0.95);
 }
 
-/* Studio Anime Screen Header */
 .studio-anime-header {
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 16px;
     margin-top: 40px;
-    margin-bottom: 28px;
+    margin-bottom: 24px;
     background: rgba(59, 130, 246, 0.1);
-    padding: 20px;
-    border-radius: 28px;
+    padding: 16px;
+    border-radius: 24px;
     border: 1px solid rgba(59, 130, 246, 0.3);
 }
 
 .studio-avatar {
-    width: 80px;
-    height: 80px;
-    border-radius: 24px;
+    width: 70px;
+    height: 70px;
+    border-radius: 20px;
     overflow: hidden;
     background: linear-gradient(145deg, #1e3a8a, #1e40af);
     border: 2px solid #3b82f6;
@@ -2376,23 +1771,22 @@ body {
 }
 
 .studio-info h2 {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     font-weight: bold;
     color: white;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
 }
 
 .studio-info p {
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     color: #3b82f6;
 }
 
-/* Studio Anime Grid - 2 columns */
 .studio-anime-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
-    max-width: 500px;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 12px;
+    max-width: 100%;
     margin: 0 auto;
 }
 
@@ -2422,12 +1816,12 @@ body {
 }
 
 .studio-anime-card-info {
-    padding: 10px;
+    padding: 8px;
     text-align: center;
 }
 
 .studio-anime-card-name {
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     font-weight: 600;
     color: white;
     white-space: nowrap;
@@ -2435,54 +1829,134 @@ body {
     text-overflow: ellipsis;
 }
 
-/* Responsive */
-@media (max-width: 550px) {
-    .studio-grid {
-        gap: 12px;
-    }
-    .studio-card-name {
-        font-size: 0.7rem;
-    }
-    .studio-view-btn {
-        font-size: 0.6rem;
-        padding: 5px 8px;
-    }
+/* ========== VIDEO MODAL - 16:9 PERFECT CENTER ========== */
+#videoModal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2000;
+    background: #000;
 }
 
-@media (max-width: 450px) {
-    .studio-grid {
-        gap: 10px;
-    }
-    .studio-card-name {
-        font-size: 0.65rem;
-    }
-    .studio-view-btn span {
-        font-size: 0.55rem;
-    }
+#videoModal.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-@media (max-width: 380px) {
-    .studio-grid {
-        gap: 8px;
-    }
-    .studio-card-name {
-        font-size: 0.6rem;
-    }
-    .studio-view-btn {
-        padding: 4px 6px;
-    }
-    .studio-view-btn span {
-        font-size: 0.5rem;
-    }
+.video-modal-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: #000;
 }
 
-* {
-    -webkit-tap-highlight-color: transparent;
-    tap-highlight-color: transparent;
-    outline: none;
+.video-modal-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.6), transparent);
+    z-index: 10;
+    pointer-events: none;
 }
 
-/* ===== GLOBAL TOUCH FX ===== */
+.video-modal-back {
+    background: rgba(255,255,255,0.2);
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: auto;
+    transition: all 0.2s;
+}
+
+.video-modal-back:active {
+    transform: scale(0.95);
+}
+
+.video-modal-title {
+    font-weight: 600;
+    font-size: 1rem;
+    color: white;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex: 1;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+    pointer-events: auto;
+}
+
+.video-modal-body {
+    flex: 1;
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 20px;
+}
+
+.video-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 90%;
+    background: #000;
+    aspect-ratio: 16 / 9;
+    margin: 0 auto;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.video-element {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    background: #000;
+    display: block;
+}
+
+.video-wrapper iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 12px;
+}
+
+.video-wrapper > div {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+@media (max-width: 600px) {
+    .video-wrapper { max-width: 95%; }
+    .video-modal-body { padding: 10px; }
+}
+
+/* ========== TOUCH EFFECTS ========== */
 .touch-ripple {
     position: fixed;
     left: 0;
@@ -2494,35 +1968,17 @@ body {
     transform: translate(-50%, -50%) scale(0.18);
     z-index: 99999;
     opacity: 0;
-    background:
-        radial-gradient(circle,
-            rgba(135, 205, 255, 1) 0%,
-            rgba(90, 160, 255, 0.92) 30%,
-            rgba(120, 120, 255, 0.72) 55%,
-            rgba(170, 90, 255, 0.38) 76%,
-            rgba(170, 90, 255, 0) 100%);
-    box-shadow:
-        0 0 10px rgba(70, 150, 255, 0.95),
-        0 0 20px rgba(130, 90, 255, 0.72),
-        0 0 30px rgba(80, 120, 255, 0.42);
+    background: radial-gradient(circle, rgba(135, 205, 255, 1) 0%, rgba(90, 160, 255, 0.92) 30%, rgba(120, 120, 255, 0.72) 55%, rgba(170, 90, 255, 0.38) 76%, rgba(170, 90, 255, 0) 100%);
+    box-shadow: 0 0 10px rgba(70, 150, 255, 0.95), 0 0 20px rgba(130, 90, 255, 0.72), 0 0 30px rgba(80, 120, 255, 0.42);
     filter: saturate(1.35);
     mix-blend-mode: screen;
     animation: tapRipple 500ms cubic-bezier(.18,.72,.22,1);
 }
 
 @keyframes tapRipple {
-    0% {
-        opacity: 0.96;
-        transform: translate(-50%, -50%) scale(0.16);
-    }
-    60% {
-        opacity: 0.76;
-        transform: translate(-50%, -50%) scale(0.82);
-    }
-    100% {
-        opacity: 0;
-        transform: translate(-50%, -50%) scale(1.06);
-    }
+    0% { opacity: 0.96; transform: translate(-50%, -50%) scale(0.16); }
+    60% { opacity: 0.76; transform: translate(-50%, -50%) scale(0.82); }
+    100% { opacity: 0; transform: translate(-50%, -50%) scale(1.06); }
 }
 
 .touch-trail {
@@ -2536,23 +1992,12 @@ body {
     transform-origin: left center;
     mix-blend-mode: screen;
     opacity: 0.96;
-    background: linear-gradient(
-        90deg,
-        rgba(80, 170, 255, 0) 0%,
-        rgba(80, 170, 255, 0.82) 14%,
-        rgba(90, 180, 255, 0.98) 32%,
-        rgba(120, 135, 255, 0.98) 58%,
-        rgba(165, 95, 255, 0.94) 82%,
-        rgba(165, 95, 255, 0.35) 100%
-    );
-    box-shadow:
-        0 0 8px rgba(70, 150, 255, 0.92),
-        0 0 16px rgba(145, 85, 255, 0.72);
+    background: linear-gradient(90deg, rgba(80, 170, 255, 0) 0%, rgba(80, 170, 255, 0.82) 14%, rgba(90, 180, 255, 0.98) 32%, rgba(120, 135, 255, 0.98) 58%, rgba(165, 95, 255, 0.94) 82%, rgba(165, 95, 255, 0.35) 100%);
+    box-shadow: 0 0 8px rgba(70, 150, 255, 0.92), 0 0 16px rgba(145, 85, 255, 0.72);
     filter: saturate(1.45) blur(0.15px);
     animation: trailFade 360ms linear forwards;
 }
 
-/* tail / အမြှီး */
 .touch-trail::after {
     content: "";
     position: absolute;
@@ -2562,66 +2007,204 @@ body {
     height: 7px;
     transform: translateY(-50%);
     border-radius: 999px;
-    background: linear-gradient(
-        90deg,
-        rgba(170, 90, 255, 0.82) 0%,
-        rgba(170, 90, 255, 0.38) 55%,
-        rgba(170, 90, 255, 0) 100%
-    );
+    background: linear-gradient(90deg, rgba(170, 90, 255, 0.82) 0%, rgba(170, 90, 255, 0.38) 55%, rgba(170, 90, 255, 0) 100%);
     filter: blur(0.3px);
 }
 
 @keyframes trailFade {
-    0% {
-        opacity: 0.96;
-    }
-    100% {
-        opacity: 0;
-    }
+    0% { opacity: 0.96; }
+    100% { opacity: 0; }
 }
 
-* {
-    -webkit-tap-highlight-color: transparent;
+/* ========== RESPONSIVE MEDIA QUERIES ========== */
+@media (min-width: 360px) and (max-width: 399px) {
+    .anime-grid { grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 14px; }
+    .bottom-nav { gap: 20px; padding: 8px 24px; }
+    .bottom-nav .nav-item { max-width: 70px; }
+    .bottom-nav .nav-item i { font-size: 1.2rem; }
+    .bottom-nav .nav-item span.text { font-size: 0.65rem; }
 }
 
-.main-content {
-    flex: 1;
-    overflow-y: auto;
-    padding: 16px;
-    padding-bottom: 120px; /* 🔥 အောက်မှာ space ထည့် */
-}</style><script>// ==================== FULL JAVASCRIPT FILE (script.js) ====================
-// ==================== ACCOUNT SYSTEM WITH SUPABASE ====================
+@media (min-width: 400px) and (max-width: 499px) {
+    .anime-grid { grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 16px; }
+    .bottom-nav { bottom: 24px; left: 16px; right: 16px; border-radius: 70px; padding: 10px 28px; gap: 28px; }
+    .bottom-nav .nav-item { max-width: 78px; padding: 8px 0; }
+    .bottom-nav .nav-item i { font-size: 1.3rem; }
+    .bottom-nav .nav-item span.text { font-size: 0.68rem; }
+    .studio-grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); }
+}
 
-// ---------- 1. DOM Elements ----------
+@media (min-width: 500px) and (max-width: 599px) {
+    .anime-grid { grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 18px; }
+    .bottom-nav { bottom: 28px; left: 20px; right: 20px; border-radius: 80px; padding: 10px 32px; gap: 36px; }
+    .bottom-nav .nav-item { max-width: 85px; padding: 9px 0; }
+    .bottom-nav .nav-item i { font-size: 1.4rem; }
+    .bottom-nav .nav-item span.text { font-size: 0.72rem; }
+    .studio-grid { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); }
+    .studio-anime-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+}
+
+@media (max-width: 359px) {
+    .top-header { padding: 12px 16px; }
+    .logo img { height: 10vh; max-height: 50px; }
+    .search-button a { width: 38px; height: 38px; }
+    .anime-grid { gap: 10px; }
+    .anime-card .genre-tag { font-size: 0.45rem; padding: 1px 4px; }
+    .play-button { width: 28px; height: 28px; }
+    .bottom-nav { bottom: 16px; left: 10px; right: 10px; border-radius: 48px; padding: 6px 16px; gap: 12px; }
+    .bottom-nav .nav-item { max-width: 55px; padding: 5px 0; }
+    .bottom-nav .nav-item i { font-size: 1rem; }
+    .bottom-nav .nav-item span.text { font-size: 0.52rem; }
+    .detail-small-image { width: 80px; height: 120px; }
+    .detail-anime-name { font-size: 1.2rem; }
+    .studio-grid { grid-template-columns: repeat(auto-fill, minmax(85px, 1fr)); gap: 10px; }
+    .studio-card-name { font-size: 0.65rem; }
+    .studio-anime-grid { grid-template-columns: repeat(auto-fill, minmax(125px, 1fr)); gap: 10px; }
+}
+
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+    .bottom-nav { bottom: max(16px, env(safe-area-inset-bottom)); padding-bottom: max(8px, env(safe-area-inset-bottom)); }
+    .main-content { padding-bottom: max(90px, calc(70px + env(safe-area-inset-bottom))); }
+}
+
+@media (orientation: landscape) and (max-height: 500px) {
+    .top-header { padding: 8px 16px; }
+    .logo img { height: 8vh; max-height: 45px; }
+    .bottom-nav { bottom: 12px; padding: 5px 16px; gap: 16px; }
+    .bottom-nav .nav-item { padding: 4px 0; }
+    .bottom-nav .nav-item i { font-size: 0.9rem; }
+    .bottom-nav .nav-item span.text { font-size: 0.5rem; }
+    .main-content { padding-bottom: 70px; }
+    .anime-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px; }
+    .detail-banner { height: 180px; }
+    .video-modal-header { padding: 8px 12px; }
+    .video-modal-back { width: 34px; height: 34px; }
+}
+
+@media (min-width: 600px) {
+    .anime-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
+    .bottom-nav { max-width: 500px; left: 50%; right: auto; transform: translateX(-50%); bottom: 30px; padding: 12px 40px; gap: 48px; }
+    .bottom-nav .nav-item { max-width: 90px; padding: 10px 0; }
+    .bottom-nav .nav-item i { font-size: 1.5rem; }
+    .bottom-nav .nav-item span.text { font-size: 0.75rem; }
+    .studio-grid { max-width: 600px; margin: 0 auto; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
+}</style><script>// ==================== FIREBASE CONFIGURATIONS (MULTI-DATABASE) ====================
+
+// Server 1 - Main Database
+const firebaseConfig1 = {
+    apiKey: "AIzaSyB1TOCB2vld44WsV1q7x0POHkhQZwA0TnE",
+    authDomain: "sc-server-1.firebaseapp.com",
+    projectId: "sc-server-1",
+    storageBucket: "sc-server-1.firebasestorage.app",
+    messagingSenderId: "964668973412",
+    appId: "1:964668973412:web:b1c997884f6c0e77e5da71",
+    measurementId: "G-6YMJHDXT6H"
+};
+
+// Server 2 - Secondary Database
+const firebaseConfig2 = {
+    apiKey: "AIzaSyDqwYr7TXAFHEvBXGToUorojMiSyYDBUs8",
+    authDomain: "sc-server-2.firebaseapp.com",
+    projectId: "sc-server-2",
+    storageBucket: "sc-server-2.firebasestorage.app",
+    messagingSenderId: "84063310238",
+    appId: "1:84063310238:web:97e763abfe960c5562068f",
+    measurementId: "G-3JB1BP7JWS"
+};
+
+// Server 3 - Tertiary Database
+const firebaseConfig3 = {
+    apiKey: "AIzaSyAJHjU3cx-h9DfkJnzha1GKpuQcLrSIva4",
+    authDomain: "sc-server-3.firebaseapp.com",
+    projectId: "sc-server-3",
+    storageBucket: "sc-server-3.firebasestorage.app",
+    messagingSenderId: "140160091682",
+    appId: "1:140160091682:web:4bb9a2d4006597eecdec7b",
+    measurementId: "G-5QYSPJ1P5Q"
+};
+
+// Initialize Firebase Servers
+firebase.initializeApp(firebaseConfig1, 'server1');
+firebase.initializeApp(firebaseConfig2, 'server2');
+firebase.initializeApp(firebaseConfig3, 'server3');
+
+// Firestore instances
+const db1 = firebase.app('server1').firestore();
+const db2 = firebase.app('server2').firestore();
+const db3 = firebase.app('server3').firestore();
+
+const allDBs = [
+    { db: db1, name: 'server1', count: 0 },
+    { db: db2, name: 'server2', count: 0 },
+    { db: db3, name: 'server3', count: 0 }
+];
+
+// ==================== HELPER: GET SERVER WITH LEAST DATA ====================
+async function getServerWithLeastData(animeName, episodeNo) {
+    const safeAnimeName = sanitizeFirebasePath(animeName);
+    const docId = `${safeAnimeName}_ep_${episodeNo}`;
+    
+    for (let server of allDBs) {
+        server.count = 0;
+    }
+    
+    for (let server of allDBs) {
+        try {
+            const commentsSnap = await server.db.collection('data').doc(docId).collection('comments').get();
+            server.count += commentsSnap.size;
+            
+            const likesDoc = await server.db.collection('data').doc(docId).get();
+            if (likesDoc.exists) {
+                server.count += likesDoc.data().likeCount || 0;
+            }
+        } catch (error) {
+            console.log(`Server ${server.name} error:`, error);
+            server.count = 999999;
+        }
+    }
+    
+    allDBs.sort((a, b) => a.count - b.count);
+    console.log(`Server counts: ${allDBs.map(s => `${s.name}:${s.count}`).join(', ')}`);
+    
+    return allDBs[0];
+}
+
+async function getActiveDB(animeName, episodeNo) {
+    const bestServer = await getServerWithLeastData(animeName, episodeNo);
+    return bestServer.db;
+}
+
+// ==================== CONSTANTS ====================
+const DEFAULT_PROFILE_IMAGE = "https://i.ibb.co/Ym2hJ5q/Grid-Art-20260321-143922590.png";
+
+// ==================== EPISODE VIDEOS (Google Drive View Links) ====================
+// အပိုင်းသစ်ထည့်ရန် ပုံစံ: { animeId: { episodeNo: "google_drive_view_link" } }
+// ဥပမာ - အပိုင်း 5 ထည့်ရန်: 5: "https://drive.google.com/file/d/xxxxx/view?usp=drive_link",
+const EPISODE_VIDEOS = {
+    1: {
+        1: "https://drive.google.com/file/d/1ZTIM0Ej2lGDTBhHCdWFT6bUxQFW-X2VP/view?usp=drive_link",
+        2: "", 3: "", 4: "", 5: "", 6: "", 7: "", 8: "", 9: "", 10: "", 11: ""
+    },
+    2: {
+        1: "https://drive.google.com/file/d/1y_QjK3wHZHnpvzc8lLD2NlhPEGShDSS_/view?usp=drive_link",
+        2: "https://drive.google.com/file/d/1DaxTEiXZQUmj4_7vxdLubIm-iAbHJewq/view?usp=drive_link",
+        3: "https://drive.google.com/file/d/1dq-V1d_s1yP9EqkkYN-HjrC-26izQznh/view?usp=drive_link",
+        4: "https://drive.google.com/file/d/13WAefLy3di9I0Pt6-nZs61NRdtse8aNQ/view?usp=drive_link",
+        5: "", 6: "", 7: "", 8: "", 9: "", 10: "", 11: ""
+    }
+};
+
+// ==================== ACCOUNT SYSTEM (LOCAL STORAGE ONLY) ====================
+let currentUser = null;
+
 const accountModal = document.getElementById('accountModal');
-const profileCircle = document.getElementById('profileCircle');
-const photoInput = document.getElementById('photoInput');
-const profileImage = document.getElementById('profileImage');
 const accountName = document.getElementById('accountName');
 const registerBtn = document.getElementById('registerBtn');
 
-let currentPhotoBase64 = '';
-
-// Default Profile (SVG)
-const DEFAULT_PROFILE = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%234a5568'/%3E%3Ccircle cx='50' cy='35' r='15' fill='%23e2e8f0'/%3E%3Ccircle cx='35' cy='32' r='2' fill='%23334155'/%3E%3Ccircle cx='65' cy='32' r='2' fill='%23334155'/%3E%3Cpath d='M35 55 Q50 70 65 55' stroke='%23e2e8f0' stroke-width='4' fill='none' stroke-linecap='round'/%3E%3C/svg%3E";
-
-// ---------- 2. Helper Functions ----------
-// User ID (10 လုံး - ဂဏန်းသက်သက်)
 function generateUserId() {
     return Math.floor(1000000000 + Math.random() * 9000000000).toString();
 }
 
-// Invite Code (8 လုံး - A-Z, 0-9)
-function generateInviteCode() {
-    const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ0123456789';
-    let code = '';
-    for (let i = 0; i < 8; i++) {
-        code += chars[Math.floor(Math.random() * chars.length)];
-    }
-    return code;
-}
-
-// Loading State
 function showLoading() {
     if (registerBtn) {
         registerBtn.disabled = true;
@@ -2636,110 +2219,12 @@ function hideLoading() {
     }
 }
 
-// ---------- 3. Profile Photo Upload ----------
-if (profileCircle) {
-    profileCircle.addEventListener('click', () => {
-        if (photoInput) photoInput.click();
-    });
-}
-
-if (photoInput) {
-    photoInput.addEventListener('change', (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = (event) => {
-                currentPhotoBase64 = event.target.result;
-                if (profileImage) profileImage.src = currentPhotoBase64;
-            };
-            reader.readAsDataURL(file);
-        }
-    });
-}
-
-// ---------- 4. SUPABASE CONFIGURATION ----------
-const SERVERS = [
-    { 
-        url: 'https://zwhynykeurcjhjgirihi.supabase.co', 
-        key: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp3aHlueWtldXJjamhqZ2lyaWhpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM5OTY5OTIsImV4cCI6MjA4OTU3Mjk5Mn0.-EWhUNgaJb_0VwByjns_lgsVmwk9GTF4c34TlYLdFP8', 
-        name: 'Server 1', 
-        maxUsers: 100 
-    },
-    { 
-        url: 'https://dufijmbcqnjlseffcwae.supabase.co', 
-        key: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR1ZmlqbWJjcW5qbHNlZmZjd2FlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM5OTcxMTAsImV4cCI6MjA4OTU3MzExMH0.qtoBPZodQ5hVj4grHBVbapMHZMO97KpyeeOUgg7836k', 
-        name: 'Server 2', 
-        maxUsers: 100 
-    }
-];
-
-// User အနည်းဆုံးရှိတဲ့ Server ကိုရွေး (ပြည့်နေရင် မရွေး)
-async function getBestServer() {
-    let bestServer = null;
-    let lowestCount = Infinity;
-    
-    for (let server of SERVERS) {
-        try {
-            const client = supabase.createClient(server.url, server.key);
-            const { count, error } = await client
-                .from('users')
-                .select('*', { count: 'exact', head: true });
-            
-            if (error) {
-                console.log(`${server.name} error:`, error);
-                continue;
-            }
-            
-            const userCount = count || 0;
-            console.log(`${server.name}: ${userCount}/${server.maxUsers} users`);
-            
-            // နေရာလွတ်ရှိမှ ရွေး
-            if (userCount < server.maxUsers && userCount < lowestCount) {
-                lowestCount = userCount;
-                bestServer = { ...server, client };
-            }
-        } catch(e) {
-            console.log(`${server.name} error:`, e);
-        }
-    }
-    
-    return bestServer;
-}
-
-// Supabase မှာသိမ်း
-async function saveToSupabase(userData, server) {
-    try {
-        const { error } = await server.client
-            .from('users')
-            .insert([userData]);
-        
-        if (error) {
-            console.error("Insert error:", error);
-            return false;
-        }
-        
-        console.log(`✅ Saved to ${server.name}`);
-        return true;
-    } catch(e) {
-        console.error("Save error:", e);
-        return false;
-    }
-}
-
-// ---------- 5. MAIN REGISTER FUNCTION ----------
-async function registerAccount() {
-    // Check if Supabase is available
-    if (typeof supabase === 'undefined') {
-        alert("Supabase library မပါပါ။ အင်တာနက်ချိတ်ဆက်မှု စစ်ဆေးပါ။");
-        return;
-    }
-    
+function registerAccount() {
     const name = accountName ? accountName.value.trim() : '';
     if (!name) {
         alert("နာမည်ထည့်ပါ။");
         return;
     }
-    
     if (name.length < 2) {
         alert("နာမည် အနည်းဆုံး 2 လုံးထည့်ပါ။");
         return;
@@ -2747,241 +2232,432 @@ async function registerAccount() {
     
     showLoading();
     
-    // Server ရွေး
-    const selectedServer = await getBestServer();
-    
-    if (!selectedServer) {
-        hideLoading();
-        alert("Server အားလုံးပြည့်နေပါသည်။ နောက်မှကြိုးစားပါ။");
-        return;
-    }
-    
-    const userId = generateUserId();
-    const inviteCode = generateInviteCode();
-    const photo = currentPhotoBase64 || DEFAULT_PROFILE;
-    
-    const userData = {
-        id: userId,
-        name: name,
-        photo: photo,
-        invite_code: inviteCode,
-        created_at: new Date().toISOString()
-    };
-    
-    // Supabase မှာသိမ်း
-    const saved = await saveToSupabase(userData, selectedServer);
-    
-    if (saved) {
-        // Local Storage မှာသိမ်း
+    setTimeout(() => {
+        const userId = generateUserId();
+        const userData = { id: userId, name: name, created_at: new Date().toISOString() };
+        
         localStorage.setItem('shrio_user', JSON.stringify(userData));
         localStorage.setItem('shrio_logged_in', 'true');
-        localStorage.setItem('shrio_server', selectedServer.name);
+        currentUser = userData;
         
         hideLoading();
         alert(`အကောင့်ဖွင့်ပြီးပါပြီ။\n\nကြိုဆိုပါသည် ${name}`);
         if (accountModal) accountModal.classList.remove('active');
+        
+        window.dispatchEvent(new Event('userDataUpdated'));
+    }, 500);
+}
+
+if (registerBtn) registerBtn.addEventListener('click', registerAccount);
+if (accountName) accountName.addEventListener('keypress', (e) => { if (e.key === 'Enter') registerAccount(); });
+
+function loadUserFromLocal() {
+    const userData = localStorage.getItem('shrio_user');
+    const loggedIn = localStorage.getItem('shrio_logged_in');
+    if (userData && loggedIn === 'true') {
+        currentUser = JSON.parse(userData);
+        if (accountModal) accountModal.classList.remove('active');
+        return true;
     } else {
-        hideLoading();
-        alert("အကောင့်ဖွင့်လို့မရပါ။ နောက်မှကြိုးစားပါ။");
+        if (accountModal) accountModal.classList.add('active');
+        return false;
     }
 }
 
-// ---------- 6. EVENT LISTENERS ----------
-if (registerBtn) {
-    registerBtn.addEventListener('click', registerAccount);
+console.log('✅ Account System Ready');
+
+// ==================== FIREBASE FUNCTIONS ====================
+function sanitizeFirebasePath(str) {
+    return str.replace(/[.#$\[\]]/g, '_').replace(/\s+/g, '_');
 }
 
-if (accountName) {
-    accountName.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') registerAccount();
+async function loadComments(animeName, episodeNo) {
+    const safeAnimeName = sanitizeFirebasePath(animeName);
+    const docId = `${safeAnimeName}_ep_${episodeNo}`;
+    
+    let allComments = [];
+    for (let server of allDBs) {
+        try {
+            const snapshot = await server.db.collection('data').doc(docId).collection('comments').orderBy('timestamp', 'desc').get();
+            snapshot.forEach(doc => {
+                allComments.push({ id: doc.id, ...doc.data(), server: server.name });
+            });
+        } catch (error) {
+            console.log(`Server ${server.name} load error:`, error);
+        }
+    }
+    
+    const uniqueComments = [];
+    const ids = new Set();
+    for (let comment of allComments) {
+        if (!ids.has(comment.id)) {
+            ids.add(comment.id);
+            uniqueComments.push(comment);
+        }
+    }
+    uniqueComments.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+    
+    return uniqueComments;
+}
+
+async function saveComment(animeName, episodeNo, userName, userId, commentText) {
+    if (!commentText.trim()) { 
+        alert("Comment ရေးပါ။"); 
+        return false; 
+    }
+    
+    const safeAnimeName = sanitizeFirebasePath(animeName);
+    const docId = `${safeAnimeName}_ep_${episodeNo}`;
+    const bestServer = await getServerWithLeastData(animeName, episodeNo);
+    
+    try {
+        await bestServer.db.collection('data').doc(docId).collection('comments').add({
+            userName: userName,
+            userId: userId,
+            comment: commentText,
+            profileImage: DEFAULT_PROFILE_IMAGE,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        console.log(`Comment saved to ${bestServer.name}`);
+        return true;
+    } catch (error) {
+        console.error("Error saving comment:", error);
+        alert("Comment သိမ်းရာတွင် အမှားရှိသည်။");
+        return false;
+    }
+}
+
+async function loadLikeCount(animeName, episodeNo) {
+    const safeAnimeName = sanitizeFirebasePath(animeName);
+    const docId = `${safeAnimeName}_ep_${episodeNo}`;
+    
+    let totalLikes = 0;
+    for (let server of allDBs) {
+        try {
+            const docSnap = await server.db.collection('data').doc(docId).get();
+            if (docSnap.exists) {
+                totalLikes += docSnap.data().likeCount || 0;
+            }
+        } catch (error) {
+            console.log(`Server ${server.name} like load error:`, error);
+        }
+    }
+    
+    return totalLikes;
+}
+
+async function loadTotalLikes(animeName) {
+    const safeAnimeName = sanitizeFirebasePath(animeName);
+    let total = 0;
+    
+    for (let server of allDBs) {
+        try {
+            const snapshot = await server.db.collection('data').get();
+            for (const doc of snapshot.docs) {
+                if (doc.id.startsWith(safeAnimeName)) {
+                    total += doc.data().likeCount || 0;
+                }
+            }
+        } catch (error) {
+            console.log(`Server ${server.name} total likes error:`, error);
+        }
+    }
+    
+    return total;
+}
+
+async function updateLikeCount(animeName, episodeNo, userId) {
+    const safeAnimeName = sanitizeFirebasePath(animeName);
+    const docId = `${safeAnimeName}_ep_${episodeNo}`;
+    const userLikeKey = `liked_${safeAnimeName}_${episodeNo}_${userId}`;
+    
+    if (localStorage.getItem(userLikeKey) === 'true') {
+        alert("ဒီအပိုင်းကို Like လုပ်ပြီးသားပါ။");
+        return false;
+    }
+    
+    const bestServer = await getServerWithLeastData(animeName, episodeNo);
+    const docRef = bestServer.db.collection('data').doc(docId);
+    
+    try {
+        await bestServer.db.runTransaction(async (transaction) => {
+            const doc = await transaction.get(docRef);
+            const newCount = (doc.exists ? doc.data().likeCount || 0 : 0) + 1;
+            transaction.set(docRef, { likeCount: newCount }, { merge: true });
+        });
+        localStorage.setItem(userLikeKey, 'true');
+        console.log(`Like saved to ${bestServer.name}`);
+        return true;
+    } catch (error) {
+        console.error("Error updating like count:", error);
+        return false;
+    }
+}
+
+// ==================== PLAYER SCREEN (Like/Comment + 16:9 with Image + Play Button) ====================
+let currentAnimeId = null;
+let currentEpisodeNo = null;
+let currentAnimeName = null;
+let currentVideoUrl = null;
+let currentAnimeImage = null;
+
+function showPlayerScreen(animeId, episodeNo, animeName, videoUrl, animeImage) {
+    currentAnimeId = animeId;
+    currentEpisodeNo = episodeNo;
+    currentAnimeName = animeName;
+    currentVideoUrl = videoUrl;
+    currentAnimeImage = animeImage;
+    
+    document.getElementById('episodeNameTitle').innerHTML = `<i class="fas fa-play-circle" style="color:#3b82f6;"></i> ${animeName} • Episode ${episodeNo}`;
+    
+    // 16:9 Container with IMBB Image + Stylish Play Button
+    const videoContainer = document.getElementById('videoContainer');
+    if (videoUrl && videoUrl !== "") {
+        videoContainer.innerHTML = `
+            <div style="position:relative; width:100%; height:100%; background:linear-gradient(135deg,#0a0a0a,#1a1a2e); display:flex; align-items:center; justify-content:center; overflow:hidden;">
+                <img src="${animeImage}" style="position:absolute; width:100%; height:100%; object-fit:cover; opacity:0.4; filter:blur(2px);">
+                <div style="position:relative; z-index:2; text-align:center;">
+                    <button id="playVideoBtn" style="background:linear-gradient(145deg,#7c3aed,#4f46e5); border:none; width:90px; height:90px; border-radius:50%; color:white; cursor:pointer; display:flex; align-items:center; justify-content:center; box-shadow:0 0 20px rgba(124,58,237,0.6), 0 8px 25px rgba(0,0,0,0.3); transition:all 0.3s ease; animation:pulse 2s infinite;">
+                        <i class="fas fa-play" style="font-size:36px; margin-left:6px;"></i>
+                    </button>
+                    <p style="color:white; margin-top:16px; font-size:14px; opacity:0.8; text-shadow:0 1px 2px rgba(0,0,0,0.5);">Click to Watch</p>
+                </div>
+            </div>
+            <style>
+                @keyframes pulse {
+                    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(124,58,237,0.7); }
+                    70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(124,58,237,0); }
+                    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(124,58,237,0); }
+                }
+                #playVideoBtn:hover { transform: scale(1.1) !important; background: linear-gradient(145deg,#8b5cf6,#6366f1) !important; box-shadow: 0 0 30px rgba(124,58,237,0.9) !important; }
+            </style>
+        `;
+        
+        setTimeout(() => {
+            const playBtn = document.getElementById('playVideoBtn');
+            if (playBtn) {
+                playBtn.addEventListener('click', () => {
+                    if (currentVideoUrl) {
+                        window.open(currentVideoUrl, '_blank');
+                    }
+                });
+            }
+        }, 100);
+    } else {
+        videoContainer.innerHTML = `
+            <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; color:#666; background:#000;">
+                <i class="fas fa-video" style="font-size:48px; margin-bottom:16px; opacity:0.5;"></i>
+                <p>Video Coming Soon</p>
+            </div>
+        `;
+    }
+    
+    loadPlayerData(animeName, episodeNo);
+    
+    document.getElementById('detailScreen').classList.remove('active');
+    document.getElementById('playerScreen').style.display = 'flex';
+}
+
+async function loadPlayerData(animeName, episodeNo) {
+    const likeCount = await loadLikeCount(animeName, episodeNo);
+    document.getElementById('likeCount').textContent = likeCount;
+    
+    const safeAnimeName = sanitizeFirebasePath(animeName);
+    const userLikeKey = `liked_${safeAnimeName}_${episodeNo}_${currentUser?.id}`;
+    const likeBtn = document.getElementById('likeBtn');
+    if (currentUser && localStorage.getItem(userLikeKey) === 'true') {
+        likeBtn.style.opacity = '0.7';
+    } else {
+        likeBtn.style.opacity = '1';
+    }
+    
+    await refreshPlayerComments();
+}
+
+async function refreshPlayerComments() {
+    if (!currentAnimeName || !currentEpisodeNo) return;
+    
+    const comments = await loadComments(currentAnimeName, currentEpisodeNo);
+    document.getElementById('commentCount').textContent = comments.length;
+    
+    const commentsList = document.getElementById('commentsList');
+    if (comments.length === 0) {
+        commentsList.innerHTML = `
+            <div style="text-align:center; color:#666; padding:40px;">
+                <i class="fas fa-comment" style="font-size:48px; margin-bottom:16px; opacity:0.5;"></i>
+                <p>ဘာ Comment မှမရှိသေးပါ။</p>
+                <p style="font-size:12px;">ပထမဆုံး Comment ရေးလိုက်ပါ။</p>
+            </div>
+        `;
+        return;
+    }
+    
+    commentsList.innerHTML = comments.map(c => `
+        <div style="background:linear-gradient(145deg,#1e1a3a,#0f0f1a); border-radius:20px; padding:16px; margin-bottom:12px; border-left:4px solid #8b5cf6; transition:all 0.3s; animation:fadeIn 0.5s ease;">
+            <div style="display:flex; align-items:center; gap:12px; margin-bottom:10px;">
+                <div style="width:44px; height:44px; border-radius:50%; overflow:hidden; background:linear-gradient(145deg,#7c3aed,#4f46e5); display:flex; align-items:center; justify-content:center;">
+                    <img src="${c.profileImage || DEFAULT_PROFILE_IMAGE}" style="width:100%; height:100%; object-fit:cover;">
+                </div>
+                <div style="flex:1;">
+                    <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                        <strong style="color:#a78bfa; font-size:1rem;">${escapeHtml(c.userName)}</strong>
+                        <span style="color:#4f46e5; font-size:0.7rem; background:rgba(79,70,229,0.2); padding:2px 8px; border-radius:20px;">ID: ${c.userId}</span>
+                    </div>
+                    <div style="color:#8b5cf6; font-size:0.7rem; margin-top:4px;">
+                        <i class="far fa-clock"></i> ${c.timestamp ? new Date(c.timestamp.toDate()).toLocaleString() : 'Just now'}
+                    </div>
+                </div>
+            </div>
+            <p style="color:#e2e8f0; margin-left:56px; line-height:1.5; word-break:break-word;">${escapeHtml(c.comment)}</p>
+        </div>
+        <style>
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(10px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+        </style>
+    `).join('');
+}
+
+// ==================== DETAIL SCREEN FUNCTIONS ====================
+let currentDetailAnimeId = null;
+let currentDetailAnimeName = null;
+
+function escapeHtml(text) {
+    if (!text) return '';
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+async function showDetailScreen(animeId) {
+    const card = document.querySelector(`.anime-card[data-id="${animeId}"]`);
+    if (!card) return;
+    
+    currentDetailAnimeId = animeId;
+    currentDetailAnimeName = card.getAttribute('data-name');
+    
+    const name = card.getAttribute('data-name');
+    const studio = card.getAttribute('data-studio') || card.getAttribute('data-namemm') || '';
+    const image = card.getAttribute('data-image');
+    const banner = card.getAttribute('data-banner');
+    const genresStr = card.getAttribute('data-genres');
+    const status = card.getAttribute('data-status') || 'ongoing';
+    const nextEpDate = card.getAttribute('data-next-ep-date') || '';
+    const telegram = card.getAttribute('data-telegram') || '';
+    
+    let genres = [];
+    try { genres = JSON.parse(genresStr); } catch(e) { genres = []; }
+    
+    document.getElementById('detailBanner').style.backgroundImage = `url('${banner}')`;
+    document.getElementById('detailBanner').innerHTML = '<div class="detail-banner-overlay"></div>';
+    
+    document.getElementById('detailAnimeImage').innerHTML = `<img src="${image}" alt="${name}" style="width:100%; height:100%; object-fit:cover;">`;
+    document.getElementById('detailAnimeName').textContent = name;
+    document.getElementById('detailStudioName').innerHTML = `<i class="fas fa-building"></i> ${studio}`;
+    document.getElementById('detailGenres').innerHTML = genres.map(g => `<span class="detail-genre-tag">${g}</span>`).join('');
+    
+    const statusBadge = document.getElementById('statusBadge');
+    const statusText = document.getElementById('statusText');
+    if (status === 'ongoing') {
+        statusBadge.className = 'status-badge ongoing';
+        statusText.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> ထုတ်လုပ်နေဆဲ';
+    } else if (status === 'coming_soon') {
+        statusBadge.className = 'status-badge coming-soon';
+        statusText.innerHTML = '<i class="fas fa-clock"></i> မကြာမီလာမည်';
+    } else {
+        statusBadge.className = 'status-badge completed';
+        statusText.innerHTML = '<i class="fas fa-check-circle"></i> ထုတ်လုပ်မှုပြီးစီး';
+    }
+    
+    const nextEpDateDiv = document.getElementById('nextEpDate');
+    if (nextEpDate && nextEpDate !== '') {
+        nextEpDateDiv.style.display = 'flex';
+        const nextEpDateText = document.getElementById('nextEpDateText');
+        nextEpDateText.innerHTML = `<i class="fas fa-calendar"></i> နောက်အပိုင်းထွက်မည့်ရက်: ${nextEpDate}`;
+    } else {
+        nextEpDateDiv.style.display = 'none';
+    }
+    
+    const telegramLink = document.getElementById('telegramLink');
+    if (telegram) {
+        telegramLink.href = telegram;
+        telegramLink.style.display = 'flex';
+    } else {
+        telegramLink.style.display = 'none';
+    }
+    
+    const totalLikes = await loadTotalLikes(name);
+    document.getElementById('totalLikesCount').textContent = totalLikes;
+    
+    const totalCommentsBox = document.getElementById('totalCommentsBox');
+    if (totalCommentsBox) totalCommentsBox.style.display = 'none';
+    
+    const totalEpisodes = parseInt(card.getAttribute('data-episodes')) || 11;
+    const episodeListDiv = document.getElementById('episodeList');
+    let episodesHtml = '';
+    for (let i = 1; i <= totalEpisodes; i++) {
+        const videoUrl = EPISODE_VIDEOS[animeId]?.[i] || "";
+        const hasVideo = videoUrl ? '' : 'style="opacity:0.6;"';
+        episodesHtml += `
+            <div class="episode-item" data-ep="${i}" data-url="${videoUrl}" ${hasVideo}>
+                <div class="episode-image">
+                    <img src="${image}" alt="Episode ${i}">
+                </div>
+                <div class="episode-info">
+                    <div class="episode-title">Episode ${i}</div>
+                </div>
+                <div class="episode-play">
+                    <i class="fas ${videoUrl ? 'fa-play' : 'fa-clock'}"></i>
+                </div>
+            </div>
+        `;
+    }
+    episodeListDiv.innerHTML = episodesHtml;
+    
+    document.querySelectorAll('.episode-item').forEach(item => {
+        item.addEventListener('click', () => {
+            const episodeNo = parseInt(item.dataset.ep);
+            const videoUrl = item.dataset.url;
+            if (videoUrl) {
+                showPlayerScreen(animeId, episodeNo, name, videoUrl, image);
+            } else {
+                alert(`Episode ${episodeNo} သည်မထွက်ရှိသေးပါ။`);
+            }
+        });
+    });
+    
+    document.getElementById('homeScreen').classList.remove('active');
+    document.getElementById('detailScreen').classList.add('active');
+}
+
+// ==================== SETUP ANIME CARD CLICKS ====================
+function setupAnimeCards() {
+    const animeCards = document.querySelectorAll('.anime-card');
+    const playButtons = document.querySelectorAll('.play-button');
+    
+    animeCards.forEach(card => {
+        card.addEventListener('click', () => {
+            const id = parseInt(card.dataset.id);
+            showDetailScreen(id);
+        });
+    });
+    
+    playButtons.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const id = parseInt(btn.dataset.id);
+            showDetailScreen(id);
+        });
     });
 }
 
-// ---------- 7. CHECK LOGIN STATUS ON PAGE LOAD ----------
-window.addEventListener('load', () => {
-    const user = localStorage.getItem('shrio_user');
-    const loggedIn = localStorage.getItem('shrio_logged_in');
-    
-    if (!user || loggedIn !== 'true') {
-        // အကောင့်မရှိရင် modal ပြမယ်
-        setTimeout(() => {
-            if (accountModal) accountModal.classList.add('active');
-        }, 500);
-    } else {
-        // အကောင့်ရှိရင် modal ဖျောက်မယ်
-        if (accountModal) accountModal.classList.remove('active');
-        // Load user data to profile
-        try {
-            const userData = JSON.parse(user);
-            if (userData.photo && profileImage) profileImage.src = userData.photo;
-            if (userData.name && accountName) accountName.value = userData.name;
-        } catch(e) {}
-    }
-});
-
-// ---------- 8. EXPORT FUNCTIONS (for external use) ----------
-window.AccountSystem = {
-    getUser: () => {
-        const user = localStorage.getItem('shrio_user');
-        return user ? JSON.parse(user) : null;
-    },
-    isLoggedIn: () => {
-        return localStorage.getItem('shrio_logged_in') === 'true';
-    },
-    logout: () => {
-        localStorage.removeItem('shrio_user');
-        localStorage.removeItem('shrio_logged_in');
-        localStorage.removeItem('shrio_server');
-        if (accountModal) accountModal.classList.add('active');
-    }
-};
-
-console.log('✅ Account System with Supabase is ready!');
-// DOM Elements
+// ==================== SEARCH FUNCTIONS ====================
 const searchIcon = document.getElementById('searchIcon');
 const searchBarContainer = document.getElementById('searchBarContainer');
 const closeSearchBar = document.getElementById('closeSearchBar');
 const searchInput = document.getElementById('searchInput');
-const homeScreen = document.getElementById('homeScreen');
-const detailScreen = document.getElementById('detailScreen');
-const detailContainer = document.getElementById('detailContainer');
 
-// Get all anime cards and play buttons
-const animeCards = document.querySelectorAll('.anime-card');
-const playButtons = document.querySelectorAll('.play-button');
-
-const ANIME_EPISODES = {
-    // Could Real Life Be Like a Dream? (ID = 1)
-    1: {
-        episodes: {
-            1: { name: "Trailer", videoUrl: "https://drive.google.com/file/d/1ZTIM0Ej2lGDTBhHCdWFT6bUxQFW-X2VP/preview" },
-            2: { name: "Episode 1", videoUrl: "" },
-            3: { name: "Episode2", videoUrl: "" },
-            4: { name: " Episode 3", videoUrl: "" },
-            5: { name: "Episode 4", videoUrl: "" },
-            6: { name: "Episode 5", videoUrl: "" },
-            7: { name: "Episode 6", videoUrl: "" },
-            8: { name: "Episode 7", videoUrl: "" },
-            9: { name: "Episode 8", videoUrl: "" },
-            10: { name: "Episode 9", videoUrl: "" },
-            11: { name: "Episode 10", videoUrl: "" } 
-        }
-    },
-    // Coming Soon (ID = 2)
-    2: {
-        episodes: {
-            1: { name: "Trailer", videoUrl: "https://drive.google.com/file/d/13WAefLy3di9I0Pt6-nZs61NRdtse8aNQ/preview" },
-            2: { name: "Episode 1", videoUrl: "https://drive.google.com/file/d/1y_QjK3wHZHnpvzc8lLD2NlhPEGShDSS_/preview" },
-            3: { name: "Episode2", videoUrl: "https://drive.google.com/file/d/1DaxTEiXZQUmj4_7vxdLubIm-iAbHJewq/preview" },
-            4: { name: " Episode 3", videoUrl: "https://drive.google.com/file/d/1dq-V1d_s1yP9EqkkYN-HjrC-26izQznh/preview" },
-            5: { name: "Episode 4", videoUrl: "" },
-            6: { name: "Episode 5", videoUrl: "" },
-            7: { name: "Episode 6", videoUrl: "" },
-            8: { name: "Episode 7", videoUrl: "" },
-            9: { name: "Episode 8", videoUrl: "" },
-            10: { name: "Episode 9", videoUrl: "" },
-            11: { name: "Episode 10", videoUrl: "" }
-        }
-    },
-    // Coming Soon (ID = 3)
-    3: {
-        episodes: {
-            1: { name: "Trailer", videoUrl: "" },
-            2: { name: "1", videoUrl: "" },
-            3: { name: "2", videoUrl: "" },
-            4: { name: "3", videoUrl: "" },
-            5: { name: "4", videoUrl: "" },
-            6: { name: "5", videoUrl: "" },
-            7: { name: "6", videoUrl: "" },
-            8: { name: "7", videoUrl: "" },
-            9: { name: "8", videoUrl: "" },
-            10: { name: "9", videoUrl: "" },
-            11: { name: "10", videoUrl: "" }
-        }
-    },
-    // Coming Soon (ID = 4)
-    4: {
-        episodes: {
-            1: { name: "Trailer", videoUrl: "" },
-            2: { name: "1", videoUrl: "" },
-            3: { name: "2", videoUrl: "" },
-            4: { name: "3", videoUrl: "" },
-            5: { name: "4", videoUrl: "" },
-            6: { name: "5", videoUrl: "" },
-            7: { name: "6", videoUrl: "" },
-            8: { name: "7", videoUrl: "" },
-            9: { name: "8", videoUrl: "" },
-            10: { name: "9", videoUrl: "" },
-            11: { name: "10", videoUrl: "" }
-        }
-    },
-    // Coming Soon (ID = 5)
-    5: {
-        episodes: {
-            1: { name: "Trailer", videoUrl: "" },
-            2: { name: "1", videoUrl: "" },
-            3: { name: "2", videoUrl: "" },
-            4: { name: "3", videoUrl: "" },
-            5: { name: "4", videoUrl: "" },
-            6: { name: "5", videoUrl: "" },
-            7: { name: "6", videoUrl: "" },
-            8: { name: "7", videoUrl: "" },
-            9: { name: "8", videoUrl: "" },
-            10: { name: "9", videoUrl: "" },
-            11: { name: "10", videoUrl: "" }
-        }
-    },
-    // Coming Soon (ID = 6)
-    6: {
-        episodes: {
-            1: { name: "Trailer", videoUrl: "" },
-            2: { name: "1", videoUrl: "" },
-            3: { name: "2", videoUrl: "" },
-            4: { name: "3", videoUrl: "" },
-            5: { name: "4", videoUrl: "" },
-            6: { name: "5", videoUrl: "" },
-            7: { name: "6", videoUrl: "" },
-            8: { name: "7", videoUrl: "" },
-            9: { name: "8", videoUrl: "" },
-            10: { name: "9", videoUrl: "" },
-            11: { name: "10", videoUrl: "" }
-        }
-    },
-    // Coming Soon (ID = 7)
-    7: {
-        episodes: {
-            1: { name: "Trailer", videoUrl: "" },
-            2: { name: "1", videoUrl: "" },
-            3: { name: "2", videoUrl: "" },
-            4: { name: "3", videoUrl: "" },
-            5: { name: "4", videoUrl: "" },
-            6: { name: "5", videoUrl: "" },
-            7: { name: "6", videoUrl: "" },
-            8: { name: "7", videoUrl: "" },
-            9: { name: "8", videoUrl: "" },
-            10: { name: "9", videoUrl: "" },
-            11: { name: "10", videoUrl: "" }
-        }
-    },
-    // Coming Soon (ID = 8)
-    8: {
-        episodes: {
-            1: { name: "Trailer", videoUrl: "" },
-            2: { name: "1", videoUrl: "" },
-            3: { name: "2", videoUrl: "" },
-            4: { name: "3", videoUrl: "" },
-            5: { name: "4", videoUrl: "" },
-            6: { name: "5", videoUrl: "" },
-            7: { name: "6", videoUrl: "" },
-            8: { name: "7", videoUrl: "" },
-            9: { name: "8", videoUrl: "" },
-            10: { name: "9", videoUrl: "" },
-            11: { name: "10", videoUrl: "" }
-        }
-    }
-};
-// ==================== SEARCH FUNCTIONS ====================
-// Open Search Bar
 if (searchIcon) {
     searchIcon.addEventListener('click', (e) => {
         e.preventDefault();
@@ -2996,7 +2672,6 @@ if (searchIcon) {
     });
 }
 
-// Close Search Bar
 if (closeSearchBar) {
     closeSearchBar.addEventListener('click', () => {
         searchBarContainer.classList.remove('active');
@@ -3005,946 +2680,91 @@ if (closeSearchBar) {
     });
 }
 
-// Search Function - real-time
 function searchAnime() {
     const searchTerm = searchInput.value.trim().toLowerCase();
-    
+    const cards = document.querySelectorAll('.anime-card');
     if (searchTerm === '') {
-        showAllCards();
+        cards.forEach(card => card.style.display = 'block');
+        return;
+    }
+    cards.forEach(card => {
+        const name = card.getAttribute('data-name').toLowerCase();
+        card.style.display = name.includes(searchTerm) ? 'block' : 'none';
+    });
+}
+
+function showAllCards() {
+    document.querySelectorAll('.anime-card').forEach(card => card.style.display = 'block');
+}
+
+if (searchInput) searchInput.addEventListener('input', searchAnime);
+
+// ==================== PROFILE SCREEN ====================
+function showProfileScreen() {
+    if (!currentUser) {
+        if (accountModal) accountModal.classList.add('active');
         return;
     }
     
-    animeCards.forEach(card => {
-        const animeName = card.getAttribute('data-name').toLowerCase();
-        
-        if (animeName.includes(searchTerm)) {
-            card.style.display = 'block';
-        } else {
-            card.style.display = 'none';
-        }
-    });
+    document.getElementById('profileName').textContent = currentUser.name;
+    document.getElementById('profileId').textContent = currentUser.id;
+    document.getElementById('homeScreen').classList.remove('active');
+    document.getElementById('profileScreen').classList.add('active');
 }
 
-// Show All Cards
-function showAllCards() {
-    animeCards.forEach(card => {
-        card.style.display = 'block';
-    });
+function hideProfileScreen() {
+    document.getElementById('profileScreen').classList.remove('active');
+    document.getElementById('homeScreen').classList.add('active');
 }
 
-// Search on input
-if (searchInput) {
-    searchInput.addEventListener('input', searchAnime);
+function showEditModal() {
+    document.getElementById('editName').value = currentUser.name;
+    document.getElementById('editModal').classList.add('active');
 }
 
-// ESC key to close search
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && searchBarContainer.classList.contains('active')) {
-        searchBarContainer.classList.remove('active');
-        searchInput.value = '';
-        showAllCards();
-    }
-});
-
-// ==================== VIDEO PLAYER MODAL (In-Page Overlay) ====================
-// Create video player modal - Video in its own aspect ratio (16:9) centered
-const videoModal = document.createElement('div');
-videoModal.id = 'videoModal';
-videoModal.innerHTML = `
-    <div class="video-modal-overlay">
-        <div class="video-modal-container">
-            <!-- SIMPLE HEADER: Back button + Title only -->
-            <div class="video-modal-header">
-                <button class="video-modal-back" id="closeVideoModal">
-                    <i class="fas fa-arrow-left"></i>
-                </button>
-                <div class="video-modal-title" id="videoModalTitleMain">Now Playing</div>
-            </div>
-            <!-- VIDEO with aspect ratio - centered -->
-            <div class="video-modal-body">
-                <div class="video-wrapper">
-                    <video id="modalVideoPlayer" controls autoplay class="video-element">
-                        <source src="" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
-                </div>
-            </div>
-        </div>
-    </div>
-`;
-document.body.appendChild(videoModal);
-
-// Add video modal styles
-const videoModalStyles = document.createElement('style');
-videoModalStyles.textContent = `
-    /* Video Modal - Simple Design with Aspect Ratio */
-    #videoModal {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 2000;
-        animation: fadeIn 0.3s ease;
-    }
+function saveProfileEdit() {
+    const newName = document.getElementById('editName').value.trim();
+    if (!newName) { alert("နာမည် ထည့်ပါ။"); return; }
+    if (newName.length < 2) { alert("နာမည် အနည်းဆုံး 2 လုံးထည့်ပါ။"); return; }
     
-    #videoModal.active {
-        display: block;
-    }
-    
-    .video-modal-overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: #000000;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-    
-    .video-modal-container {
-        position: relative;
-        width: 100%;
-        height: 100%;
-        background: #000;
-        display: flex;
-        flex-direction: column;
-    }
-    
-    @keyframes fadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
-    }
-    
-    /* SIMPLE HEADER - Back button + Title only */
-    .video-modal-header {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        display: flex;
-        align-items: center;
-        gap: 16px;
-        padding: 16px 20px;
-        background: linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 100%);
-        z-index: 10;
-        pointer-events: none;
-    }
-    
-    .video-modal-back {
-        background: rgba(255, 255, 255, 0.2);
-        border: none;
-        color: white;
-        width: 44px;
-        height: 44px;
-        border-radius: 50%;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: all 0.2s;
-        flex-shrink: 0;
-        backdrop-filter: blur(10px);
-        pointer-events: auto;
-    }
-    
-    .video-modal-back:hover {
-        background: rgba(255, 255, 255, 0.3);
-        transform: scale(1.05);
-    }
-    
-    .video-modal-back:active {
-        transform: scale(0.95);
-    }
-    
-    .video-modal-back i {
-        font-size: 1.3rem;
-    }
-    
-    .video-modal-title {
-        font-weight: 600;
-        font-size: 1.1rem;
-        color: white;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        flex: 1;
-        text-shadow: 0 1px 2px rgba(0,0,0,0.5);
-        pointer-events: auto;
-    }
-    
-    /* VIDEO BODY - centers the video with its aspect ratio */
-    .video-modal-body {
-        flex: 1;
-        background: #000;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        height: 100%;
-    }
-    
-    /* Video wrapper - maintains aspect ratio and centers */
-    .video-wrapper {
-        position: relative;
-        width: 100%;
-        max-width: 100%;
-        background: #000;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    
-    /* Video element - maintains its own aspect ratio */
-    .video-element {
-        width: 100%;
-        height: auto;
-        max-height: 100vh;
-        object-fit: contain;
-        background: #000;
-        display: block;
-    }
-    
-    /* Remove default video controls styling issues */
-    video::-webkit-media-controls-panel {
-        background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 100%);
-    }
-    
-    /* Mobile responsive */
-    @media (max-width: 768px) {
-        .video-modal-header {
-            padding: 12px 16px;
-            gap: 12px;
-        }
-        
-        .video-modal-back {
-            width: 38px;
-            height: 38px;
-        }
-        
-        .video-modal-back i {
-            font-size: 1.1rem;
-        }
-        
-        .video-modal-title {
-            font-size: 0.95rem;
-        }
-    }
-    
-    @media (max-width: 480px) {
-        .video-modal-header {
-            padding: 10px 12px;
-            gap: 10px;
-        }
-        
-        .video-modal-back {
-            width: 34px;
-            height: 34px;
-        }
-        
-        .video-modal-title {
-            font-size: 0.85rem;
-        }
-    }
-    
-    /* Landscape mode - video still maintains aspect ratio */
-    @media (orientation: landscape) {
-        .video-modal-header {
-            padding: 10px 16px;
-        }
-        
-        .video-modal-back {
-            width: 36px;
-            height: 36px;
-        }
-        
-        .video-element {
-            width: auto;
-            height: 100%;
-            max-width: 100%;
-        }
-        
-        .video-wrapper {
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-    }
-`;
-document.head.appendChild(videoModalStyles);
-
-// Video modal elements
-const modalVideoPlayer = document.getElementById('modalVideoPlayer');
-const closeVideoModal = document.getElementById('closeVideoModal');
-const videoModalTitleMain = document.getElementById('videoModalTitleMain');
-
-function openVideoModal(videoUrl, animeName, episodeNum, episodeName) {
-    if (!videoUrl || videoUrl === "") {
-        alert(`⚠️ "${episodeName}" သည်မထွက်ရှိသေးပါ။`);
-        return false;
-    }
-    
-    // Google Drive preview link ဖြစ်မဖြစ် စစ်မယ်
-    const isGoogleDrivePreview = videoUrl.includes('drive.google.com') && videoUrl.includes('/preview');
-    
-    if (isGoogleDrivePreview) {
-        // iframe နဲ့ဖွင့်မယ်
-        const iframeHtml = `<iframe src="${videoUrl}" style="width:100%; height:100%; border:none;" allow="autoplay; fullscreen"></iframe>`;
-        document.querySelector('.video-wrapper').innerHTML = iframeHtml;
-        modalVideoPlayer.style.display = 'none';
-    } else {
-        // မူလ video tag အတိုင်း
-        document.querySelector('.video-wrapper').innerHTML = `
-            <video id="modalVideoPlayer" controls autoplay class="video-element">
-                <source src="${videoUrl}" type="video/mp4">
-            </video>
-        `;
-    }
-    
-    videoModalTitleMain.textContent = `${animeName} • ${episodeName}`;
-    videoModal.classList.add('active');
-    return true;
+    currentUser.name = newName;
+    localStorage.setItem('shrio_user', JSON.stringify(currentUser));
+    document.getElementById('profileName').textContent = newName;
+    document.getElementById('editModal').classList.remove('active');
+    alert("Profile ပြောင်းလဲမှု အောင်မြင်ပါသည်။");
 }
 
-// Close video modal
-function closeVideoModalFunc() {
-    if (modalVideoPlayer) {
-        modalVideoPlayer.pause();
-        modalVideoPlayer.src = '';
-        modalVideoPlayer.load();
-    }
-    videoModal.classList.remove('active');
-}
-
-// Close modal events
-if (closeVideoModal) {
-    closeVideoModal.addEventListener('click', closeVideoModalFunc);
-}
-
-// Close when clicking on overlay background
-const modalOverlay = document.querySelector('.video-modal-overlay');
-if (modalOverlay) {
-    modalOverlay.addEventListener('click', (e) => {
-        if (e.target === modalOverlay) {
-            closeVideoModalFunc();
-        }
-    });
-}
-
-// ESC key to close modal
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && videoModal.classList.contains('active')) {
-        closeVideoModalFunc();
-    }
-});
-
-// ==================== HELPER FUNCTIONS ====================
-// Function to get status text and icon
-function getStatusInfo(status) {
-    if (status === 'ongoing') {
-        return {
-            text: 'ထုတ်လုပ်နေဆဲ',
-            icon: 'fa-spinner fa-pulse',
-            class: 'ongoing'
-        };
-    } else if (status === 'completed') {
-        return {
-            text: 'ထုတ်လုပ်မှုပြီးစီး',
-            icon: 'fa-check-circle',
-            class: 'completed'
-        };
-    } else if (status === 'coming_soon') {
-        return {
-            text: 'မကြာမီလာမည်',
-            icon: 'fa-clock',
-            class: 'coming-soon'
-        };
-    } else {
-        // default (သတ်မှတ်မထားရင် ongoing အနေနဲ့ပြမယ်)
-        return {
-            text: 'ထုတ်လုပ်နေဆဲ',
-            icon: 'fa-spinner fa-pulse',
-            class: 'ongoing'
-        };
-    }
-}
-
-// Function to generate episode list with episode names and video links
-function generateEpisodes(animeId, totalEpisodes, animeImage) {
-    const episodes = [];
-    const maxEpisodes = Math.min(totalEpisodes, 30);  // အများဆုံး 30 Episode ထိပြမယ်
-    const animeData = ANIME_EPISODES[animeId];
-    
-    for (let i = 1; i <= maxEpisodes; i++) {
-        let episodeName = `Episode ${i}`;
-        let videoUrl = "";
-        
-        if (animeData && animeData.episodes && animeData.episodes[i]) {
-            episodeName = animeData.episodes[i].name;
-            videoUrl = animeData.episodes[i].videoUrl;
-        }
-        
-        episodes.push({
-            number: i,
-            name: episodeName,
-            image: animeImage,
-            videoUrl: videoUrl
-        });
-    }
-    
-    return episodes;
-}
-// ==================== DETAIL SCREEN FUNCTIONS ====================
-// Function to show detail screen
-function showDetailScreen(animeId) {
-    const selectedCard = document.querySelector(`.anime-card[data-id="${animeId}"]`);
-    if (!selectedCard) return;
-    
-    const name = selectedCard.getAttribute('data-name');
-    const nameMm = selectedCard.getAttribute('data-namemm');
-    const image = selectedCard.getAttribute('data-image');
-    const banner = selectedCard.getAttribute('data-banner');
-    const genresStr = selectedCard.getAttribute('data-genres');
-    const likes = parseInt(selectedCard.getAttribute('data-likes')) || 0;
-    const episodes = parseInt(selectedCard.getAttribute('data-episodes')) || 12;
-    const status = selectedCard.getAttribute('data-status');
-    const telegramLink = selectedCard.getAttribute('data-telegram');
-    
-    let genres = [];
-    try {
-        genres = JSON.parse(genresStr);
-    } catch(e) {
-        genres = ['Action', 'Adventure'];
-    }
-    
-    const statusInfo = getStatusInfo(status);
-    const episodeList = generateEpisodes(parseInt(animeId), episodes, image);
-    const animeName = name;
-    
-    const detailHTML = `
-        <div class="detail-banner" style="background-image: url('${banner}')">
-            <div class="detail-banner-overlay"></div>
-        </div>
-        <div class="back-button" id="backButton">
-            <i class="fas fa-arrow-left"></i>
-        </div>
-        <div class="detail-content">
-            <div class="detail-info-row">
-                <div class="detail-small-image">
-                    <img src="${image}" alt="${name}">
-                </div>
-                <div class="detail-name-section">
-                    <div class="detail-anime-name">${name}</div>
-                    <div class="detail-anime-name-mm">${nameMm}</div>
-                    <div class="detail-genres">
-                        ${genres.map(g => `<span class="detail-genre-tag">${g}</span>`).join('')}
-                    </div>
-                </div>
-            </div>
-            
-            <div class="like-status-row">
-        <div class="like-button" id="likeButton">
-    <i class="far fa-heart"></i>
-</div>
-                <div class="status-badge ${statusInfo.class}">
-                    <i class="fas ${statusInfo.icon}"></i>
-                    <span>${statusInfo.text}</span>
-                </div>
-            </div>
-            
-            <a href="${telegramLink}" class="telegram-button" target="_blank">
-                <i class="fab fa-telegram-plane"></i>
-                <span>ထုတ်လုပ်သည် Channel</span>
-                <i class="fas fa-external-link-alt" style="font-size: 0.8rem;"></i>
-            </a>
-            
-            <div class="episode-section-title">
-                <i class="fas fa-list"></i>
-                <span>Episodes (${episodeList.length})</span>
-            </div>
-            
-            <div class="episode-list" id="episodeList">
-    ${episodeList.map(ep => `
-        <div class="episode-item" data-video-url="${ep.videoUrl}" data-ep-num="${ep.number}" data-ep-name="${ep.name}">
-            <div class="episode-image">
-                <img src="${ep.image}" alt="${ep.name}">
-            </div>
-            <div class="episode-info">
-                <div class="episode-title">${ep.name}</div>
-            </div>
-            <div class="episode-play" data-episode="${ep.number}">
-                <i class="fas fa-play"></i>
-            </div>
-        </div>
-    `).join('')}
-</div>
-        </div>
-    `;
-    
-    detailContainer.innerHTML = detailHTML;
-    
-    homeScreen.classList.remove('active');
-    detailScreen.classList.add('active');
-    
-    const backButton = document.getElementById('backButton');
-    if (backButton) {
-        backButton.addEventListener('click', () => {
-            detailScreen.classList.remove('active');
-            homeScreen.classList.add('active');
-        });
-    }
-    
-    const likeButton = document.getElementById('likeButton');
-if (likeButton) {
-    const likeIcon = likeButton.querySelector('i');
-    
-    // Get current user ID
-    const userId = localStorage.getItem('shrio_user_id');
-    const animeIdForLike = animeId;  // animeId is available from outer scope
-    
-    // Check if user already liked this anime
-    const likedKey = `liked_anime_${animeIdForLike}_${userId}`;
-    let isLiked = localStorage.getItem(likedKey) === 'true';
-    
-    // Set initial heart icon state
-    if (isLiked) {
-        likeIcon.className = 'fas fa-heart';
-    } else {
-        likeIcon.className = 'far fa-heart';
-    }
-    
-    likeButton.addEventListener('click', async () => {
-        // Get user data for Telegram notification
-        const userData = getCurrentUserData();
-        const userName = userData ? userData.name : 'အမည်မရှိသေး';
-        const userIdForNotif = userData ? userData.id : 'ID မရှိသေး';
-        const serverNo = SERVER_NO;
-        
-        if (isLiked) {
-            // UNLIKE
-            likeIcon.className = 'far fa-heart';
-            isLiked = false;
-            
-            // Remove from localStorage
-            localStorage.removeItem(likedKey);
-            
-            // Send unlike notification to Telegram
-            await sendUnlikeNotification(name, userName, userIdForNotif, serverNo);
-            
-        } else {
-            // LIKE
-            likeIcon.className = 'fas fa-heart';
-            isLiked = true;
-            
-            // Save to localStorage
-            localStorage.setItem(likedKey, 'true');
-            
-            // Send like notification to Telegram
-            await sendLikeNotification(name, userName, userIdForNotif, serverNo);
-        }
-        
-        // ❌ နံပါတ် update လုံးဝမလုပ်တော့ဘူး
-        // likeCountSpan ကိုလည်း ဖျက်လိုက်ပြီ
-    });
-}
-    
-    // Episode play buttons - Open video modal in the middle
-    const episodePlayButtons = document.querySelectorAll('.episode-play');
-    episodePlayButtons.forEach((btn) => {
-        btn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const episodeItem = btn.closest('.episode-item');
-            const videoUrl = episodeItem ? episodeItem.getAttribute('data-video-url') : '';
-            const episodeNum = btn.getAttribute('data-episode');
-            const episodeName = episodeItem ? episodeItem.getAttribute('data-ep-name') : `Episode ${episodeNum}`;
-            openVideoModal(videoUrl, animeName, episodeNum, episodeName);
-        });
-    });
-    
-    const episodeItems = document.querySelectorAll('.episode-item');
-    episodeItems.forEach((item) => {
-        item.addEventListener('click', (e) => {
-            if (e.target.closest('.episode-play')) return;
-            const videoUrl = item.getAttribute('data-video-url');
-            const episodeNum = item.getAttribute('data-ep-num');
-            const episodeName = item.getAttribute('data-ep-name');
-            openVideoModal(videoUrl, animeName, episodeNum, episodeName);
-        });
-    });
-}
-
-// ==================== EVENT LISTENERS ====================
-playButtons.forEach(button => {
-    button.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const animeId = button.getAttribute('data-id');
-        showDetailScreen(animeId);
-    });
-});
-
-animeCards.forEach(card => {
-    card.addEventListener('click', () => {
-        const animeId = card.getAttribute('data-id');
-        showDetailScreen(animeId);
-    });
-});
-
-const homeNavItem = document.querySelector('.nav-item:first-child');
-if (homeNavItem) {
-    homeNavItem.addEventListener('click', (e) => {
-        e.preventDefault();
-        if (videoModal.classList.contains('active')) {
-            closeVideoModalFunc();
-        } else if (detailScreen.classList.contains('active')) {
-            detailScreen.classList.remove('active');
-            homeScreen.classList.add('active');
-        }
-    });
-}
-
-const navItems = document.querySelectorAll('.nav-item');
-if (navItems.length > 1) {
-    navItems.forEach((item, index) => {
-        if (index !== 0) {
-            item.addEventListener('click', (e) => {
-                e.preventDefault();
-                // Alert ဖြတ်ပြီး ဘာမှမလုပ်တော့ဘူး
-                // const text = item.querySelector('.text')?.innerText || '';
-                // alert(`${text} လုပ်ဆောင်ချက် ထပ်မံထည့်သွင်းပေးပါမည်။`);
-            });
-        }
-    });
-}
-
-console.log('ShrioPlay - Video Modal Ready (Header above video, not inside)');
-
-// ==================== PROFILE SCREEN (အလယ်မှာပြမယ်) ====================
-(function() {
-    console.log('🔄 Loading Profile Screen...');
-    
-    const profileScreen = document.getElementById('profileScreen');
-    const homeScreen = document.getElementById('homeScreen');
-    const detailScreen = document.getElementById('detailScreen');
-    const profileBackBtn = document.getElementById('profileBackBtn');
-    const editProfileBtn = document.getElementById('editProfileBtn');
-    const editModal = document.getElementById('editModal');
-    const closeEditModal = document.getElementById('closeEditModal');
-    const editProfileCircle = document.getElementById('editProfileCircle');
-    const editPhotoInput = document.getElementById('editPhotoInput');
-    const editName = document.getElementById('editName');
-    const saveEditBtn = document.getElementById('saveEditBtn');
-    const profileImageLarge = document.getElementById('profileImageLarge');
-    const profileName = document.getElementById('profileName');
-    const profileId = document.getElementById('profileId');
-    const profileInvite = document.getElementById('profileInvite');
-    const editProfileImage = document.getElementById('editProfileImage');
-
-    let currentUserData = null;
-    const DEFAULT_PROFILE = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%234a5568'/%3E%3Ccircle cx='50' cy='35' r='15' fill='%23e2e8f0'/%3E%3Ccircle cx='35' cy='32' r='2' fill='%23334155'/%3E%3Ccircle cx='65' cy='32' r='2' fill='%23334155'/%3E%3Cpath d='M35 55 Q50 70 65 55' stroke='%23e2e8f0' stroke-width='4' fill='none' stroke-linecap='round'/%3E%3C/svg%3E";
-
-    function loadProfileData() {
-        const userStr = localStorage.getItem('shrio_user');
-        if (userStr) {
-            try {
-                currentUserData = JSON.parse(userStr);
-                if (profileImageLarge) profileImageLarge.src = currentUserData.photo || DEFAULT_PROFILE;
-                if (profileName) profileName.textContent = currentUserData.name || 'အမည်မရှိသေး';
-                if (profileId) profileId.textContent = currentUserData.id || 'ID မရှိသေး';
-                if (profileInvite) profileInvite.textContent = currentUserData.invite_code || 'CODE မရှိသေး';
-            } catch(e) { console.error(e); }
-        }
-    }
-
-    function showProfileScreen() {
-        const loggedIn = localStorage.getItem('shrio_logged_in') === 'true';
-        if (!loggedIn) {
-            const accountModal = document.getElementById('accountModal');
-            if (accountModal) accountModal.classList.add('active');
-            return;
-        }
-        loadProfileData();
-        if (homeScreen) homeScreen.classList.remove('active');
-        if (detailScreen) detailScreen.classList.remove('active');
-        if (profileScreen) profileScreen.classList.add('active');
-    }
-
-    function hideProfileScreen() {
-        if (profileScreen) profileScreen.classList.remove('active');
-        if (homeScreen) homeScreen.classList.add('active');
-    }
-
-    // Back Button - နှိပ်ရင် Home ကိုပြန်သွားမယ်
-    if (profileBackBtn) {
-        profileBackBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            hideProfileScreen();
-        });
-    }
-
-    // Click outside to close (ကတ်အပြင်ကိုနှိပ်ရင် ပိတ်မယ်)
-    if (profileScreen) {
-        profileScreen.addEventListener('click', (e) => {
-            if (e.target === profileScreen) {
-                hideProfileScreen();
-            }
-        });
-    }
-
-    // အောက်ခြေ Account ခလုပ်
-    const bottomNavItems = document.querySelectorAll('.bottom-nav .nav-item');
-    bottomNavItems.forEach((item) => {
-        const textSpan = item.querySelector('.text');
-        const btnText = textSpan ? textSpan.innerText : '';
-        
-        if (btnText === 'Home') {
-            item.addEventListener('click', (e) => {
-                e.preventDefault();
-                hideProfileScreen();
-                if (detailScreen) detailScreen.classList.remove('active');
-            });
-        } 
-        else if (btnText === 'Account' || btnText === 'Profile') {
-            item.addEventListener('click', (e) => {
-                e.preventDefault();
-                showProfileScreen();
-            });
-        }
-
-        
-    });
-
-    // Edit Profile Modal
-    if (editProfileBtn) {
-        editProfileBtn.addEventListener('click', () => {
-            if (currentUserData) {
-                editName.value = currentUserData.name || '';
-                editProfileImage.src = currentUserData.photo || DEFAULT_PROFILE;
-                editModal.classList.add('active');
-            } else {
-                alert('User data not found. Please register first.');
-            }
-        });
-    }
-
-    if (closeEditModal) {
-        closeEditModal.addEventListener('click', () => editModal.classList.remove('active'));
-    }
-
-    if (editProfileCircle) {
-        editProfileCircle.addEventListener('click', () => editPhotoInput.click());
-    }
-
-    if (editPhotoInput) {
-        editPhotoInput.addEventListener('change', (e) => {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = (event) => editProfileImage.src = event.target.result;
-                reader.readAsDataURL(file);
-            }
-        });
-    }
-
-    if (saveEditBtn) {
-        saveEditBtn.addEventListener('click', () => {
-            const newName = editName.value.trim();
-            if (!newName) { alert("နာမည် ထည့်ပါ။"); return; }
-            if (newName.length < 2) { alert("နာမည် အနည်းဆုံး 2 လုံးထည့်ပါ။"); return; }
-            
-            if (currentUserData) {
-                currentUserData.name = newName;
-                currentUserData.photo = editProfileImage.src;
-                localStorage.setItem('shrio_user', JSON.stringify(currentUserData));
-                loadProfileData();
-                
-                const profileImageSmall = document.getElementById('profileImage');
-                if (profileImageSmall) profileImageSmall.src = editProfileImage.src;
-                const accountNameInput = document.getElementById('accountName');
-                if (accountNameInput) accountNameInput.value = newName;
-                
-                editModal.classList.remove('active');
-                alert("Profile ပြောင်းလဲမှု အောင်မြင်ပါသည်။");
-            }
-        });
-    }
-
-    loadProfileData();
-    console.log('✅ Profile Screen Ready (Centered)');
-})();
-
-// ==================== TELEGRAM LIKE/UNLIKE NOTIFICATION ====================
-// Telegram Bot Configuration
-const BOT_TOKEN = '8094270595:AAERziCUrOYf38DMOSReu1oOSEf2LLG_qS0';
-const CHAT_ID = '@shrioplaylike';  // Group username
-const SERVER_NO = '1';  // သင့် server နံပါတ် ထည့်ပါ
-
-// Function to send like notification to Telegram
-async function sendLikeNotification(animeName, userName, userId, serverNo) {
-    const message = `❤️ *LIKE*\n\n` +
-                    `📺 *Anime:* ${animeName}\n` +
-                    `👤 *User:* ${userName}\n` +
-                    `🆔 *ID:* ${userId}\n` +
-                    `🖥️ *Server No.:* ${serverNo}\n\n` +
-                    `✅ Liked this anime!`;
-    
-    const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
-    
-    try {
-        await fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                chat_id: CHAT_ID,
-                text: message,
-                parse_mode: 'Markdown'
-            })
-        });
-        console.log('✅ Like notification sent');
-    } catch (error) {
-        console.error('❌ Error sending like:', error);
-    }
-}
-
-// Function to send unlike notification to Telegram
-async function sendUnlikeNotification(animeName, userName, userId, serverNo) {
-    const message = `💔 *UNLIKE*\n\n` +
-                    `📺 *Anime:* ${animeName}\n` +
-                    `👤 *User:* ${userName}\n` +
-                    `🆔 *ID:* ${userId}\n` +
-                    `🖥️ *Server No.:* ${serverNo}\n\n` +
-                    `❌ Unliked this anime!`;
-    
-    const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
-    
-    try {
-        await fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                chat_id: CHAT_ID,
-                text: message,
-                parse_mode: 'Markdown'
-            })
-        });
-        console.log('✅ Unlike notification sent');
-    } catch (error) {
-        console.error('❌ Error sending unlike:', error);
-    }
-}
-
-// Get current user data from localStorage
-function getCurrentUserData() {
-    const userStr = localStorage.getItem('shrio_user');
-    if (userStr) {
-        try {
-            return JSON.parse(userStr);
-        } catch(e) {
-            return null;
-        }
-    }
-    return null;
-}
-
-// ==================== FAQ SCREEN FUNCTION ====================
-(function() {
-    // FAQ Screen Elements
-    const faqScreen = document.getElementById('faqScreen');
-    const homeScreen = document.getElementById('homeScreen');
-    const detailScreen = document.getElementById('detailScreen');
-    const faqBackBtn = document.getElementById('faqBackBtn');
-    
-    // Function to show FAQ screen
-    function showFaqScreen() {
-        if (homeScreen) homeScreen.classList.remove('active');
-        if (detailScreen) detailScreen.classList.remove('active');
-        if (faqScreen) faqScreen.classList.add('active');
-    }
-    
-    // Function to hide FAQ screen
-    function hideFaqScreen() {
-        if (faqScreen) faqScreen.classList.remove('active');
-        if (homeScreen) homeScreen.classList.add('active');
-    }
-    
-    // Back button event
-    if (faqBackBtn) {
-        faqBackBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            hideFaqScreen();
-        });
-    }
-    
-    // Click outside to close (optional)
-    if (faqScreen) {
-        faqScreen.addEventListener('click', (e) => {
-            if (e.target === faqScreen) {
-                hideFaqScreen();
-            }
-        });
-    }
-    
-    // FAQ Accordion functionality
+// ==================== FAQ ACCORDION ====================
+function setupFaqAccordion() {
     const faqItems = document.querySelectorAll('.faq-item');
     faqItems.forEach(item => {
         const question = item.querySelector('.faq-question');
         if (question) {
             question.addEventListener('click', () => {
-                // Close other open items
-                faqItems.forEach(otherItem => {
-                    if (otherItem !== item && otherItem.classList.contains('active')) {
-                        otherItem.classList.remove('active');
+                faqItems.forEach(other => {
+                    if (other !== item && other.classList.contains('active')) {
+                        other.classList.remove('active');
                     }
                 });
-                // Toggle current item
                 item.classList.toggle('active');
             });
         }
     });
-    
-    // Connect to bottom navigation FAQ button
-    const navItems = document.querySelectorAll('.bottom-nav .nav-item');
-    navItems.forEach((item, index) => {
-        const textSpan = item.querySelector('.text');
-        const btnText = textSpan ? textSpan.innerText : '';
-        
-        if (btnText === 'FAQ') {
-            item.addEventListener('click', (e) => {
-                e.preventDefault();
-                showFaqScreen();
-            });
-        }
-    });
-    
-    console.log('✅ FAQ Screen Ready');
-})();
+}
 
-// ==================== STUDIO SCREEN FUNCTION ====================
-(function() {
-    const studioScreen = document.getElementById('studioScreen');
-    const studioAnimeScreen = document.getElementById('studioAnimeScreen');
-    const homeScreen = document.getElementById('homeScreen');
-    const detailScreen = document.getElementById('detailScreen');
+// ==================== STUDIO SCREEN ====================
+function setupStudioScreen() {
     const studioBackBtn = document.getElementById('studioBackBtn');
     const studioAnimeBackBtn = document.getElementById('studioAnimeBackBtn');
     
     function showStudioScreen() {
-        if (homeScreen) homeScreen.classList.remove('active');
-        if (detailScreen) detailScreen.classList.remove('active');
-        if (studioAnimeScreen) studioAnimeScreen.classList.remove('active');
-        if (studioScreen) studioScreen.classList.add('active');
+        document.getElementById('homeScreen').classList.remove('active');
+        document.getElementById('studioScreen').classList.add('active');
     }
     
     function hideStudioScreen() {
-        if (studioScreen) studioScreen.classList.remove('active');
-        if (homeScreen) homeScreen.classList.add('active');
+        document.getElementById('studioScreen').classList.remove('active');
+        document.getElementById('homeScreen').classList.add('active');
     }
     
     function showStudioAnimeScreen(studioCard) {
@@ -3969,48 +2789,48 @@ function getCurrentUserData() {
         
         const grid = document.getElementById('studioAnimeGrid');
         grid.innerHTML = animeList.map(anime => `
-            <div class="studio-anime-card">
-                <div class="studio-anime-card-image">
-                    <img src="${anime.image}" alt="${anime.name}">
-                </div>
-                <div class="studio-anime-card-info">
-                    <div class="studio-anime-card-name">${anime.name}</div>
-                </div>
+            <div class="studio-anime-card" data-name="${anime.name}">
+                <div class="studio-anime-card-image"><img src="${anime.image}" alt="${anime.name}"></div>
+                <div class="studio-anime-card-info"><div class="studio-anime-card-name">${anime.name}</div></div>
             </div>
         `).join('');
         
-        if (studioScreen) studioScreen.classList.remove('active');
-        if (studioAnimeScreen) studioAnimeScreen.classList.add('active');
+        document.querySelectorAll('.studio-anime-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const animeName = card.getAttribute('data-name');
+                const animeCard = document.querySelector(`.anime-card[data-name="${animeName}"]`);
+                if (animeCard) {
+                    const id = parseInt(animeCard.dataset.id);
+                    document.getElementById('studioAnimeScreen').classList.remove('active');
+                    showDetailScreen(id);
+                }
+            });
+        });
+        
+        document.getElementById('studioScreen').classList.remove('active');
+        document.getElementById('studioAnimeScreen').classList.add('active');
     }
     
     function hideStudioAnimeScreen() {
-        if (studioAnimeScreen) studioAnimeScreen.classList.remove('active');
-        if (studioScreen) studioScreen.classList.add('active');
+        document.getElementById('studioAnimeScreen').classList.remove('active');
+        document.getElementById('studioScreen').classList.add('active');
     }
     
-    // Event Listeners
     if (studioBackBtn) studioBackBtn.addEventListener('click', hideStudioScreen);
     if (studioAnimeBackBtn) studioAnimeBackBtn.addEventListener('click', hideStudioAnimeScreen);
     
-    // View buttons and card click events
     document.querySelectorAll('.studio-card').forEach(card => {
         const viewBtn = card.querySelector('.studio-view-btn');
-        
         if (viewBtn) {
             viewBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
                 showStudioAnimeScreen(card);
             });
         }
-        
-        card.addEventListener('click', () => {
-            showStudioAnimeScreen(card);
-        });
+        card.addEventListener('click', () => showStudioAnimeScreen(card));
     });
     
-    // Connect to bottom navigation Studio button
-    const navItems = document.querySelectorAll('.bottom-nav .nav-item');
-    navItems.forEach(item => {
+    document.querySelectorAll('.bottom-nav .nav-item').forEach(item => {
         const textSpan = item.querySelector('.text');
         if (textSpan && textSpan.innerText === 'Studio') {
             item.addEventListener('click', (e) => {
@@ -4019,33 +2839,133 @@ function getCurrentUserData() {
             });
         }
     });
+}
+
+// ==================== BOTTOM NAVIGATION ====================
+function setupBottomNav() {
+    const detailBackBtn = document.getElementById('detailBackBtn');
+    if (detailBackBtn) {
+        detailBackBtn.addEventListener('click', () => {
+            document.getElementById('detailScreen').classList.remove('active');
+            document.getElementById('homeScreen').classList.add('active');
+        });
+    }
     
-    console.log('✅ Studio Screen Ready (3 columns, 6 studios, data from HTML)');
-})();
+    const playerBackBtn = document.getElementById('playerBackBtn');
+    if (playerBackBtn) {
+        playerBackBtn.addEventListener('click', () => {
+            document.getElementById('playerScreen').style.display = 'none';
+            document.getElementById('detailScreen').classList.add('active');
+        });
+    }
+    
+    const profileBackBtn = document.getElementById('profileBackBtn');
+    if (profileBackBtn) profileBackBtn.addEventListener('click', hideProfileScreen);
+    
+    const editProfileBtn = document.getElementById('editProfileBtn');
+    if (editProfileBtn) editProfileBtn.addEventListener('click', showEditModal);
+    
+    const closeEditModal = document.getElementById('closeEditModal');
+    if (closeEditModal) closeEditModal.addEventListener('click', () => document.getElementById('editModal').classList.remove('active'));
+    
+    const saveEditBtn = document.getElementById('saveEditBtn');
+    if (saveEditBtn) saveEditBtn.addEventListener('click', saveProfileEdit);
+    
+    const faqBackBtn = document.getElementById('faqBackBtn');
+    if (faqBackBtn) {
+        faqBackBtn.addEventListener('click', () => {
+            document.getElementById('faqScreen').classList.remove('active');
+            document.getElementById('homeScreen').classList.add('active');
+        });
+    }
+    
+    document.querySelectorAll('.bottom-nav .nav-item').forEach(item => {
+        const textSpan = item.querySelector('.text');
+        if (textSpan && textSpan.innerText === 'FAQ') {
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                document.getElementById('homeScreen').classList.remove('active');
+                document.getElementById('faqScreen').classList.add('active');
+            });
+        }
+        if (textSpan && textSpan.innerText === 'Home') {
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                document.getElementById('homeScreen').classList.add('active');
+                document.getElementById('detailScreen').classList.remove('active');
+                document.getElementById('playerScreen').style.display = 'none';
+                document.getElementById('profileScreen').classList.remove('active');
+                document.getElementById('faqScreen').classList.remove('active');
+                document.getElementById('studioScreen').classList.remove('active');
+                document.getElementById('studioAnimeScreen').classList.remove('active');
+            });
+        }
+        if (textSpan && textSpan.innerText === 'Account') {
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                showProfileScreen();
+            });
+        }
+    });
+}
 
-// GLOBAL RIPPLE EFFECT
+// ==================== LIKE & COMMENT BUTTONS ====================
+const likeBtn = document.getElementById('likeBtn');
+if (likeBtn) {
+    likeBtn.addEventListener('click', async () => {
+        if (!currentUser) {
+            alert("ကျေးဇူးပြု၍ အကောင့်ဖွင့်ပါ။");
+            if (accountModal) accountModal.classList.add('active');
+            return;
+        }
+        
+        const success = await updateLikeCount(currentAnimeName, currentEpisodeNo, currentUser.id);
+        if (success) {
+            const newCount = await loadLikeCount(currentAnimeName, currentEpisodeNo);
+            document.getElementById('likeCount').textContent = newCount;
+            likeBtn.style.opacity = '0.7';
+            alert("Like လုပ်ပြီးပါပြီ။");
+        }
+    });
+}
 
+const postCommentBtn = document.getElementById('postCommentBtn');
+if (postCommentBtn) {
+    postCommentBtn.addEventListener('click', async () => {
+        if (!currentUser) {
+            alert("ကျေးဇူးပြု၍ အကောင့်ဖွင့်ပါ။");
+            if (accountModal) accountModal.classList.add('active');
+            return;
+        }
+        
+        const commentInput = document.getElementById('commentInput');
+        const commentText = commentInput.value;
+        const success = await saveComment(currentAnimeName, currentEpisodeNo, currentUser.name, currentUser.id, commentText);
+        if (success) {
+            commentInput.value = '';
+            await refreshPlayerComments();
+            alert("Comment ရေးသားပြီးပါပြီ။");
+        }
+    });
+}
+
+// ==================== TOUCH EFFECTS ====================
 document.addEventListener("touchstart", createRipple);
 document.addEventListener("mousedown", createRipple);
 
 function createRipple(e) {
     const x = e.touches ? e.touches[0].clientX : e.clientX;
     const y = e.touches ? e.touches[0].clientY : e.clientY;
-
     const ripple = document.createElement("div");
-    ripple.className = "ripple";
+    ripple.className = "touch-ripple";
     ripple.style.left = x + "px";
     ripple.style.top = y + "px";
-
     document.body.appendChild(ripple);
-
-    setTimeout(() => {
-        ripple.remove();
-    }, 600);
+    setTimeout(() => ripple.remove(), 600);
 }
 
-/* ===== GLOBAL TOUCH FX ===== */
-(() => {
+// Touch trail effect (keep existing)
+(function() {
     let pointerDown = false;
     let lastPoint = null;
     let smoothPoint = null;
@@ -4054,21 +2974,11 @@ function createRipple(e) {
     let lastEmitTime = 0;
 
     function getPoint(e) {
-        if (e.touches && e.touches[0]) {
-            return {
-                x: e.touches[0].clientX,
-                y: e.touches[0].clientY
-            };
-        }
-        return {
-            x: e.clientX,
-            y: e.clientY
-        };
+        if (e.touches && e.touches[0]) return { x: e.touches[0].clientX, y: e.touches[0].clientY };
+        return { x: e.clientX, y: e.clientY };
     }
 
-    function lerp(a, b, t) {
-        return a + (b - a) * t;
-    }
+    function lerp(a, b, t) { return a + (b - a) * t; }
 
     function createTapRipple(x, y) {
         const ripple = document.createElement("div");
@@ -4076,7 +2986,6 @@ function createRipple(e) {
         ripple.style.left = `${x}px`;
         ripple.style.top = `${y}px`;
         document.body.appendChild(ripple);
-
         setTimeout(() => ripple.remove(), 520);
     }
 
@@ -4084,22 +2993,16 @@ function createRipple(e) {
         const dx = x2 - x1;
         const dy = y2 - y1;
         const distance = Math.hypot(dx, dy);
-
         if (distance < 4) return;
-
         const trail = document.createElement("div");
         trail.className = "touch-trail";
-
         const angle = Math.atan2(dy, dx) * 180 / Math.PI;
-
         trail.style.width = `${distance}px`;
         trail.style.height = `${thickness}px`;
         trail.style.left = `${x1}px`;
         trail.style.top = `${y1}px`;
         trail.style.transform = `translateY(-50%) rotate(${angle}deg)`;
-
         document.body.appendChild(trail);
-
         setTimeout(() => trail.remove(), 380);
     }
 
@@ -4108,39 +3011,24 @@ function createRipple(e) {
             rafId = null;
             return;
         }
-
         smoothPoint.x = lerp(smoothPoint.x, queuedPoint.x, 0.35);
         smoothPoint.y = lerp(smoothPoint.y, queuedPoint.y, 0.35);
-
         const now = performance.now();
         if (now - lastEmitTime > 10) {
             const speed = Math.hypot(smoothPoint.x - lastPoint.x, smoothPoint.y - lastPoint.y);
             const thickness = Math.max(5, Math.min(8, 5 + speed * 0.08));
-
             createTrail(lastPoint.x, lastPoint.y, smoothPoint.x, smoothPoint.y, thickness);
-
-            lastPoint = {
-                x: smoothPoint.x,
-                y: smoothPoint.y
-            };
-
+            lastPoint = { x: smoothPoint.x, y: smoothPoint.y };
             lastEmitTime = now;
         }
-
-        const remain = Math.hypot(queuedPoint.x - smoothPoint.x, queuedPoint.y - smoothPoint.y);
-
-        if (pointerDown || remain > 0.8) {
+        if (pointerDown || Math.hypot(queuedPoint.x - smoothPoint.x, queuedPoint.y - smoothPoint.y) > 0.8) {
             rafId = requestAnimationFrame(animateMove);
         } else {
             rafId = null;
         }
     }
 
-    function startAnimationLoop() {
-        if (!rafId) {
-            rafId = requestAnimationFrame(animateMove);
-        }
-    }
+    function startAnimationLoop() { if (!rafId) rafId = requestAnimationFrame(animateMove); }
 
     function onStart(e) {
         const p = getPoint(e);
@@ -4161,7 +3049,6 @@ function createRipple(e) {
 
     function onEnd() {
         pointerDown = false;
-
         if (queuedPoint && smoothPoint) {
             const dx = queuedPoint.x - smoothPoint.x;
             const dy = queuedPoint.y - smoothPoint.y;
@@ -4169,7 +3056,6 @@ function createRipple(e) {
                 createTrail(smoothPoint.x, smoothPoint.y, queuedPoint.x, queuedPoint.y, 6);
             }
         }
-
         lastPoint = null;
         smoothPoint = null;
         queuedPoint = null;
@@ -4179,8 +3065,16 @@ function createRipple(e) {
     document.addEventListener("touchmove", onMove, { passive: true });
     document.addEventListener("touchend", onEnd, { passive: true });
     document.addEventListener("touchcancel", onEnd, { passive: true });
-
     document.addEventListener("mousedown", onStart);
     document.addEventListener("mousemove", onMove);
     document.addEventListener("mouseup", onEnd);
-})();</script>
+})();
+
+// ==================== INITIALIZE ====================
+loadUserFromLocal();
+setupAnimeCards();
+setupFaqAccordion();
+setupStudioScreen();
+setupBottomNav();
+
+console.log('✅ ShrioPlay Fully Loaded');</script>
