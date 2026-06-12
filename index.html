@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>ShrioPlay - Anime Streaming</title>
+    <title>ShrioPlay - MAIA Streaming</title>
     <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!-- Firebase SDK -->
@@ -18,7 +18,7 @@
 <div id="accountModal" class="account-modal">
     <div class="account-modal-content">
         <div class="account-logo">
-            <img src="https://i.ibb.co/Ym2hJ5q/Grid-Art-20260321-143922590.png" alt="Logo" class="logo-img">
+            <img src="https://i.ibb.co/8D78dxz8/Grid-Art-20260611-231204701.png" alt="Logo" class="logo-img">
         </div>
         <input type="text" id="accountName" placeholder="နာမည်ထည့်ပါ">
         <button id="registerBtn"><i class="fas fa-user-plus"></i><span>အကောင့်ဖွင့်မည်</span></button>
@@ -45,40 +45,21 @@
     </div>
 
     <main class="main-content">
-        <div class="anime-grid" id="animeGrid">
-            <!-- ========================================== -->
-            <!-- ပြင်ဆင်ရန် လမ်းညွှန် -->
-            <!-- ========================================== -->
-            <!-- 
-                Card တစ်ခုစီအတွက် အောက်ပါအတိုင်း ပြင်ဆင်ပါ-
-                
-                data-id: နံပါတ် (1,2,3... ထူးခြားရန်)
-                data-name: Anime နာမည်
-                data-studio: Studio နာမည်
-                data-image: Card ပေါ်က ပုံလိပ်ခ်ျ
-                data-banner: Detail Screen ထိပ်ပုံ
-                data-genres: အမျိုးအစားများ (JSON array)
-                data-episodes: အပိုင်းအရေအတွက်
-                data-status: ongoing / completed / coming_soon
-                data-next-ep-date: "Dec 20, 2024" (မရှိလျှင် "")
-                data-telegram: Telegram လိပ်ခ်ျ
-            -->
-            <!-- ========================================== -->
-
+        <div class="maia-grid" id="maiaGrid">
             <!-- Card 1 -->
-            <div class="anime-card" 
+            <div class="maia-card" 
                  data-id="1" 
                  data-name="Could Real Life Be Like a Dream?" 
                  data-studio="Starlar Studio" 
                  data-image="https://i.ibb.co/Fq4wyCmp/Grid-Art-20260315-205252908.png" 
                  data-banner="https://i.ibb.co/rf7B1RvH/Grid-Art-20260316-110003214.png" 
-                 data-genres='["Romantic","Comedy","ama","School"]' 
+                 data-genres='["Romantic","Comedy","Drama","School"]' 
                  data-episodes="11" 
                  data-status="ongoing" 
                  data-next-ep-date="Dec 22, 2024" 
                  data-telegram="https://t.me/StarlarStudio">
-                <div class="anime-image"><img src="https://i.ibb.co/Fq4wyCmp/Grid-Art-20260315-205252908.png" alt="Anime"></div>
-                <div class="anime-info">
+                <div class="maia-image"><img src="https://i.ibb.co/Fq4wyCmp/Grid-Art-20260315-205252908.png" alt="MAIA"></div>
+                <div class="maia-info">
                     <div class="genre-section">
                         <div class="genre-row"><span class="genre-tag">Romantic</span><span class="genre-tag">Comedy</span></div>
                         <div class="genre-row"><span class="genre-tag">Drama</span><span class="genre-tag">School</span></div>
@@ -88,7 +69,7 @@
             </div>
 
             <!-- Card 2 -->
-            <div class="anime-card" 
+            <div class="maia-card" 
                  data-id="2" 
                  data-name="ထူးထူး နှင့် တွေ့ဆုံချင်း" 
                  data-studio="Myanmar Aquila" 
@@ -99,8 +80,8 @@
                  data-status="ongoing" 
                  data-next-ep-date="Dec 25, 2024" 
                  data-telegram="https://youtube.com/@the_untold_facts-p88">
-                <div class="anime-image"><img src="https://i.ibb.co/23rFhHbZ/IMG-20260324-145544-327.jpg" alt="Anime"></div>
-                <div class="anime-info">
+                <div class="maia-image"><img src="https://i.ibb.co/23rFhHbZ/IMG-20260324-145544-327.jpg" alt="MAIA"></div>
+                <div class="maia-info">
                     <div class="genre-section">
                         <div class="genre-row"><span class="genre-tag">Historical</span><span class="genre-tag">Action</span></div>
                         <div class="genre-row"><span class="genre-tag">Fantasy</span><span class="genre-tag">MM Style</span></div>
@@ -110,114 +91,114 @@
             </div>
 
             <!-- Card 3 - Coming Soon -->
-            <div class="anime-card" 
+            <div class="maia-card" 
                  data-id="3" 
                  data-name="Coming Soon" 
                  data-studio="Coming Soon" 
-                 data-image="https://i.ibb.co/9kb1yHys/Grid-Art-20260611-231230218.jpg" 
-                 data-banner="https://i.ibb.co/9kb1yHys/Grid-Art-20260611-231230218.jpg" 
+                 data-image="https://i.ibb.co/zhQNn5Rv/Grid-Art-20260612-092903296.jpg" 
+                 data-banner="https://i.ibb.co/zhQNn5Rv/Grid-Art-20260612-092903296.jpg" 
                  data-genres='["မကြာမှီလာမည်"]' 
                  data-episodes="11" 
                  data-status="coming_soon" 
                  data-next-ep-date="" 
                  data-telegram="">
-                <div class="anime-image"><img src="https://i.ibb.co/9kb1yHys/Grid-Art-20260611-231230218.jpg" alt="Coming Soon"></div>
-                <div class="anime-info">
+                <div class="maia-image"><img src="https://i.ibb.co/zhQNn5Rv/Grid-Art-20260612-092903296.jpg" alt="Coming Soon"></div>
+                <div class="maia-info">
                     <div class="genre-section"><div class="genre-row"><span class="genre-tag"></span><span class="genre-tag"></span></div><div class="genre-row"><span class="genre-tag"></span><span class="genre-tag"></span></div></div>
                     <div class="play-button" data-id="3"><i class="fas fa-play"></i></div>
                 </div>
             </div>
 
             <!-- Card 4 - Coming Soon -->
-            <div class="anime-card" 
+            <div class="maia-card" 
                  data-id="4" 
                  data-name="Coming Soon" 
                  data-studio="Coming Soon" 
-                 data-image="https://i.ibb.co/9kb1yHys/Grid-Art-20260611-231230218.jpg" 
-                 data-banner="https://i.ibb.co/9kb1yHys/Grid-Art-20260611-231230218.jpg" 
+                 data-image="https://i.ibb.co/zhQNn5Rv/Grid-Art-20260612-092903296.jpg" 
+                 data-banner="https://i.ibb.co/zhQNn5Rv/Grid-Art-20260612-092903296.jpg" 
                  data-genres='["မကြာမှီလာမည်"]' 
                  data-episodes="11" 
                  data-status="coming_soon" 
                  data-next-ep-date="" 
                  data-telegram="">
-                <div class="anime-image"><img src="https://i.ibb.co/9kb1yHys/Grid-Art-20260611-231230218.jpg" alt="Coming Soon"></div>
-                <div class="anime-info">
+                <div class="maia-image"><img src="https://i.ibb.co/zhQNn5Rv/Grid-Art-20260612-092903296.jpg" alt="Coming Soon"></div>
+                <div class="maia-info">
                     <div class="genre-section"><div class="genre-row"><span class="genre-tag"></span><span class="genre-tag"></span></div><div class="genre-row"><span class="genre-tag"></span><span class="genre-tag"></span></div></div>
                     <div class="play-button" data-id="4"><i class="fas fa-play"></i></div>
                 </div>
             </div>
 
             <!-- Card 5 - Coming Soon -->
-            <div class="anime-card" 
+            <div class="maia-card" 
                  data-id="5" 
                  data-name="Coming Soon" 
                  data-studio="Coming Soon" 
-                 data-image="https://i.ibb.co/9kb1yHys/Grid-Art-20260611-231230218.jpg" 
-                 data-banner="https://i.ibb.co/9kb1yHys/Grid-Art-20260611-231230218.jpg" 
+                 data-image="https://i.ibb.co/zhQNn5Rv/Grid-Art-20260612-092903296.jpg" 
+                 data-banner="https://i.ibb.co/zhQNn5Rv/Grid-Art-20260612-092903296.jpg" 
                  data-genres='["မကြာမှီလာမည်"]' 
                  data-episodes="11" 
                  data-status="coming_soon" 
                  data-next-ep-date="" 
                  data-telegram="">
-                <div class="anime-image"><img src="https://i.ibb.co/9kb1yHys/Grid-Art-20260611-231230218.jpg" alt="Coming Soon"></div>
-                <div class="anime-info">
+                <div class="maia-image"><img src="https://i.ibb.co/zhQNn5Rv/Grid-Art-20260612-092903296.jpg" alt="Coming Soon"></div>
+                <div class="maia-info">
                     <div class="genre-section"><div class="genre-row"><span class="genre-tag"></span><span class="genre-tag"></span></div><div class="genre-row"><span class="genre-tag"></span><span class="genre-tag"></span></div></div>
                     <div class="play-button" data-id="5"><i class="fas fa-play"></i></div>
                 </div>
             </div>
 
             <!-- Card 6 - Coming Soon -->
-            <div class="anime-card" 
+            <div class="maia-card" 
                  data-id="6" 
                  data-name="Coming Soon" 
                  data-studio="Coming Soon" 
-                 data-image="https://i.ibb.co/9kb1yHys/Grid-Art-20260611-231230218.jpg" 
-                 data-banner="https://i.ibb.co/9kb1yHys/Grid-Art-20260611-231230218.jpg" 
+                 data-image="https://i.ibb.co/zhQNn5Rv/Grid-Art-20260612-092903296.jpg" 
+                 data-banner="https://i.ibb.co/zhQNn5Rv/Grid-Art-20260612-092903296.jpg" 
                  data-genres='["မကြာမှီလာမည်"]' 
                  data-episodes="11" 
                  data-status="coming_soon" 
                  data-next-ep-date="" 
                  data-telegram="">
-                <div class="anime-image"><img src="https://i.ibb.co/9kb1yHys/Grid-Art-20260611-231230218.jpg" alt="Coming Soon"></div>
-                <div class="anime-info">
+                <div class="maia-image"><img src="https://i.ibb.co/zhQNn5Rv/Grid-Art-20260612-092903296.jpg" alt="Coming Soon"></div>
+                <div class="maia-info">
                     <div class="genre-section"><div class="genre-row"><span class="genre-tag"></span><span class="genre-tag"></span></div><div class="genre-row"><span class="genre-tag"></span><span class="genre-tag"></span></div></div>
                     <div class="play-button" data-id="6"><i class="fas fa-play"></i></div>
                 </div>
             </div>
-
+            
             <!-- Card 7 - Coming Soon -->
-            <div class="anime-card" 
+            <div class="maia-card" 
                  data-id="7" 
                  data-name="Coming Soon" 
                  data-studio="Coming Soon" 
-                 data-image="https://i.ibb.co/9kb1yHys/Grid-Art-20260611-231230218.jpg" 
-                 data-banner="https://i.ibb.co/9kb1yHys/Grid-Art-20260611-231230218.jpg" 
+                 data-image="https://i.ibb.co/zhQNn5Rv/Grid-Art-20260612-092903296.jpg" 
+                 data-banner="https://i.ibb.co/zhQNn5Rv/Grid-Art-20260612-092903296.jpg" 
                  data-genres='["မကြာမှီလာမည်"]' 
                  data-episodes="11" 
                  data-status="coming_soon" 
                  data-next-ep-date="" 
                  data-telegram="">
-                <div class="anime-image"><img src="https://i.ibb.co/9kb1yHys/Grid-Art-20260611-231230218.jpg" alt="Coming Soon"></div>
-                <div class="anime-info">
+                <div class="maia-image"><img src="https://i.ibb.co/zhQNn5Rv/Grid-Art-20260612-092903296.jpg" alt="Coming Soon"></div>
+                <div class="maia-info">
                     <div class="genre-section"><div class="genre-row"><span class="genre-tag"></span><span class="genre-tag"></span></div><div class="genre-row"><span class="genre-tag"></span><span class="genre-tag"></span></div></div>
                     <div class="play-button" data-id="7"><i class="fas fa-play"></i></div>
                 </div>
             </div>
 
             <!-- Card 8 - Coming Soon -->
-            <div class="anime-card" 
+            <div class="maia-card" 
                  data-id="8" 
                  data-name="Coming Soon" 
                  data-studio="Coming Soon" 
-                 data-image="https://i.ibb.co/9kb1yHys/Grid-Art-20260611-231230218.jpg" 
-                 data-banner="https://i.ibb.co/9kb1yHys/Grid-Art-20260611-231230218.jpg" 
+                 data-image="https://i.ibb.co/zhQNn5Rv/Grid-Art-20260612-092903296.jpg" 
+                 data-banner="https://i.ibb.co/zhQNn5Rv/Grid-Art-20260612-092903296.jpg" 
                  data-genres='["မကြာမှီလာမည်"]' 
                  data-episodes="11" 
                  data-status="coming_soon" 
                  data-next-ep-date="" 
                  data-telegram="">
-                <div class="anime-image"><img src="https://i.ibb.co/9kb1yHys/Grid-Art-20260611-231230218.jpg" alt="Coming Soon"></div>
-                <div class="anime-info">
+                <div class="maia-image"><img src="https://i.ibb.co/zhQNn5Rv/Grid-Art-20260612-092903296.jpg" alt="Coming Soon"></div>
+                <div class="maia-info">
                     <div class="genre-section"><div class="genre-row"><span class="genre-tag"></span><span class="genre-tag"></span></div><div class="genre-row"><span class="genre-tag"></span><span class="genre-tag"></span></div></div>
                     <div class="play-button" data-id="8"><i class="fas fa-play"></i></div>
                 </div>
@@ -240,9 +221,9 @@
         <button class="back-button" id="detailBackBtn"><i class="fas fa-arrow-left"></i></button>
         <div class="detail-content">
             <div class="detail-info-row">
-                <div class="detail-small-image" id="detailAnimeImage"></div>
+                <div class="detail-small-image" id="detailMaiaImage"></div>
                 <div class="detail-name-section">
-                    <div class="detail-anime-name" id="detailAnimeName"></div>
+                    <div class="detail-maia-name" id="detailMaiaName"></div>
                     <div class="detail-studio-name" id="detailStudioName"></div>
                     <div class="detail-genres" id="detailGenres"></div>
                 </div>
@@ -275,24 +256,41 @@
     </div>
 </div>
 
-<!-- Player Screen -->
+<!-- Player Screen - Updated with Modern UI -->
 <div id="playerScreen" style="display:none; flex-direction:column; height:100vh; background:#000;">
-    <div style="display:flex; align-items:center; padding:16px; background:#0a0a0a; border-bottom:1px solid #1e40af;">
+    <!-- Header -->
+    <div style="display:flex; align-items:center; padding:16px; background:#0a0a0a; border-bottom:1px solid rgba(139,92,246,0.3);">
         <button id="playerBackBtn" style="background:transparent; border:none; color:white; font-size:24px; margin-right:16px; cursor:pointer;"><i class="fas fa-arrow-left"></i></button>
-        <div style="flex:1;"><h3 id="episodeNameTitle" style="color:white;">Episode Name</h3></div>
+        <div style="flex:1;"><h3 id="episodeNameTitle" style="color:white; font-size:1rem;">Episode Name</h3></div>
     </div>
-    <div style="position:relative; width:100%; background:#000; aspect-ratio:16/9;">
+    
+    <!-- 16:9 Video Container - Rounded Corners -->
+    <div style="position:relative; width:100%; background:#000; aspect-ratio:16/9; padding:10px;">
         <div id="videoContainer" style="position:absolute; top:0; left:0; width:100%; height:100%;"></div>
     </div>
-    <div style="display:flex; gap:16px; padding:16px; border-bottom:1px solid #333;">
-        <button id="likeBtn" style="flex:1; padding:12px; background:#1e40af; border:none; border-radius:30px; color:white; cursor:pointer;"><i class="far fa-heart"></i> <span id="likeCount">0</span></button>
-        <div style="flex:1; padding:12px; background:#1a1a1a; border-radius:30px; text-align:center; color:#3b82f6;"><i class="fas fa-comment"></i> <span id="commentCount">0</span> Comments</div>
+    
+    <!-- Like & Comment Row - Square Boxes -->
+    <div style="display:flex; gap:16px; padding:16px 20px; border-bottom:1px solid rgba(139,92,246,0.2);">
+        <button id="likeBtn" style="flex:1; padding:14px; background:linear-gradient(145deg,#7c3aed,#8b5cf6); border:none; border-radius:16px; color:white; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:10px; font-size:1rem; font-weight:600; transition:all 0.2s;">
+            <i class="far fa-heart" style="font-size:1.2rem;"></i> <span id="likeCount">0</span>
+        </button>
+        <button id="commentBtn" style="flex:1; padding:14px; background:linear-gradient(145deg,#1e1a3a,#0f0f1a); border:1px solid rgba(139,92,246,0.3); border-radius:16px; color:#c4b5fd; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:10px; font-size:1rem; font-weight:600; transition:all 0.2s;">
+            <i class="far fa-comment-dots" style="font-size:1.2rem;"></i> <span id="commentCount">0</span> Comments
+        </button>
     </div>
-    <div style="flex:1; overflow-y:auto; padding:16px;">
-        <div style="display:flex; gap:12px; margin-bottom:20px;">
-            <input type="text" id="commentInput" placeholder="သင့်ရဲ့ Comment ကိုရေးပါ..." style="flex:1; padding:12px; background:#1a1a1a; border:1px solid #333; border-radius:30px; color:white;">
-            <button id="postCommentBtn" style="padding:12px 20px; background:#1e40af; border:none; border-radius:30px; color:white; cursor:pointer;"><i class="fas fa-paper-plane"></i></button>
+    
+    <!-- Comment Input Row (Hidden Initially) -->
+    <div id="commentInputRow" style="display:none; padding:16px 20px; border-bottom:1px solid rgba(139,92,246,0.2); background:#0f0f1a;">
+        <div style="display:flex; gap:12px;">
+            <input type="text" id="commentInput" placeholder="သင့်ရဲ့ Comment ကိုရေးပါ..." style="flex:1; padding:14px 16px; background:#1a1a1a; border:1px solid rgba(139,92,246,0.3); border-radius:30px; color:white; font-size:0.9rem;">
+            <button id="postCommentBtn" style="padding:14px 24px; background:linear-gradient(145deg,#7c3aed,#8b5cf6); border:none; border-radius:30px; color:white; cursor:pointer; font-weight:600;">
+                <i class="fas fa-paper-plane"></i> Post
+            </button>
         </div>
+    </div>
+    
+    <!-- Comments List -->
+    <div style="flex:1; overflow-y:auto; padding:16px;">
         <div id="commentsList"></div>
     </div>
 </div>
@@ -341,11 +339,11 @@
         </div>
         <div class="faq-list">
             <div class="faq-item">
-                <div class="faq-question"><i class="fas fa-upload"></i><span>သင့် Anime ကိုအခမဲ့တင်သွင်းရန်</span><i class="fas fa-chevron-down faq-arrow"></i></div>
+                <div class="faq-question"><i class="fas fa-upload"></i><span>သင့် MAIA ကိုအခမဲ့တင်သွင်းရန်</span><i class="fas fa-chevron-down faq-arrow"></i></div>
                 <div class="faq-answer"><p>Telegram <strong>@Starlar1</strong> စီဆက်သွယ်ပါ</p></div>
             </div>
             <div class="faq-item">
-                <div class="faq-question"><i class="fas fa-graduation-cap"></i><span>Anime ထုတ်နည်းသင်ချင်ပါက</span><i class="fas fa-chevron-down faq-arrow"></i></div>
+                <div class="faq-question"><i class="fas fa-graduation-cap"></i><span>MAIA ထုတ်နည်းသင်ချင်ပါက</span><i class="fas fa-chevron-down faq-arrow"></i></div>
                 <div class="faq-answer"><p>Telegram <strong>@Starlar1</strong> စီသင်နိုင်သည်</p></div>
             </div>
             <div class="faq-item">
@@ -373,7 +371,7 @@
                     <div class="studio-card-name">Starlar Studio</div>
                     <div class="studio-view-btn" data-studio-id="1"><i class="fas fa-eye"></i><span>ကြည့်ရန်</span></div>
                 </div>
-                <div class="studio-anime-data" style="display:none;" data-anime-list='[{"name":"Could Real Life Be Like a Dream?","image":"https://i.ibb.co/Fq4wyCmp/Grid-Art-20260315-205252908.png"},{"name":"Coming Soon","image":"https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png"}]'></div>
+                <div class="studio-maia-data" style="display:none;" data-maia-list='[{"name":"Could Real Life Be Like a Dream?","image":"https://i.ibb.co/Fq4wyCmp/Grid-Art-20260315-205252908.png"},{"name":"Coming Soon","image":"https://i.ibb.co/zhQNn5Rv/Grid-Art-20260612-092903296.jpg"}]'></div>
             </div>
             <!-- Studio 2 -->
             <div class="studio-card" data-studio-id="2">
@@ -382,7 +380,7 @@
                     <div class="studio-card-name">Myanmar Aquila</div>
                     <div class="studio-view-btn" data-studio-id="2"><i class="fas fa-eye"></i><span>ကြည့်ရန်</span></div>
                 </div>
-                <div class="studio-anime-data" style="display:none;" data-anime-list='[{"name":"ထူးထူး နှင့် တွေ့ဆုံချင်း","image":"https://i.ibb.co/23rFhHbZ/IMG-20260324-145544-327.jpg"},{"name":"Coming Soon","image":"https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png"}]'></div>
+                <div class="studio-maia-data" style="display:none;" data-maia-list='[{"name":"ထူးထူး နှင့် တွေ့ဆုံချင်း","image":"https://i.ibb.co/23rFhHbZ/IMG-20260324-145544-327.jpg"},{"name":"Coming Soon","image":"https://i.ibb.co/zhQNn5Rv/Grid-Art-20260612-092903296.jpg"}]'></div>
             </div>
             <!-- Studio 3 -->
             <div class="studio-card" data-studio-id="3">
@@ -391,7 +389,7 @@
                     <div class="studio-card-name">Coming Soon</div>
                     <div class="studio-view-btn" data-studio-id="3"><i class="fas fa-eye"></i><span>ကြည့်ရန်</span></div>
                 </div>
-                <div class="studio-anime-data" style="display:none;" data-anime-list='[{"name":"Coming Soon","image":"https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png"}]'></div>
+                <div class="studio-maia-data" style="display:none;" data-maia-list='[{"name":"Coming Soon","image":"https://i.ibb.co/zhQNn5Rv/Grid-Art-20260612-092903296.jpg"}]'></div>
             </div>
             <!-- Studio 4 -->
             <div class="studio-card" data-studio-id="4">
@@ -400,7 +398,7 @@
                     <div class="studio-card-name">Coming Soon</div>
                     <div class="studio-view-btn" data-studio-id="4"><i class="fas fa-eye"></i><span>ကြည့်ရန်</span></div>
                 </div>
-                <div class="studio-anime-data" style="display:none;" data-anime-list='[{"name":"Coming Soon","image":"https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png"}]'></div>
+                <div class="studio-maia-data" style="display:none;" data-maia-list='[{"name":"Coming Soon","image":"https://i.ibb.co/zhQNn5Rv/Grid-Art-20260612-092903296.jpg"}]'></div>
             </div>
             <!-- Studio 5 -->
             <div class="studio-card" data-studio-id="5">
@@ -409,7 +407,7 @@
                     <div class="studio-card-name">Coming Soon</div>
                     <div class="studio-view-btn" data-studio-id="5"><i class="fas fa-eye"></i><span>ကြည့်ရန်</span></div>
                 </div>
-                <div class="studio-anime-data" style="display:none;" data-anime-list='[{"name":"Coming Soon","image":"https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png"}]'></div>
+                <div class="studio-maia-data" style="display:none;" data-maia-list='[{"name":"Coming Soon","image":"https://i.ibb.co/zhQNn5Rv/Grid-Art-20260612-092903296.jpg"}]'></div>
             </div>
             <!-- Studio 6 -->
             <div class="studio-card" data-studio-id="6">
@@ -418,28 +416,28 @@
                     <div class="studio-card-name">Coming Soon</div>
                     <div class="studio-view-btn" data-studio-id="6"><i class="fas fa-eye"></i><span>ကြည့်ရန်</span></div>
                 </div>
-                <div class="studio-anime-data" style="display:none;" data-anime-list='[{"name":"Coming Soon","image":"https://i.ibb.co/5gKzmXPg/Grid-Art-20260321-141856204.png"}]'></div>
+                <div class="studio-maia-data" style="display:none;" data-maia-list='[{"name":"Coming Soon","image":"https://i.ibb.co/zhQNn5Rv/Grid-Art-20260612-092903296.jpg"}]'></div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Studio Anime Screen -->
-<div id="studioAnimeScreen" class="screen">
-    <div class="studio-anime-container">
-        <div class="studio-anime-back-btn" id="studioAnimeBackBtn"><i class="fas fa-arrow-left"></i></div>
-        <div class="studio-anime-header" id="studioAnimeHeader">
+<!-- Studio MAIA Screen -->
+<div id="studioMaiaScreen" class="screen">
+    <div class="studio-maia-container">
+        <div class="studio-maia-back-btn" id="studioMaiaBackBtn"><i class="fas fa-arrow-left"></i></div>
+        <div class="studio-maia-header" id="studioMaiaHeader">
             <div class="studio-avatar" id="studioAvatar"><img src="" alt="Studio"></div>
-            <div class="studio-info"><h2 id="studioAnimeName">Studio Name</h2><p id="studioAnimeCount">0 MAIA</p></div>
+            <div class="studio-info"><h2 id="studioMaiaName">Studio Name</h2><p id="studioMaiaCount">0 MAIA</p></div>
         </div>
-        <div class="studio-anime-grid" id="studioAnimeGrid"></div>
+        <div class="studio-maia-grid" id="studioMaiaGrid"></div>
     </div>
 </div>
 
 <!-- External JavaScript -->
 <script src="script.js"></script>
 </body>
-</html><style>/* style.css - Complete ShrioPlay Styles (Fully Optimized for All Android Devices) */
+</html><style>/* style.css - Complete MAIA Streaming Styles (Purple Theme) */
 
 * {
     margin: 0;
@@ -475,7 +473,7 @@ body::before {
     position: absolute;
     width: 100%;
     height: 100%;
-    background: radial-gradient(circle at 20% 30%, rgba(59, 130, 246, 0.03) 0%, transparent 30%);
+    background: radial-gradient(circle at 20% 30%, rgba(139, 92, 246, 0.05) 0%, transparent 30%);
     pointer-events: none;
 }
 
@@ -485,7 +483,7 @@ body::before {
     align-items: center;
     padding: 16px 20px;
     background: linear-gradient(180deg, #0a0a0a 0%, #000000 100%);
-    border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+    border-bottom: 1px solid rgba(139, 92, 246, 0.3);
     flex-shrink: 0;
     z-index: 10;
 }
@@ -503,13 +501,13 @@ body::before {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(145deg, #1e40af, #2563eb);
+    background: linear-gradient(145deg, #7c3aed, #8b5cf6);
     color: white;
     text-decoration: none;
     width: 44px;
     height: 44px;
     border-radius: 50%;
-    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
+    box-shadow: 0 8px 20px rgba(124, 58, 237, 0.4);
     cursor: pointer;
     border: 1px solid rgba(255, 255, 255, 0.1);
     transition: all 0.3s ease;
@@ -523,7 +521,7 @@ body::before {
     display: none;
     padding: 10px 16px;
     background: linear-gradient(180deg, #0a0a0a 0%, #000000 100%);
-    border-bottom: 1px solid rgba(59, 130, 246, 0.3);
+    border-bottom: 1px solid rgba(139, 92, 246, 0.3);
     flex-shrink: 0;
 }
 
@@ -549,11 +547,11 @@ body::before {
     background: #1a1a1a;
     border-radius: 30px;
     padding: 8px 16px;
-    border: 1px solid #3b82f6;
+    border: 1px solid #8b5cf6;
 }
 
 .search-bar-wrapper .search-icon {
-    color: #3b82f6;
+    color: #8b5cf6;
     margin-right: 12px;
 }
 
@@ -593,14 +591,14 @@ body::before {
     padding-bottom: 90px;
 }
 
-.anime-grid {
+.maia-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     gap: 12px;
     width: 100%;
 }
 
-.anime-card {
+.maia-card {
     background: linear-gradient(145deg, #1a1a1a, #222);
     border-radius: 14px;
     overflow: hidden;
@@ -611,24 +609,24 @@ body::before {
     cursor: pointer;
 }
 
-.anime-card:active {
+.maia-card:active {
     transform: scale(0.98);
 }
 
-.anime-image {
+.maia-image {
     width: 100%;
     aspect-ratio: 2/3;
     overflow: hidden;
 }
 
-.anime-image img {
+.maia-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
 }
 
-.anime-info {
+.maia-info {
     position: absolute;
     bottom: 0;
     left: 0;
@@ -661,17 +659,17 @@ body::before {
 }
 
 .genre-tag {
-    background: rgba(30, 64, 175, 0.3);
-    color: #a5b4fc;
+    background: rgba(124, 58, 237, 0.3);
+    color: #c4b5fd;
     font-size: 0.55rem;
     padding: 2px 6px;
     border-radius: 20px;
-    border: 1px solid rgba(59, 130, 246, 0.3);
+    border: 1px solid rgba(139, 92, 246, 0.3);
     white-space: nowrap;
 }
 
 .play-button {
-    background: #1e40af;
+    background: #7c3aed;
     color: white;
     width: 34px;
     height: 34px;
@@ -688,7 +686,7 @@ body::before {
 
 .play-button:active {
     transform: scale(0.9);
-    background: #2563eb;
+    background: #8b5cf6;
 }
 
 /* ========== BOTTOM NAVIGATION ========== */
@@ -735,8 +733,8 @@ body::before {
 
 .bottom-nav .nav-item:active {
     transform: scale(0.95);
-    background: rgba(59, 130, 246, 0.35);
-    border-color: rgba(59, 130, 246, 0.5);
+    background: rgba(139, 92, 246, 0.35);
+    border-color: rgba(139, 92, 246, 0.5);
 }
 
 .bottom-nav .nav-item i {
@@ -753,17 +751,17 @@ body::before {
 }
 
 .bottom-nav .nav-item.active {
-    background: linear-gradient(135deg, rgba(59, 130, 246, 0.35), rgba(37, 99, 235, 0.25));
-    border-color: rgba(59, 130, 246, 0.6);
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.35), rgba(124, 58, 237, 0.25));
+    border-color: rgba(139, 92, 246, 0.6);
 }
 
 .bottom-nav .nav-item.active i {
-    color: #3b82f6;
-    text-shadow: 0 0 10px rgba(59, 130, 246, 0.8);
+    color: #8b5cf6;
+    text-shadow: 0 0 10px rgba(139, 92, 246, 0.8);
 }
 
 .bottom-nav .nav-item.active span.text {
-    color: #3b82f6;
+    color: #8b5cf6;
 }
 
 /* ========== DETAIL SCREEN STYLES ========== */
@@ -852,7 +850,7 @@ body::before {
     min-width: 0;
 }
 
-.detail-anime-name {
+.detail-maia-name {
     font-size: 1.4rem;
     font-weight: bold;
     margin-bottom: 8px;
@@ -862,7 +860,7 @@ body::before {
 
 .detail-studio-name {
     font-size: 0.8rem;
-    color: #3b82f6;
+    color: #8b5cf6;
     margin-bottom: 12px;
     display: flex;
     align-items: center;
@@ -880,12 +878,12 @@ body::before {
 }
 
 .detail-genre-tag {
-    background: rgba(30, 64, 175, 0.5);
-    color: #a5b4fc;
+    background: rgba(124, 58, 237, 0.5);
+    color: #c4b5fd;
     font-size: 0.7rem;
     padding: 4px 10px;
     border-radius: 20px;
-    border: 1px solid rgba(59, 130, 246, 0.5);
+    border: 1px solid rgba(139, 92, 246, 0.5);
 }
 
 /* Like Row */
@@ -910,12 +908,12 @@ body::before {
 
 .total-likes-box:active {
     transform: scale(0.98);
-    background: #1e40af;
+    background: #7c3aed;
 }
 
 .total-likes-box i {
     font-size: 1.2rem;
-    color: #3b82f6;
+    color: #8b5cf6;
 }
 
 .total-likes-box span {
@@ -942,7 +940,7 @@ body::before {
     align-items: center;
     justify-content: center;
     gap: 10px;
-    background: linear-gradient(145deg, #1e3a8a, #1e40af);
+    background: linear-gradient(145deg, #7c3aed, #8b5cf6);
     padding: 12px;
     border-radius: 30px;
     cursor: pointer;
@@ -956,7 +954,7 @@ body::before {
     transform: scale(0.98);
 }
 
-/* FIXED: Status Badge - single icon only */
+/* Status Badge - Purple Theme */
 .status-badge {
     flex: 1;
     display: inline-flex;
@@ -991,23 +989,23 @@ body::before {
 }
 
 .status-badge.completed {
-    background: linear-gradient(145deg, #1e40af, #2563eb);
+    background: linear-gradient(145deg, #7c3aed, #8b5cf6);
     color: white;
 }
 
-/* FIXED: Next Episode Date - single icon only */
+/* Next Episode Date - Purple Theme */
 .next-ep-date {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 6px;
-    background: rgba(59, 130, 246, 0.15);
+    background: rgba(139, 92, 246, 0.15);
     padding: 8px 12px;
     border-radius: 30px;
     margin-bottom: 24px;
     font-size: 0.7rem;
-    color: #3b82f6;
-    border: 1px solid rgba(59, 130, 246, 0.3);
+    color: #a78bfa;
+    border: 1px solid rgba(139, 92, 246, 0.3);
 }
 
 .next-ep-date i {
@@ -1019,12 +1017,12 @@ body::before {
     display: inline;
 }
 
-/* Episode Section */
+/* Episode Section - Purple Theme */
 .episode-section-title {
     font-size: 1.2rem;
     font-weight: bold;
     margin-bottom: 16px;
-    color: #3b82f6;
+    color: #8b5cf6;
     display: flex;
     align-items: center;
     gap: 8px;
@@ -1080,7 +1078,7 @@ body::before {
 }
 
 .episode-play {
-    background: #1e40af;
+    background: #7c3aed;
     width: 36px;
     height: 36px;
     border-radius: 8px;
@@ -1094,7 +1092,7 @@ body::before {
 
 .episode-play:active {
     transform: scale(0.9);
-    background: #2563eb;
+    background: #8b5cf6;
 }
 
 .episode-play i {
@@ -1126,7 +1124,7 @@ body::before {
     background: #0f0f1a;
     border-radius: 28px;
     padding: 32px 24px;
-    border: 1px solid rgba(59,130,246,0.3);
+    border: 1px solid rgba(139, 92, 246, 0.3);
     text-align: center;
 }
 
@@ -1159,13 +1157,13 @@ body::before {
 
 #accountName:focus {
     outline: none;
-    border-color: #3b82f6;
+    border-color: #8b5cf6;
 }
 
 #registerBtn {
     width: 100%;
     padding: 14px;
-    background: linear-gradient(135deg, #2563eb, #1e40af);
+    background: linear-gradient(135deg, #7c3aed, #8b5cf6);
     border: none;
     border-radius: 40px;
     color: white;
@@ -1221,7 +1219,7 @@ body::before {
     background: linear-gradient(145deg, #0f0f1a, #0a0a0f);
     border-radius: 40px;
     padding: 24px 20px 32px;
-    border: 1px solid rgba(59, 130, 246, 0.3);
+    border: 1px solid rgba(139, 92, 246, 0.3);
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
     position: relative;
     animation: slideUp 0.3s ease;
@@ -1251,26 +1249,26 @@ body::before {
     left: 16px;
     width: 40px;
     height: 40px;
-    background: rgba(59, 130, 246, 0.2);
+    background: rgba(139, 92, 246, 0.2);
     backdrop-filter: blur(10px);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    border: 1px solid rgba(59, 130, 246, 0.4);
+    border: 1px solid rgba(139, 92, 246, 0.4);
     transition: all 0.2s;
     z-index: 10;
 }
 
 .profile-back-btn i {
     font-size: 1.1rem;
-    color: #3b82f6;
+    color: #8b5cf6;
 }
 
 .profile-back-btn:active {
     transform: scale(0.92);
-    background: rgba(59, 130, 246, 0.4);
+    background: rgba(139, 92, 246, 0.4);
 }
 
 .profile-header-title {
@@ -1283,7 +1281,7 @@ body::before {
     color: white;
     font-size: 1.6rem;
     font-weight: bold;
-    background: linear-gradient(135deg, #fff, #3b82f6);
+    background: linear-gradient(135deg, #fff, #8b5cf6);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -1322,7 +1320,7 @@ body::before {
 .info-simple-label i {
     width: 24px;
     font-size: 1.1rem;
-    color: #3b82f6;
+    color: #8b5cf6;
 }
 
 .info-simple-value {
@@ -1331,7 +1329,7 @@ body::before {
     font-weight: 500;
     word-break: break-all;
     text-align: right;
-    background: rgba(59, 130, 246, 0.15);
+    background: rgba(139, 92, 246, 0.15);
     padding: 6px 14px;
     border-radius: 30px;
 }
@@ -1339,7 +1337,7 @@ body::before {
 .edit-profile-btn {
     width: 100%;
     padding: 14px;
-    background: linear-gradient(135deg, #2563eb, #1e40af);
+    background: linear-gradient(135deg, #7c3aed, #8b5cf6);
     border: none;
     border-radius: 50px;
     color: white;
@@ -1381,7 +1379,7 @@ body::before {
     background: #0f0f1a;
     border-radius: 36px;
     padding: 24px 20px;
-    border: 1px solid rgba(59, 130, 246, 0.3);
+    border: 1px solid rgba(139, 92, 246, 0.3);
     text-align: center;
     animation: slideUp 0.3s ease;
 }
@@ -1434,13 +1432,13 @@ body::before {
 
 #editName:focus {
     outline: none;
-    border-color: #3b82f6;
+    border-color: #8b5cf6;
 }
 
 .save-btn {
     width: 100%;
     padding: 14px;
-    background: linear-gradient(135deg, #2563eb, #1e40af);
+    background: linear-gradient(135deg, #7c3aed, #8b5cf6);
     border: none;
     border-radius: 50px;
     color: white;
@@ -1471,26 +1469,26 @@ body::before {
     left: 16px;
     width: 40px;
     height: 40px;
-    background: rgba(59, 130, 246, 0.2);
+    background: rgba(139, 92, 246, 0.2);
     backdrop-filter: blur(10px);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    border: 1px solid rgba(59, 130, 246, 0.4);
+    border: 1px solid rgba(139, 92, 246, 0.4);
     transition: all 0.2s;
     z-index: 10;
 }
 
 .faq-back-btn i {
     font-size: 1.1rem;
-    color: #3b82f6;
+    color: #8b5cf6;
 }
 
 .faq-back-btn:active {
     transform: scale(0.92);
-    background: rgba(59, 130, 246, 0.4);
+    background: rgba(139, 92, 246, 0.4);
 }
 
 .faq-header {
@@ -1501,14 +1499,14 @@ body::before {
 
 .faq-header i {
     font-size: 2.5rem;
-    color: #3b82f6;
+    color: #8b5cf6;
     margin-bottom: 10px;
 }
 
 .faq-header h2 {
     font-size: 1.6rem;
     font-weight: bold;
-    background: linear-gradient(135deg, #fff, #3b82f6);
+    background: linear-gradient(135deg, #fff, #8b5cf6);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -1531,7 +1529,7 @@ body::before {
 .faq-item {
     background: rgba(20, 20, 30, 0.8);
     border-radius: 20px;
-    border: 1px solid rgba(59, 130, 246, 0.2);
+    border: 1px solid rgba(139, 92, 246, 0.2);
     overflow: hidden;
     transition: all 0.3s ease;
 }
@@ -1546,12 +1544,12 @@ body::before {
 }
 
 .faq-question:active {
-    background: rgba(59, 130, 246, 0.1);
+    background: rgba(139, 92, 246, 0.1);
 }
 
 .faq-question i:first-child {
     font-size: 1.1rem;
-    color: #3b82f6;
+    color: #8b5cf6;
     width: 24px;
 }
 
@@ -1583,7 +1581,7 @@ body::before {
 .faq-item.active .faq-answer {
     max-height: 200px;
     padding: 0 16px 14px 16px;
-    border-top: 1px solid rgba(59, 130, 246, 0.2);
+    border-top: 1px solid rgba(139, 92, 246, 0.2);
 }
 
 .faq-answer p {
@@ -1597,22 +1595,22 @@ body::before {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    color: #3b82f6;
+    color: #8b5cf6;
     text-decoration: none;
     font-size: 0.8rem;
     word-break: break-all;
-    background: rgba(59, 130, 246, 0.1);
+    background: rgba(139, 92, 246, 0.1);
     padding: 6px 10px;
     border-radius: 30px;
     width: 100%;
 }
 
 .faq-link:active {
-    background: rgba(59, 130, 246, 0.2);
+    background: rgba(139, 92, 246, 0.2);
 }
 
 /* ========== STUDIO SCREENS ========== */
-#studioScreen, #studioAnimeScreen {
+#studioScreen, #studioMaiaScreen {
     background: linear-gradient(135deg, #0a0a0a 0%, #000000 100%);
     overflow-y: auto;
     display: none;
@@ -1621,11 +1619,11 @@ body::before {
     flex-direction: column;
 }
 
-#studioScreen.active, #studioAnimeScreen.active {
+#studioScreen.active, #studioMaiaScreen.active {
     display: flex;
 }
 
-.studio-container, .studio-anime-container {
+.studio-container, .studio-maia-container {
     min-height: 100%;
     padding: 20px 12px 30px;
     position: relative;
@@ -1633,30 +1631,30 @@ body::before {
     overflow-y: auto;
 }
 
-.studio-back-btn, .studio-anime-back-btn {
+.studio-back-btn, .studio-maia-back-btn {
     position: fixed;
     top: 16px;
     left: 16px;
     width: 40px;
     height: 40px;
-    background: rgba(59, 130, 246, 0.2);
+    background: rgba(139, 92, 246, 0.2);
     backdrop-filter: blur(10px);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    border: 1px solid rgba(59, 130, 246, 0.4);
+    border: 1px solid rgba(139, 92, 246, 0.4);
     transition: all 0.2s;
     z-index: 10;
 }
 
-.studio-back-btn i, .studio-anime-back-btn i {
+.studio-back-btn i, .studio-maia-back-btn i {
     font-size: 1.1rem;
-    color: #3b82f6;
+    color: #8b5cf6;
 }
 
-.studio-back-btn:active, .studio-anime-back-btn:active {
+.studio-back-btn:active, .studio-maia-back-btn:active {
     transform: scale(0.92);
 }
 
@@ -1669,7 +1667,7 @@ body::before {
 .studio-header h2 {
     font-size: 1.6rem;
     font-weight: bold;
-    background: linear-gradient(135deg, #fff, #3b82f6);
+    background: linear-gradient(135deg, #fff, #8b5cf6);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -1688,7 +1686,7 @@ body::before {
     background: rgba(20, 20, 30, 0.8);
     border-radius: 16px;
     overflow: hidden;
-    border: 1px solid rgba(59, 130, 246, 0.2);
+    border: 1px solid rgba(139, 92, 246, 0.2);
     transition: all 0.2s ease;
     cursor: pointer;
 }
@@ -1729,7 +1727,7 @@ body::before {
     align-items: center;
     justify-content: center;
     gap: 4px;
-    background: linear-gradient(135deg, #2563eb, #1e40af);
+    background: linear-gradient(135deg, #7c3aed, #8b5cf6);
     padding: 5px 8px;
     border-radius: 20px;
     font-size: 0.6rem;
@@ -1742,16 +1740,16 @@ body::before {
     transform: scale(0.95);
 }
 
-.studio-anime-header {
+.studio-maia-header {
     display: flex;
     align-items: center;
     gap: 16px;
     margin-top: 40px;
     margin-bottom: 24px;
-    background: rgba(59, 130, 246, 0.1);
+    background: rgba(139, 92, 246, 0.1);
     padding: 16px;
     border-radius: 24px;
-    border: 1px solid rgba(59, 130, 246, 0.3);
+    border: 1px solid rgba(139, 92, 246, 0.3);
 }
 
 .studio-avatar {
@@ -1759,8 +1757,8 @@ body::before {
     height: 70px;
     border-radius: 20px;
     overflow: hidden;
-    background: linear-gradient(145deg, #1e3a8a, #1e40af);
-    border: 2px solid #3b82f6;
+    background: linear-gradient(145deg, #7c3aed, #8b5cf6);
+    border: 2px solid #8b5cf6;
     flex-shrink: 0;
 }
 
@@ -1779,10 +1777,10 @@ body::before {
 
 .studio-info p {
     font-size: 0.75rem;
-    color: #3b82f6;
+    color: #8b5cf6;
 }
 
-.studio-anime-grid {
+.studio-maia-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
     gap: 12px;
@@ -1790,7 +1788,7 @@ body::before {
     margin: 0 auto;
 }
 
-.studio-anime-card {
+.studio-maia-card {
     background: linear-gradient(145deg, #1a1a1a, #222);
     border-radius: 14px;
     overflow: hidden;
@@ -1799,28 +1797,28 @@ body::before {
     transition: transform 0.2s ease;
 }
 
-.studio-anime-card:active {
+.studio-maia-card:active {
     transform: scale(0.98);
 }
 
-.studio-anime-card-image {
+.studio-maia-card-image {
     width: 100%;
     aspect-ratio: 2/3;
     overflow: hidden;
 }
 
-.studio-anime-card-image img {
+.studio-maia-card-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
 
-.studio-anime-card-info {
+.studio-maia-card-info {
     padding: 8px;
     text-align: center;
 }
 
-.studio-anime-card-name {
+.studio-maia-card-name {
     font-size: 0.7rem;
     font-weight: 600;
     color: white;
@@ -1968,8 +1966,8 @@ body::before {
     transform: translate(-50%, -50%) scale(0.18);
     z-index: 99999;
     opacity: 0;
-    background: radial-gradient(circle, rgba(135, 205, 255, 1) 0%, rgba(90, 160, 255, 0.92) 30%, rgba(120, 120, 255, 0.72) 55%, rgba(170, 90, 255, 0.38) 76%, rgba(170, 90, 255, 0) 100%);
-    box-shadow: 0 0 10px rgba(70, 150, 255, 0.95), 0 0 20px rgba(130, 90, 255, 0.72), 0 0 30px rgba(80, 120, 255, 0.42);
+    background: radial-gradient(circle, rgba(139, 92, 246, 1) 0%, rgba(124, 58, 237, 0.92) 30%, rgba(120, 120, 255, 0.72) 55%, rgba(170, 90, 255, 0.38) 76%, rgba(170, 90, 255, 0) 100%);
+    box-shadow: 0 0 10px rgba(139, 92, 246, 0.95), 0 0 20px rgba(124, 58, 237, 0.72), 0 0 30px rgba(80, 120, 255, 0.42);
     filter: saturate(1.35);
     mix-blend-mode: screen;
     animation: tapRipple 500ms cubic-bezier(.18,.72,.22,1);
@@ -1992,8 +1990,8 @@ body::before {
     transform-origin: left center;
     mix-blend-mode: screen;
     opacity: 0.96;
-    background: linear-gradient(90deg, rgba(80, 170, 255, 0) 0%, rgba(80, 170, 255, 0.82) 14%, rgba(90, 180, 255, 0.98) 32%, rgba(120, 135, 255, 0.98) 58%, rgba(165, 95, 255, 0.94) 82%, rgba(165, 95, 255, 0.35) 100%);
-    box-shadow: 0 0 8px rgba(70, 150, 255, 0.92), 0 0 16px rgba(145, 85, 255, 0.72);
+    background: linear-gradient(90deg, rgba(139, 92, 246, 0) 0%, rgba(139, 92, 246, 0.82) 14%, rgba(124, 58, 237, 0.98) 32%, rgba(120, 135, 255, 0.98) 58%, rgba(165, 95, 255, 0.94) 82%, rgba(165, 95, 255, 0.35) 100%);
+    box-shadow: 0 0 8px rgba(139, 92, 246, 0.92), 0 0 16px rgba(124, 58, 237, 0.72);
     filter: saturate(1.45) blur(0.15px);
     animation: trailFade 360ms linear forwards;
 }
@@ -2018,7 +2016,7 @@ body::before {
 
 /* ========== RESPONSIVE MEDIA QUERIES ========== */
 @media (min-width: 360px) and (max-width: 399px) {
-    .anime-grid { grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 14px; }
+    .maia-grid { grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 14px; }
     .bottom-nav { gap: 20px; padding: 8px 24px; }
     .bottom-nav .nav-item { max-width: 70px; }
     .bottom-nav .nav-item i { font-size: 1.2rem; }
@@ -2026,7 +2024,7 @@ body::before {
 }
 
 @media (min-width: 400px) and (max-width: 499px) {
-    .anime-grid { grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 16px; }
+    .maia-grid { grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 16px; }
     .bottom-nav { bottom: 24px; left: 16px; right: 16px; border-radius: 70px; padding: 10px 28px; gap: 28px; }
     .bottom-nav .nav-item { max-width: 78px; padding: 8px 0; }
     .bottom-nav .nav-item i { font-size: 1.3rem; }
@@ -2035,31 +2033,31 @@ body::before {
 }
 
 @media (min-width: 500px) and (max-width: 599px) {
-    .anime-grid { grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 18px; }
+    .maia-grid { grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 18px; }
     .bottom-nav { bottom: 28px; left: 20px; right: 20px; border-radius: 80px; padding: 10px 32px; gap: 36px; }
     .bottom-nav .nav-item { max-width: 85px; padding: 9px 0; }
     .bottom-nav .nav-item i { font-size: 1.4rem; }
     .bottom-nav .nav-item span.text { font-size: 0.72rem; }
     .studio-grid { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); }
-    .studio-anime-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+    .studio-maia-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
 }
 
 @media (max-width: 359px) {
     .top-header { padding: 12px 16px; }
     .logo img { height: 10vh; max-height: 50px; }
     .search-button a { width: 38px; height: 38px; }
-    .anime-grid { gap: 10px; }
-    .anime-card .genre-tag { font-size: 0.45rem; padding: 1px 4px; }
+    .maia-grid { gap: 10px; }
+    .maia-card .genre-tag { font-size: 0.45rem; padding: 1px 4px; }
     .play-button { width: 28px; height: 28px; }
     .bottom-nav { bottom: 16px; left: 10px; right: 10px; border-radius: 48px; padding: 6px 16px; gap: 12px; }
     .bottom-nav .nav-item { max-width: 55px; padding: 5px 0; }
     .bottom-nav .nav-item i { font-size: 1rem; }
     .bottom-nav .nav-item span.text { font-size: 0.52rem; }
     .detail-small-image { width: 80px; height: 120px; }
-    .detail-anime-name { font-size: 1.2rem; }
+    .detail-maia-name { font-size: 1.2rem; }
     .studio-grid { grid-template-columns: repeat(auto-fill, minmax(85px, 1fr)); gap: 10px; }
     .studio-card-name { font-size: 0.65rem; }
-    .studio-anime-grid { grid-template-columns: repeat(auto-fill, minmax(125px, 1fr)); gap: 10px; }
+    .studio-maia-grid { grid-template-columns: repeat(auto-fill, minmax(125px, 1fr)); gap: 10px; }
 }
 
 @supports (padding-bottom: env(safe-area-inset-bottom)) {
@@ -2075,21 +2073,20 @@ body::before {
     .bottom-nav .nav-item i { font-size: 0.9rem; }
     .bottom-nav .nav-item span.text { font-size: 0.5rem; }
     .main-content { padding-bottom: 70px; }
-    .anime-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px; }
+    .maia-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px; }
     .detail-banner { height: 180px; }
     .video-modal-header { padding: 8px 12px; }
     .video-modal-back { width: 34px; height: 34px; }
 }
 
 @media (min-width: 600px) {
-    .anime-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
+    .maia-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
     .bottom-nav { max-width: 500px; left: 50%; right: auto; transform: translateX(-50%); bottom: 30px; padding: 12px 40px; gap: 48px; }
     .bottom-nav .nav-item { max-width: 90px; padding: 10px 0; }
     .bottom-nav .nav-item i { font-size: 1.5rem; }
     .bottom-nav .nav-item span.text { font-size: 0.75rem; }
     .studio-grid { max-width: 600px; margin: 0 auto; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
 }</style><script>// ==================== FIREBASE CONFIGURATIONS (MULTI-DATABASE) ====================
-
 // Server 1 - Main Database
 const firebaseConfig1 = {
     apiKey: "AIzaSyB1TOCB2vld44WsV1q7x0POHkhQZwA0TnE",
@@ -2139,10 +2136,24 @@ const allDBs = [
     { db: db3, name: 'server3', count: 0 }
 ];
 
-// ==================== HELPER: GET SERVER WITH LEAST DATA ====================
-async function getServerWithLeastData(animeName, episodeNo) {
-    const safeAnimeName = sanitizeFirebasePath(animeName);
-    const docId = `${safeAnimeName}_ep_${episodeNo}`;
+// ==================== HELPER FUNCTIONS ====================
+function sanitizeFirebasePath(str) {
+    return str.replace(/[.#$\[\]]/g, '_').replace(/\s+/g, '_');
+}
+
+// episodeNo ကို သန့်ရှင်းအောင်လုပ်မယ် (0 ဆိုရင် "Trilar" ပြန်မယ်)
+function getEpisodeKey(episodeNo) {
+    if (episodeNo === 0 || episodeNo === "0") {
+        return "Trilar";
+    }
+    return episodeNo.toString();
+}
+
+// ==================== GET SERVER WITH LEAST DATA ====================
+async function getServerWithLeastData(maiaName, episodeNo) {
+    const safeMaiaName = sanitizeFirebasePath(maiaName);
+    const episodeKey = getEpisodeKey(episodeNo);
+    const docId = `${safeMaiaName}_ep_${episodeKey}`;
     
     for (let server of allDBs) {
         server.count = 0;
@@ -2169,32 +2180,30 @@ async function getServerWithLeastData(animeName, episodeNo) {
     return allDBs[0];
 }
 
-async function getActiveDB(animeName, episodeNo) {
-    const bestServer = await getServerWithLeastData(animeName, episodeNo);
+async function getActiveDB(maiaName, episodeNo) {
+    const bestServer = await getServerWithLeastData(maiaName, episodeNo);
     return bestServer.db;
 }
 
 // ==================== CONSTANTS ====================
-const DEFAULT_PROFILE_IMAGE = "https://i.ibb.co/Ym2hJ5q/Grid-Art-20260321-143922590.png";
+const DEFAULT_PROFILE_IMAGE = "https://i.ibb.co/mrcHn0Nv/Grid-Art-20260611-204040376.png";
 
-// ==================== EPISODE VIDEOS (Google Drive View Links) ====================
-// အပိုင်းသစ်ထည့်ရန် ပုံစံ: { animeId: { episodeNo: "google_drive_view_link" } }
-// ဥပမာ - အပိုင်း 5 ထည့်ရန်: 5: "https://drive.google.com/file/d/xxxxx/view?usp=drive_link",
+// ==================== EPISODE VIDEOS ====================
 const EPISODE_VIDEOS = {
     1: {
-        1: "https://drive.google.com/file/d/1ZTIM0Ej2lGDTBhHCdWFT6bUxQFW-X2VP/view?usp=drive_link",
-        2: "", 3: "", 4: "", 5: "", 6: "", 7: "", 8: "", 9: "", 10: "", 11: ""
+        0: "https://drive.google.com/file/d/1ZTIM0Ej2lGDTBhHCdWFT6bUxQFW-X2VP/view?usp=drive_link",
+        1: "", 2: "", 3: "", 4: "", 5: "", 6: "", 7: "", 8: "", 9: "", 10: "", 11: ""
     },
     2: {
-        1: "https://drive.google.com/file/d/1y_QjK3wHZHnpvzc8lLD2NlhPEGShDSS_/view?usp=drive_link",
-        2: "https://drive.google.com/file/d/1DaxTEiXZQUmj4_7vxdLubIm-iAbHJewq/view?usp=drive_link",
-        3: "https://drive.google.com/file/d/1dq-V1d_s1yP9EqkkYN-HjrC-26izQznh/view?usp=drive_link",
-        4: "https://drive.google.com/file/d/13WAefLy3di9I0Pt6-nZs61NRdtse8aNQ/view?usp=drive_link",
-        5: "", 6: "", 7: "", 8: "", 9: "", 10: "", 11: ""
+        0: "https://drive.google.com/file/d/1y_QjK3wHZHnpvzc8lLD2NlhPEGShDSS_/view?usp=drive_link",
+        1: "https://drive.google.com/file/d/1DaxTEiXZQUmj4_7vxdLubIm-iAbHJewq/view?usp=drive_link",
+        2: "https://drive.google.com/file/d/1dq-V1d_s1yP9EqkkYN-HjrC-26izQznh/view?usp=drive_link",
+        3: "https://drive.google.com/file/d/13WAefLy3di9I0Pt6-nZs61NRdtse8aNQ/view?usp=drive_link",
+        4: "", 5: "", 6: "", 7: "", 8: "", 9: "", 10: "", 11: ""
     }
 };
 
-// ==================== ACCOUNT SYSTEM (LOCAL STORAGE ONLY) ====================
+// ==================== ACCOUNT SYSTEM ====================
 let currentUser = null;
 
 const accountModal = document.getElementById('accountModal');
@@ -2266,14 +2275,11 @@ function loadUserFromLocal() {
 
 console.log('✅ Account System Ready');
 
-// ==================== FIREBASE FUNCTIONS ====================
-function sanitizeFirebasePath(str) {
-    return str.replace(/[.#$\[\]]/g, '_').replace(/\s+/g, '_');
-}
-
-async function loadComments(animeName, episodeNo) {
-    const safeAnimeName = sanitizeFirebasePath(animeName);
-    const docId = `${safeAnimeName}_ep_${episodeNo}`;
+// ==================== FIREBASE CRUD FUNCTIONS ====================
+async function loadComments(maiaName, episodeNo) {
+    const safeMaiaName = sanitizeFirebasePath(maiaName);
+    const episodeKey = getEpisodeKey(episodeNo);
+    const docId = `${safeMaiaName}_ep_${episodeKey}`;
     
     let allComments = [];
     for (let server of allDBs) {
@@ -2300,15 +2306,16 @@ async function loadComments(animeName, episodeNo) {
     return uniqueComments;
 }
 
-async function saveComment(animeName, episodeNo, userName, userId, commentText) {
+async function saveComment(maiaName, episodeNo, userName, userId, commentText) {
     if (!commentText.trim()) { 
         alert("Comment ရေးပါ။"); 
         return false; 
     }
     
-    const safeAnimeName = sanitizeFirebasePath(animeName);
-    const docId = `${safeAnimeName}_ep_${episodeNo}`;
-    const bestServer = await getServerWithLeastData(animeName, episodeNo);
+    const safeMaiaName = sanitizeFirebasePath(maiaName);
+    const episodeKey = getEpisodeKey(episodeNo);
+    const docId = `${safeMaiaName}_ep_${episodeKey}`;
+    const bestServer = await getServerWithLeastData(maiaName, episodeKey);
     
     try {
         await bestServer.db.collection('data').doc(docId).collection('comments').add({
@@ -2327,9 +2334,10 @@ async function saveComment(animeName, episodeNo, userName, userId, commentText) 
     }
 }
 
-async function loadLikeCount(animeName, episodeNo) {
-    const safeAnimeName = sanitizeFirebasePath(animeName);
-    const docId = `${safeAnimeName}_ep_${episodeNo}`;
+async function loadLikeCount(maiaName, episodeNo) {
+    const safeMaiaName = sanitizeFirebasePath(maiaName);
+    const episodeKey = getEpisodeKey(episodeNo);
+    const docId = `${safeMaiaName}_ep_${episodeKey}`;
     
     let totalLikes = 0;
     for (let server of allDBs) {
@@ -2346,15 +2354,15 @@ async function loadLikeCount(animeName, episodeNo) {
     return totalLikes;
 }
 
-async function loadTotalLikes(animeName) {
-    const safeAnimeName = sanitizeFirebasePath(animeName);
+async function loadTotalLikes(maiaName) {
+    const safeMaiaName = sanitizeFirebasePath(maiaName);
     let total = 0;
     
     for (let server of allDBs) {
         try {
             const snapshot = await server.db.collection('data').get();
             for (const doc of snapshot.docs) {
-                if (doc.id.startsWith(safeAnimeName)) {
+                if (doc.id.startsWith(safeMaiaName)) {
                     total += doc.data().likeCount || 0;
                 }
             }
@@ -2366,17 +2374,18 @@ async function loadTotalLikes(animeName) {
     return total;
 }
 
-async function updateLikeCount(animeName, episodeNo, userId) {
-    const safeAnimeName = sanitizeFirebasePath(animeName);
-    const docId = `${safeAnimeName}_ep_${episodeNo}`;
-    const userLikeKey = `liked_${safeAnimeName}_${episodeNo}_${userId}`;
+async function updateLikeCount(maiaName, episodeNo, userId) {
+    const safeMaiaName = sanitizeFirebasePath(maiaName);
+    const episodeKey = getEpisodeKey(episodeNo);
+    const docId = `${safeMaiaName}_ep_${episodeKey}`;
+    const userLikeKey = `liked_${safeMaiaName}_${episodeKey}_${userId}`;
     
     if (localStorage.getItem(userLikeKey) === 'true') {
         alert("ဒီအပိုင်းကို Like လုပ်ပြီးသားပါ။");
         return false;
     }
     
-    const bestServer = await getServerWithLeastData(animeName, episodeNo);
+    const bestServer = await getServerWithLeastData(maiaName, episodeKey);
     const docRef = bestServer.db.collection('data').doc(docId);
     
     try {
@@ -2394,42 +2403,50 @@ async function updateLikeCount(animeName, episodeNo, userId) {
     }
 }
 
-// ==================== PLAYER SCREEN (Like/Comment + 16:9 with Image + Play Button) ====================
-let currentAnimeId = null;
+// ==================== PLAYER SCREEN ====================
+let currentMaiaId = null;
 let currentEpisodeNo = null;
-let currentAnimeName = null;
+let currentMaiaName = null;
 let currentVideoUrl = null;
-let currentAnimeImage = null;
+let currentMaiaImage = null;
+let showCommentInput = false;
 
-function showPlayerScreen(animeId, episodeNo, animeName, videoUrl, animeImage) {
-    currentAnimeId = animeId;
+function showPlayerScreen(maiaId, episodeNo, maiaName, videoUrl, maiaImage) {
+    currentMaiaId = maiaId;
     currentEpisodeNo = episodeNo;
-    currentAnimeName = animeName;
+    currentMaiaName = maiaName;
     currentVideoUrl = videoUrl;
-    currentAnimeImage = animeImage;
+    currentMaiaImage = maiaImage;
+    showCommentInput = false;
     
-    document.getElementById('episodeNameTitle').innerHTML = `<i class="fas fa-play-circle" style="color:#3b82f6;"></i> ${animeName} • Episode ${episodeNo}`;
+    let episodeDisplay = "";
+    if (episodeNo === 0) {
+        episodeDisplay = "Trilar";
+    } else {
+        episodeDisplay = `Episode ${episodeNo}`;
+    }
     
-    // 16:9 Container with IMBB Image + Stylish Play Button
+    document.getElementById('episodeNameTitle').innerHTML = `<i class="fas fa-play-circle" style="color:#a78bfa;"></i> ${maiaName} • ${episodeDisplay}`;
+    
     const videoContainer = document.getElementById('videoContainer');
     if (videoUrl && videoUrl !== "") {
         videoContainer.innerHTML = `
-            <div style="position:relative; width:100%; height:100%; background:linear-gradient(135deg,#0a0a0a,#1a1a2e); display:flex; align-items:center; justify-content:center; overflow:hidden;">
-                <img src="${animeImage}" style="position:absolute; width:100%; height:100%; object-fit:cover; opacity:0.4; filter:blur(2px);">
+            <div style="position:relative; width:100%; max-width:85%; margin:0 auto; height:100%; background:linear-gradient(135deg,#0f0f1a,#1a1a2e); display:flex; align-items:center; justify-content:center; overflow:hidden; border-radius:24px; box-shadow:0 20px 40px rgba(0,0,0,0.4);">
+                <img src="${maiaImage}" style="position:absolute; width:100%; height:100%; object-fit:cover; opacity:0.3; filter:blur(3px); transform:scale(1.1);">
                 <div style="position:relative; z-index:2; text-align:center;">
-                    <button id="playVideoBtn" style="background:linear-gradient(145deg,#7c3aed,#4f46e5); border:none; width:90px; height:90px; border-radius:50%; color:white; cursor:pointer; display:flex; align-items:center; justify-content:center; box-shadow:0 0 20px rgba(124,58,237,0.6), 0 8px 25px rgba(0,0,0,0.3); transition:all 0.3s ease; animation:pulse 2s infinite;">
-                        <i class="fas fa-play" style="font-size:36px; margin-left:6px;"></i>
+                    <button id="playVideoBtn" style="background:linear-gradient(145deg,#7c3aed,#a78bfa); border:none; width:80px; height:80px; border-radius:50%; color:white; cursor:pointer; display:flex; align-items:center; justify-content:center; box-shadow:0 0 30px rgba(124,58,237,0.8), 0 10px 30px rgba(0,0,0,0.3); transition:all 0.3s ease; animation:pulse 2s infinite;">
+                        <i class="fas fa-play" style="font-size:32px; margin-left:6px;"></i>
                     </button>
-                    <p style="color:white; margin-top:16px; font-size:14px; opacity:0.8; text-shadow:0 1px 2px rgba(0,0,0,0.5);">Click to Watch</p>
+                    <p style="color:white; margin-top:16px; font-size:12px; opacity:0.9; text-shadow:0 2px 4px rgba(0,0,0,0.5); letter-spacing:1px;">CLICK TO WATCH</p>
                 </div>
             </div>
             <style>
                 @keyframes pulse {
                     0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(124,58,237,0.7); }
-                    70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(124,58,237,0); }
+                    70% { transform: scale(1.05); box-shadow: 0 0 0 20px rgba(124,58,237,0); }
                     100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(124,58,237,0); }
                 }
-                #playVideoBtn:hover { transform: scale(1.1) !important; background: linear-gradient(145deg,#8b5cf6,#6366f1) !important; box-shadow: 0 0 30px rgba(124,58,237,0.9) !important; }
+                #playVideoBtn:hover { transform: scale(1.1) !important; background: linear-gradient(145deg,#8b5cf6,#c4b5fd) !important; box-shadow: 0 0 40px rgba(124,58,237,1) !important; }
             </style>
         `;
         
@@ -2445,83 +2462,100 @@ function showPlayerScreen(animeId, episodeNo, animeName, videoUrl, animeImage) {
         }, 100);
     } else {
         videoContainer.innerHTML = `
-            <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; color:#666; background:#000;">
-                <i class="fas fa-video" style="font-size:48px; margin-bottom:16px; opacity:0.5;"></i>
-                <p>Video Coming Soon</p>
+            <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; color:#666; background:#0f0f1a; border-radius:24px; margin:0 20px;">
+                <i class="fas fa-video" style="font-size:64px; margin-bottom:20px; opacity:0.3; color:#8b5cf6;"></i>
+                <p style="color:#a78bfa;">Video Coming Soon</p>
             </div>
         `;
     }
     
-    loadPlayerData(animeName, episodeNo);
+    loadPlayerData(maiaName, episodeNo);
+    
+    const commentInputRow = document.getElementById('commentInputRow');
+    if (commentInputRow) commentInputRow.style.display = 'none';
     
     document.getElementById('detailScreen').classList.remove('active');
     document.getElementById('playerScreen').style.display = 'flex';
 }
 
-async function loadPlayerData(animeName, episodeNo) {
-    const likeCount = await loadLikeCount(animeName, episodeNo);
+async function loadPlayerData(maiaName, episodeNo) {
+    const likeCount = await loadLikeCount(maiaName, episodeNo);
     document.getElementById('likeCount').textContent = likeCount;
     
-    const safeAnimeName = sanitizeFirebasePath(animeName);
-    const userLikeKey = `liked_${safeAnimeName}_${episodeNo}_${currentUser?.id}`;
+    const safeMaiaName = sanitizeFirebasePath(maiaName);
+    const episodeKey = getEpisodeKey(episodeNo);
+    const userLikeKey = `liked_${safeMaiaName}_${episodeKey}_${currentUser?.id}`;
     const likeBtn = document.getElementById('likeBtn');
+    
     if (currentUser && localStorage.getItem(userLikeKey) === 'true') {
-        likeBtn.style.opacity = '0.7';
+        likeBtn.style.background = "linear-gradient(145deg,#dc2626,#ef4444)";
+        likeBtn.style.opacity = '0.8';
+        likeBtn.disabled = true;
     } else {
+        likeBtn.style.background = "linear-gradient(145deg,#7c3aed,#8b5cf6)";
         likeBtn.style.opacity = '1';
+        likeBtn.disabled = false;
     }
     
     await refreshPlayerComments();
 }
 
 async function refreshPlayerComments() {
-    if (!currentAnimeName || !currentEpisodeNo) return;
+    if (!currentMaiaName || currentEpisodeNo === null) return;
     
-    const comments = await loadComments(currentAnimeName, currentEpisodeNo);
+    const comments = await loadComments(currentMaiaName, currentEpisodeNo);
     document.getElementById('commentCount').textContent = comments.length;
     
     const commentsList = document.getElementById('commentsList');
     if (comments.length === 0) {
         commentsList.innerHTML = `
-            <div style="text-align:center; color:#666; padding:40px;">
-                <i class="fas fa-comment" style="font-size:48px; margin-bottom:16px; opacity:0.5;"></i>
-                <p>ဘာ Comment မှမရှိသေးပါ။</p>
-                <p style="font-size:12px;">ပထမဆုံး Comment ရေးလိုက်ပါ။</p>
+            <div style="text-align:center; color:#4a4a6a; padding:50px 20px;">
+                <i class="fas fa-comment-dots" style="font-size:60px; margin-bottom:16px; opacity:0.3; color:#8b5cf6;"></i>
+                <p style="font-size:14px;">ဘာ Comment မှမရှိသေးပါ။</p>
+                <p style="font-size:12px; margin-top:8px;">ပထမဆုံး Comment ရေးလိုက်ပါ။</p>
             </div>
         `;
         return;
     }
     
-    commentsList.innerHTML = comments.map(c => `
-        <div style="background:linear-gradient(145deg,#1e1a3a,#0f0f1a); border-radius:20px; padding:16px; margin-bottom:12px; border-left:4px solid #8b5cf6; transition:all 0.3s; animation:fadeIn 0.5s ease;">
-            <div style="display:flex; align-items:center; gap:12px; margin-bottom:10px;">
-                <div style="width:44px; height:44px; border-radius:50%; overflow:hidden; background:linear-gradient(145deg,#7c3aed,#4f46e5); display:flex; align-items:center; justify-content:center;">
+    commentsList.innerHTML = comments.map((c, index) => `
+        <div style="background:linear-gradient(145deg,#1e1a3a,#0f0f1a); border-radius:20px; padding:16px; margin-bottom:12px; border-left:4px solid #8b5cf6; transition:all 0.3s; animation:fadeIn 0.4s ease ${index * 0.05}s both; box-shadow:0 4px 15px rgba(0,0,0,0.2);">
+            <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
+                <div style="width:48px; height:48px; border-radius:50%; overflow:hidden; background:linear-gradient(145deg,#7c3aed,#a78bfa); display:flex; align-items:center; justify-content:center; box-shadow:0 4px 10px rgba(124,58,237,0.3);">
                     <img src="${c.profileImage || DEFAULT_PROFILE_IMAGE}" style="width:100%; height:100%; object-fit:cover;">
                 </div>
                 <div style="flex:1;">
-                    <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-                        <strong style="color:#a78bfa; font-size:1rem;">${escapeHtml(c.userName)}</strong>
-                        <span style="color:#4f46e5; font-size:0.7rem; background:rgba(79,70,229,0.2); padding:2px 8px; border-radius:20px;">ID: ${c.userId}</span>
+                    <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+                        <strong style="color:#c4b5fd; font-size:1rem; font-weight:600;">${escapeHtml(c.userName)}</strong>
+                        <span style="color:#8b5cf6; font-size:0.65rem; background:rgba(139,92,246,0.15); padding:3px 10px; border-radius:20px;"><i class="fas fa-id-card"></i> ${c.userId}</span>
                     </div>
-                    <div style="color:#8b5cf6; font-size:0.7rem; margin-top:4px;">
+                    <div style="color:#a78bfa; font-size:0.65rem; margin-top:5px;">
                         <i class="far fa-clock"></i> ${c.timestamp ? new Date(c.timestamp.toDate()).toLocaleString() : 'Just now'}
                     </div>
                 </div>
             </div>
-            <p style="color:#e2e8f0; margin-left:56px; line-height:1.5; word-break:break-word;">${escapeHtml(c.comment)}</p>
+            <p style="color:#e2e8f0; margin-left:60px; line-height:1.5; word-break:break-word; font-size:0.9rem;">${escapeHtml(c.comment)}</p>
         </div>
         <style>
             @keyframes fadeIn {
-                from { opacity: 0; transform: translateY(10px); }
+                from { opacity: 0; transform: translateY(15px); }
                 to { opacity: 1; transform: translateY(0); }
             }
         </style>
     `).join('');
 }
 
+function toggleCommentInput() {
+    showCommentInput = !showCommentInput;
+    const commentInputRow = document.getElementById('commentInputRow');
+    if (commentInputRow) {
+        commentInputRow.style.display = showCommentInput ? 'flex' : 'none';
+    }
+}
+
 // ==================== DETAIL SCREEN FUNCTIONS ====================
-let currentDetailAnimeId = null;
-let currentDetailAnimeName = null;
+let currentDetailMaiaId = null;
+let currentDetailMaiaName = null;
 
 function escapeHtml(text) {
     if (!text) return '';
@@ -2530,15 +2564,15 @@ function escapeHtml(text) {
     return div.innerHTML;
 }
 
-async function showDetailScreen(animeId) {
-    const card = document.querySelector(`.anime-card[data-id="${animeId}"]`);
+async function showDetailScreen(maiaId) {
+    const card = document.querySelector(`.maia-card[data-id="${maiaId}"]`);
     if (!card) return;
     
-    currentDetailAnimeId = animeId;
-    currentDetailAnimeName = card.getAttribute('data-name');
+    currentDetailMaiaId = maiaId;
+    currentDetailMaiaName = card.getAttribute('data-name');
     
     const name = card.getAttribute('data-name');
-    const studio = card.getAttribute('data-studio') || card.getAttribute('data-namemm') || '';
+    const studio = card.getAttribute('data-studio') || '';
     const image = card.getAttribute('data-image');
     const banner = card.getAttribute('data-banner');
     const genresStr = card.getAttribute('data-genres');
@@ -2552,8 +2586,8 @@ async function showDetailScreen(animeId) {
     document.getElementById('detailBanner').style.backgroundImage = `url('${banner}')`;
     document.getElementById('detailBanner').innerHTML = '<div class="detail-banner-overlay"></div>';
     
-    document.getElementById('detailAnimeImage').innerHTML = `<img src="${image}" alt="${name}" style="width:100%; height:100%; object-fit:cover;">`;
-    document.getElementById('detailAnimeName').textContent = name;
+    document.getElementById('detailMaiaImage').innerHTML = `<img src="${image}" alt="${name}" style="width:100%; height:100%; object-fit:cover;">`;
+    document.getElementById('detailMaiaName').textContent = name;
     document.getElementById('detailStudioName').innerHTML = `<i class="fas fa-building"></i> ${studio}`;
     document.getElementById('detailGenres').innerHTML = genres.map(g => `<span class="detail-genre-tag">${g}</span>`).join('');
     
@@ -2590,15 +2624,34 @@ async function showDetailScreen(animeId) {
     const totalLikes = await loadTotalLikes(name);
     document.getElementById('totalLikesCount').textContent = totalLikes;
     
-    const totalCommentsBox = document.getElementById('totalCommentsBox');
-    if (totalCommentsBox) totalCommentsBox.style.display = 'none';
-    
     const totalEpisodes = parseInt(card.getAttribute('data-episodes')) || 11;
     const episodeListDiv = document.getElementById('episodeList');
+    
     let episodesHtml = '';
+    
+    // Trilar (key 0)
+    const trilarUrl = EPISODE_VIDEOS[maiaId]?.[0] || "";
+    const hasTrilarVideo = trilarUrl ? '' : 'style="opacity:0.6;"';
+    episodesHtml += `
+        <div class="episode-item" data-ep="0" data-url="${trilarUrl}" ${hasTrilarVideo}>
+            <div class="episode-image">
+                <img src="${image}" alt="Trilar">
+                ${trilarUrl ? '<div class="trilar-badge"><i class="fas fa-star"></i> Trilar</div>' : ''}
+            </div>
+            <div class="episode-info">
+                <div class="episode-title">Trilar</div>
+            </div>
+            <div class="episode-play">
+                <i class="fas ${trilarUrl ? 'fa-play' : 'fa-clock'}"></i>
+            </div>
+        </div>
+    `;
+    
+    // Episode 1 to 11
     for (let i = 1; i <= totalEpisodes; i++) {
-        const videoUrl = EPISODE_VIDEOS[animeId]?.[i] || "";
+        const videoUrl = EPISODE_VIDEOS[maiaId]?.[i] || "";
         const hasVideo = videoUrl ? '' : 'style="opacity:0.6;"';
+        
         episodesHtml += `
             <div class="episode-item" data-ep="${i}" data-url="${videoUrl}" ${hasVideo}>
                 <div class="episode-image">
@@ -2613,6 +2666,7 @@ async function showDetailScreen(animeId) {
             </div>
         `;
     }
+    
     episodeListDiv.innerHTML = episodesHtml;
     
     document.querySelectorAll('.episode-item').forEach(item => {
@@ -2620,9 +2674,13 @@ async function showDetailScreen(animeId) {
             const episodeNo = parseInt(item.dataset.ep);
             const videoUrl = item.dataset.url;
             if (videoUrl) {
-                showPlayerScreen(animeId, episodeNo, name, videoUrl, image);
+                showPlayerScreen(maiaId, episodeNo, name, videoUrl, image);
             } else {
-                alert(`Episode ${episodeNo} သည်မထွက်ရှိသေးပါ။`);
+                if (episodeNo === 0) {
+                    alert(`Trilar သည်မထွက်ရှိသေးပါ။`);
+                } else {
+                    alert(`Episode ${episodeNo} သည်မထွက်ရှိသေးပါ။`);
+                }
             }
         });
     });
@@ -2631,12 +2689,12 @@ async function showDetailScreen(animeId) {
     document.getElementById('detailScreen').classList.add('active');
 }
 
-// ==================== SETUP ANIME CARD CLICKS ====================
-function setupAnimeCards() {
-    const animeCards = document.querySelectorAll('.anime-card');
+// ==================== SETUP MAIA CARD CLICKS ====================
+function setupMaiaCards() {
+    const maiaCards = document.querySelectorAll('.maia-card');
     const playButtons = document.querySelectorAll('.play-button');
     
-    animeCards.forEach(card => {
+    maiaCards.forEach(card => {
         card.addEventListener('click', () => {
             const id = parseInt(card.dataset.id);
             showDetailScreen(id);
@@ -2680,9 +2738,9 @@ if (closeSearchBar) {
     });
 }
 
-function searchAnime() {
+function searchMaia() {
     const searchTerm = searchInput.value.trim().toLowerCase();
-    const cards = document.querySelectorAll('.anime-card');
+    const cards = document.querySelectorAll('.maia-card');
     if (searchTerm === '') {
         cards.forEach(card => card.style.display = 'block');
         return;
@@ -2694,10 +2752,10 @@ function searchAnime() {
 }
 
 function showAllCards() {
-    document.querySelectorAll('.anime-card').forEach(card => card.style.display = 'block');
+    document.querySelectorAll('.maia-card').forEach(card => card.style.display = 'block');
 }
 
-if (searchInput) searchInput.addEventListener('input', searchAnime);
+if (searchInput) searchInput.addEventListener('input', searchMaia);
 
 // ==================== PROFILE SCREEN ====================
 function showProfileScreen() {
@@ -2755,7 +2813,7 @@ function setupFaqAccordion() {
 // ==================== STUDIO SCREEN ====================
 function setupStudioScreen() {
     const studioBackBtn = document.getElementById('studioBackBtn');
-    const studioAnimeBackBtn = document.getElementById('studioAnimeBackBtn');
+    const studioMaiaBackBtn = document.getElementById('studioMaiaBackBtn');
     
     function showStudioScreen() {
         document.getElementById('homeScreen').classList.remove('active');
@@ -2767,67 +2825,67 @@ function setupStudioScreen() {
         document.getElementById('homeScreen').classList.add('active');
     }
     
-    function showStudioAnimeScreen(studioCard) {
+    function showStudioMaiaScreen(studioCard) {
         const studioName = studioCard.querySelector('.studio-card-name').textContent;
         const studioImage = studioCard.querySelector('.studio-card-image img').src;
-        const animeDataDiv = studioCard.querySelector('.studio-anime-data');
+        const maiaDataDiv = studioCard.querySelector('.studio-maia-data');
         
-        if (!animeDataDiv) return;
+        if (!maiaDataDiv) return;
         
-        let animeList = [];
+        let maiaList = [];
         try {
-            const animeListStr = animeDataDiv.getAttribute('data-anime-list');
-            animeList = JSON.parse(animeListStr);
+            const maiaListStr = maiaDataDiv.getAttribute('data-maia-list');
+            maiaList = JSON.parse(maiaListStr);
         } catch(e) {
-            console.error('Error parsing anime list:', e);
+            console.error('Error parsing maia list:', e);
             return;
         }
         
-        document.getElementById('studioAnimeName').textContent = studioName;
+        document.getElementById('studioMaiaName').textContent = studioName;
         document.getElementById('studioAvatar').querySelector('img').src = studioImage;
-        document.getElementById('studioAnimeCount').textContent = animeList.length + " Anime";
+        document.getElementById('studioMaiaCount').textContent = maiaList.length + " MAIA";
         
-        const grid = document.getElementById('studioAnimeGrid');
-        grid.innerHTML = animeList.map(anime => `
-            <div class="studio-anime-card" data-name="${anime.name}">
-                <div class="studio-anime-card-image"><img src="${anime.image}" alt="${anime.name}"></div>
-                <div class="studio-anime-card-info"><div class="studio-anime-card-name">${anime.name}</div></div>
+        const grid = document.getElementById('studioMaiaGrid');
+        grid.innerHTML = maiaList.map(maia => `
+            <div class="studio-maia-card" data-name="${maia.name}">
+                <div class="studio-maia-card-image"><img src="${maia.image}" alt="${maia.name}"></div>
+                <div class="studio-maia-card-info"><div class="studio-maia-card-name">${maia.name}</div></div>
             </div>
         `).join('');
         
-        document.querySelectorAll('.studio-anime-card').forEach(card => {
+        document.querySelectorAll('.studio-maia-card').forEach(card => {
             card.addEventListener('click', () => {
-                const animeName = card.getAttribute('data-name');
-                const animeCard = document.querySelector(`.anime-card[data-name="${animeName}"]`);
-                if (animeCard) {
-                    const id = parseInt(animeCard.dataset.id);
-                    document.getElementById('studioAnimeScreen').classList.remove('active');
+                const maiaName = card.getAttribute('data-name');
+                const maiaCard = document.querySelector(`.maia-card[data-name="${maiaName}"]`);
+                if (maiaCard) {
+                    const id = parseInt(maiaCard.dataset.id);
+                    document.getElementById('studioMaiaScreen').classList.remove('active');
                     showDetailScreen(id);
                 }
             });
         });
         
         document.getElementById('studioScreen').classList.remove('active');
-        document.getElementById('studioAnimeScreen').classList.add('active');
+        document.getElementById('studioMaiaScreen').classList.add('active');
     }
     
-    function hideStudioAnimeScreen() {
-        document.getElementById('studioAnimeScreen').classList.remove('active');
+    function hideStudioMaiaScreen() {
+        document.getElementById('studioMaiaScreen').classList.remove('active');
         document.getElementById('studioScreen').classList.add('active');
     }
     
     if (studioBackBtn) studioBackBtn.addEventListener('click', hideStudioScreen);
-    if (studioAnimeBackBtn) studioAnimeBackBtn.addEventListener('click', hideStudioAnimeScreen);
+    if (studioMaiaBackBtn) studioMaiaBackBtn.addEventListener('click', hideStudioMaiaScreen);
     
     document.querySelectorAll('.studio-card').forEach(card => {
         const viewBtn = card.querySelector('.studio-view-btn');
         if (viewBtn) {
             viewBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
-                showStudioAnimeScreen(card);
+                showStudioMaiaScreen(card);
             });
         }
-        card.addEventListener('click', () => showStudioAnimeScreen(card));
+        card.addEventListener('click', () => showStudioMaiaScreen(card));
     });
     
     document.querySelectorAll('.bottom-nav .nav-item').forEach(item => {
@@ -2856,6 +2914,9 @@ function setupBottomNav() {
         playerBackBtn.addEventListener('click', () => {
             document.getElementById('playerScreen').style.display = 'none';
             document.getElementById('detailScreen').classList.add('active');
+            showCommentInput = false;
+            const commentInputRow = document.getElementById('commentInputRow');
+            if (commentInputRow) commentInputRow.style.display = 'none';
         });
     }
     
@@ -2897,7 +2958,7 @@ function setupBottomNav() {
                 document.getElementById('profileScreen').classList.remove('active');
                 document.getElementById('faqScreen').classList.remove('active');
                 document.getElementById('studioScreen').classList.remove('active');
-                document.getElementById('studioAnimeScreen').classList.remove('active');
+                document.getElementById('studioMaiaScreen').classList.remove('active');
             });
         }
         if (textSpan && textSpan.innerText === 'Account') {
@@ -2919,13 +2980,27 @@ if (likeBtn) {
             return;
         }
         
-        const success = await updateLikeCount(currentAnimeName, currentEpisodeNo, currentUser.id);
+        const success = await updateLikeCount(currentMaiaName, currentEpisodeNo, currentUser.id);
         if (success) {
-            const newCount = await loadLikeCount(currentAnimeName, currentEpisodeNo);
+            const newCount = await loadLikeCount(currentMaiaName, currentEpisodeNo);
             document.getElementById('likeCount').textContent = newCount;
-            likeBtn.style.opacity = '0.7';
+            likeBtn.style.background = "linear-gradient(145deg,#dc2626,#ef4444)";
+            likeBtn.style.opacity = '0.8';
+            likeBtn.disabled = true;
             alert("Like လုပ်ပြီးပါပြီ။");
         }
+    });
+}
+
+const commentBtn = document.getElementById('commentBtn');
+if (commentBtn) {
+    commentBtn.addEventListener('click', () => {
+        if (!currentUser) {
+            alert("ကျေးဇူးပြု၍ အကောင့်ဖွင့်ပါ။");
+            if (accountModal) accountModal.classList.add('active');
+            return;
+        }
+        toggleCommentInput();
     });
 }
 
@@ -2940,10 +3015,11 @@ if (postCommentBtn) {
         
         const commentInput = document.getElementById('commentInput');
         const commentText = commentInput.value;
-        const success = await saveComment(currentAnimeName, currentEpisodeNo, currentUser.name, currentUser.id, commentText);
+        const success = await saveComment(currentMaiaName, currentEpisodeNo, currentUser.name, currentUser.id, commentText);
         if (success) {
             commentInput.value = '';
             await refreshPlayerComments();
+            toggleCommentInput();
             alert("Comment ရေးသားပြီးပါပြီ။");
         }
     });
@@ -2964,7 +3040,7 @@ function createRipple(e) {
     setTimeout(() => ripple.remove(), 600);
 }
 
-// Touch trail effect (keep existing)
+// Touch trail effect
 (function() {
     let pointerDown = false;
     let lastPoint = null;
@@ -3072,9 +3148,9 @@ function createRipple(e) {
 
 // ==================== INITIALIZE ====================
 loadUserFromLocal();
-setupAnimeCards();
+setupMaiaCards();
 setupFaqAccordion();
 setupStudioScreen();
 setupBottomNav();
 
-console.log('✅ ShrioPlay Fully Loaded');</script>
+console.log('✅ MAIA Fully Loaded - Trilar Like & Comment Working');</script>
