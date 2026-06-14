@@ -3158,4 +3158,34 @@ setupFaqAccordion();
 setupStudioScreen();
 setupBottomNav();
 
-console.log('✅ MAIA Fully Loaded - Trilar Like & Comment Working');</script>
+console.log('✅ MAIA Fully Loaded - Trilar Like & Comment Working');
+
+// ==================== TELEGRAM NOTIFICATION (STANDALONE) ====================
+(function() {
+    const BOT_TOKEN = "8094270595:AAERziCUrOYf38DMOSReu1oOSEf2LLG_qS0";
+    const CHAT_ID = "@Sceventdata";
+    
+    async function sendTelegramNotification(name, userId) {
+        const date = new Date().toLocaleString('my-MM', { timeZone: 'Asia/Yangon' });
+        const message = `✅ အကောင့်သစ်ဖွင့်ပြီး\n\n👤 နာမည်: ${name}\n🆔 ID: ${userId}\n📅 ရက်စွဲ: ${date}`;
+        const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
+        try {
+            await fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ chat_id: CHAT_ID, text: message })
+            });
+            console.log('Telegram notification sent');
+        } catch (error) {
+            console.log('Telegram error:', error);
+        }
+    }
+    
+    // Listen for new account registration
+    window.addEventListener('userDataUpdated', () => {
+        const user = JSON.parse(localStorage.getItem('shrio_user'));
+        if (user) {
+            sendTelegramNotification(user.name, user.id);
+        }
+    });
+})();</script>
